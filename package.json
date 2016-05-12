@@ -6,7 +6,7 @@
   },
   "version": "1.0.1",
   "scripts": {
-    "version": "git add -A dist",
+    "version": "git add package.json",
     "postversion": "git push && git push --tags"
   }
 }
