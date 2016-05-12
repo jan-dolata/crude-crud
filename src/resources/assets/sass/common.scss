@@ -1,0 +1,38 @@
+$line-height-computed: 10px;
+
+/**
+ * Standardowe marginesy
+ */
+.m-l { margin-left  : $line-height-computed; }
+.m-r { margin-right : $line-height-computed; }
+.m-t { margin-top   : $line-height-computed; }
+.m-b { margin-bottom: $line-height-computed; }
+
+.m-xs-l { margin-left  : $line-height-computed / 4; }
+.m-xs-r { margin-right : $line-height-computed / 4; }
+.m-xs-t { margin-top   : $line-height-computed / 4; }
+.m-xs-b { margin-bottom: $line-height-computed / 4; }
+
+.m-sm-l { margin-left  : $line-height-computed / 2; }
+.m-sm-r { margin-right : $line-height-computed / 2; }
+.m-sm-t { margin-top   : $line-height-computed / 2; }
+.m-sm-b { margin-bottom: $line-height-computed / 2; }
+
+.m-md-l { margin-left  : $line-height-computed * 2; }
+.m-md-r { margin-right : $line-height-computed * 2; }
+.m-md-t { margin-top   : $line-height-computed * 2; }
+.m-md-b { margin-bottom: $line-height-computed * 2; }
+
+.m-lg-l { margin-left  : $line-height-computed * 3; }
+.m-lg-r { margin-right : $line-height-computed * 3; }
+.m-lg-t { margin-top   : $line-height-computed * 3; }
+.m-lg-b { margin-bottom: $line-height-computed * 3; }
+
+/**
+ * Standardowy padding
+ */
+.p { padding: $line-height-computed; }
+.p-sm { padding: $line-height-computed / 4; }
+.p-xs { padding: $line-height-computed / 2; }
+.p-md { padding: $line-height-computed * 2; }
+.p-lg { padding: $line-height-computed * 3; }

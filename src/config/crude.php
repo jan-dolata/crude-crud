@@ -2,6 +2,8 @@
 
 return [
 
+
+
     /**
      * Eloquent Models namespace
      * @var array

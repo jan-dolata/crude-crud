@@ -1,0 +1,172 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/font-awesome/scss/font-awesome";
+@import "node_modules/owlcarousel/owl-carousel/owl.carousel";
+@import "node_modules/jquery-ui-bundle/jquery-ui";
+@import "node_modules/bootstrap-datetimepicker-sass/src/sass/bootstrap-datetimepicker";
+
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+
+
+@import "common";
+
+$bodyBg: #f5f5f5;
+$btnBg: #F7E454;
+$txtColor: #333;
+
+
+body {
+    overflow-y: scroll;
+    background-color: $bodyBg;
+    color: $txtColor;
+    font-family: 'Lato', sans-serif;
+}
+
+.admin {
+    font-family: 'Lato', sans-serif;
+}
+
+$boxBg: #fff;
+$boxBorder: 2px solid #fff;
+$boxRadius: 1px;
+$boxShadow: 0px 2px 3px 0px rgba(0,0,0,0.3);
+
+$mobileWidth: 700px;
+
+$margin: 50px;
+$mapMarginRight: 300px;
+
+.box {
+    background: $boxBg;
+
+    border: $boxBorder;
+    border-radius: $boxRadius;
+
+    -webkit-box-shadow: $boxShadow;
+    -moz-box-shadow: $boxShadow;
+    box-shadow: $boxShadow;
+}
+
+$activeBg: #555;
+$arrowSize: 16px;
+
+.navbar {
+    .active {
+        a {
+            background-color: $activeBg !important;
+            color: $boxBg !important;
+            border-radius: $boxRadius;
+        }
+
+        &:after {
+            position: absolute;
+            transform: rotate(45deg);
+            content: '';
+            background-color: $activeBg;
+            width: $arrowSize;
+            height: $arrowSize;
+            margin-left: - $arrowSize / 2;
+            margin-top: - $arrowSize / 2;
+            left: 50%;
+
+            box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.3);
+        }
+
+        box-shadow: $boxShadow;
+    }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.map {
+    width: 100%;
+    height: 500px;
+}
+
+.map-region {
+    height: 400px;
+}
+
+tbody {
+    .active {
+        color: #fff;
+        background-color: $activeBg !important;
+        box-shadow: $boxShadow;
+
+        td {
+            color: #fff;
+            background-color: $activeBg !important;
+        }
+    }
+}
+
+.ui-widget-content {
+    background: #fff !important;
+    font-family: 'Lato', sans-serif;
+    box-shadow: $boxShadow;
+}
+
+.ui-menu-item {
+    font-family: 'Lato', sans-serif;
+}
+
+.ui-state-focus {
+    font-family: 'Lato', sans-serif;
+
+    background: $activeBg !important;
+    color: $boxBg !important;
+    font-weight: normal !important;
+    border: 1px solid $activeBg !important;
+}
+
+.btn-icon {
+    &:hover {
+        color: $activeBg;
+    }
+}
+
+.controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+}
+
+#pac-input:focus {
+    border-color: #4d90fe;
+}
+
+.pac-container {
+    font-family: Roboto;
+}
+
+#type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
+#target {
+    width: 345px;
+}

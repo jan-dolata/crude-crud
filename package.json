@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "bootstrap-sass": "^3.3.6"
+  },
+  "version": "1.0.0",
+  "scripts": {
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags"
+  }
+}
