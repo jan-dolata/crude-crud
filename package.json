@@ -4,7 +4,7 @@
   "dependencies": {
     "bootstrap-sass": "^3.3.6"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "version": "git add package.json",
     "postversion": "git push && git push --tags"
