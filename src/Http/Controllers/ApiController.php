@@ -4,9 +4,9 @@ namespace JanDolata\CrudeCRUD\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use JanDolata\CrudeCRUD\Engine\ProjectInstance;
-use JanDolata\CrudeCRUD\Http\Controllers\ApiResponseTrait;
+use JanDolata\CrudeCRUD\Http\Controllers\Traits\ApiResponseTrait;
 use JanDolata\CrudeCRUD\Http\Requests\ApiRequest;
+use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
 class ApiController extends Controller
 {
@@ -14,17 +14,15 @@ class ApiController extends Controller
     use ApiResponseTrait;
 
     /**
-     * Related model name
-     *
-     * @var string
-     */
-    protected $modelName = '';
-
-    /**
      * Fetch collection
      */
-    public function index(Request $request, $modelName)
+    public function index(Request $request, $crudeName)
     {
+        $crude = CrudeInstance::get($crudeName);
+
+        // if ($crude instanceof CrudeInterface)
+            
+
         $page = $request->input('page', 1);
         $numRows = $request->input('numRows', 20);
         $sortAttr = $request->input('sortAttr', 'id');
@@ -33,7 +31,7 @@ class ApiController extends Controller
         $searchValue = $request->input('searchValue', '');
 
         try {
-            $model = (new ProjectInstance)->model($modelName);
+            $model = (new ProjectInstance)->model($crudeName);
             $collection = $model->getAll($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
 
             $count = $model->countFiltered($searchAttr, $searchValue);
@@ -52,10 +50,10 @@ class ApiController extends Controller
     /**
      * Add new model
      */
-    public function store(ApiRequest $request, $modelName)
+    public function store(ApiRequest $request, $crudeName)
     {
         try {
-            $model = (new ProjectInstance)->model($modelName);
+            $model = (new ProjectInstance)->model($crudeName);
             $model = $model->create($request->all());
             return $this->successResponse([
                 'model' => $model,
@@ -69,10 +67,10 @@ class ApiController extends Controller
     /**
      * Update model
      */
-    public function update(ApiRequest $request, $modelName, $id)
+    public function update(ApiRequest $request, $crudeName, $id)
     {
         try {
-            $model = (new ProjectInstance)->model($modelName);
+            $model = (new ProjectInstance)->model($crudeName);
             $model->updateById($id, $request->all());
             return $this->successResponse([
                 'message' => trans('admin.item_has_been_updated')
@@ -85,10 +83,10 @@ class ApiController extends Controller
     /**
      * Remove model
      */
-    public function destroy($modelName, $id)
+    public function destroy($crudeName, $id)
     {
         try {
-            $model = (new ProjectInstance)->model($modelName);
+            $model = (new ProjectInstance)->model($crudeName);
             $model->deleteById($id);
             return $this->successResponse([
                 'message' => trans('admin.item_has_been_removed')

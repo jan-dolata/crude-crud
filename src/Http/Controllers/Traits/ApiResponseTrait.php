@@ -1,6 +1,6 @@
 <?php
 
-namespace JanDolata\CrudeCRUD\Http\Controllers;
+namespace JanDolata\CrudeCRUD\Http\Controllers\Traits;
 
 trait ApiResponseTrait
 {

@@ -2,14 +2,14 @@
 
 namespace JanDolata\CrudeCRUD\Engine;
 
-class Crude
+class CrudeSetup
 {
 
     /**
      * Setup name
      * @var string
      */
-    protected $setupName = '';
+    protected $crudeName = '';
 
     /**
      * Model attributes on list
@@ -55,15 +55,27 @@ class Crude
     protected $deleteOption = true;
 
     /**
+     * Show add option
+     * @var boolean
+     */
+    protected $addOption = true;
+
+    /**
+     * Show edit option
+     * @var boolean
+     */
+    protected $editOption = true;
+
+    /**
      * Construct
-     * @param string $setupName
-     * @param array  $modelAttr
+     * @param  string $crudeName
+     * @param  array  $modelAttr
      * @return self
      */
-    function __construct($setupName, $modelAttr)
+    function __construct($crudeName, $modelAttr)
     {
-        $this->setupName = $setupName;
-        $modelAttr = $this->makeArray($modelAttr);
+        $this->crudeName = $crudeName;
+        $modelAttr = is_array($modelAttr) ? $modelAttr : [$modelAttr];
 
         $formAttr = array_diff($modelAttr, ['id', 'created_at', 'updated_at', 'deleted_at']);
 
@@ -88,11 +100,6 @@ class Crude
         return $this;
     }
 
-    public function makeArray($value)
-    {
-        return is_array($value) ? $value : [$value];
-    }
-
     /**
      * Prepare data for JS list config model
      * @return array
@@ -107,6 +114,8 @@ class Crude
             'inputType'     => $this->inputType,
             'actions'       => $this->actions,
             'deleteOption'  => $this->deleteOption,
+            'editOption'    => $this->editOption,
+            'addOption'     => $this->addOption,
             'modelDefaults' => $this->modelDefaults,
 
             'config' => [
@@ -194,6 +203,22 @@ class Crude
     public function setEditForm($editForm)
     {
         $this->editForm = $editForm;
+
+        return $this;
+    }
+
+    public function lockEditOption()
+    {
+        $this->editOption = false;
+        $this->setEditForm([]);
+
+        return $this;
+    }
+
+    public function lockAddOption()
+    {
+        $this->addOption = false;
+        $this->setAddForm([]);
 
         return $this;
     }

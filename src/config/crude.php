@@ -9,10 +9,10 @@ return [
     'routePrefix' => 'crude',
 
     /**
-     * Namespace of crude setups class
+     * Namespace of crude class
      * @var string
      */
-    'crudeSetupsNamespace' => '\App\Engine\CrudeSetups\\',
+    'namespace' => '\App\Engine\Crude\\',
 
     /**
      * Routes middleware
