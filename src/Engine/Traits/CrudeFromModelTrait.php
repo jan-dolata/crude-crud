@@ -25,19 +25,10 @@ trait CrudeFromModelTrait
     }
 
     /**
-     * Get crude setup
-     * @return CrudeSetup
-     */
-    public function getCrudeSetup()
-    {
-        return $this->getDefaultCrudeSetup();
-    }
-
-    /**
      * Get default crude setup
      * @return CrudeSetup
      */
-    public function getDefaultCrudeSetup()
+    public function getModelCrudeSetup()
     {
         $crudeName = $this->getCalledClassName();
         $modelAttr = array_merge(['id'], $this->model->getFillable(), ['created_at']);
@@ -47,24 +38,13 @@ trait CrudeFromModelTrait
         if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeUpdateInterface)
             $crude->lockEditOption();
 
-        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeAddInterface)
+        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeStoreInterface)
             $crude->lockAddOption();
 
         if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeDeleteInterface)
             $crude->lockDeleteOption();
 
         return $crude;
-    }
-
-    /**
-     * Get called class name
-     * @return string
-     */
-    protected static function getCalledClassName()
-    {
-        $class = get_called_class();
-        $class = explode('\\', $class);
-        return end($class);
     }
 
     /**
@@ -102,8 +82,8 @@ trait CrudeFromModelTrait
      */
     public function formatModel($model)
     {
-        $model->canEdit = true;
-        $model->canRemove = true;
+        $model->canBeEdited = true;
+        $model->canBeRemoved = true;
 
         return $model;
     }
@@ -165,10 +145,22 @@ trait CrudeFromModelTrait
     }
 
     /**
+     * Store new model
+     * @param  array $attributes
+     * @return Model
+     */
+    public function store($attributes)
+    {
+        $model = $this->model->create($attributes);
+
+        return $this->getById($model->id);
+    }
+
+    /**
      * Update by id
      * @param  integer $id
      * @param  array   $attributes
-     * @return self
+     * @return Model
      */
     public function updateById($id, $attributes)
     {
@@ -177,9 +169,12 @@ trait CrudeFromModelTrait
         if (empty($model))
             return $this;
 
-        $model->update($attributes);
+        unset($attributes['canBeEdited']);
+        unset($attributes['canBeRemoved']);
 
-        return $this;
+        $model->fill($attributes)->save();
+
+        return $model;
     }
 
     /**

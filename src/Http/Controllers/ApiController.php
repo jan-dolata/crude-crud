@@ -20,8 +20,8 @@ class ApiController extends Controller
     {
         $crude = CrudeInstance::get($crudeName);
 
-        // if ($crude instanceof CrudeInterface)
-            
+        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeInterface)
+            return $this->forbiddenResponse();
 
         $page = $request->input('page', 1);
         $numRows = $request->input('numRows', 20);
@@ -30,21 +30,15 @@ class ApiController extends Controller
         $searchAttr = $request->input('searchAttr', 'id');
         $searchValue = $request->input('searchValue', '');
 
-        try {
-            $model = (new ProjectInstance)->model($crudeName);
-            $collection = $model->getAll($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
+        $collection = $crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
+        $count = $crude->countFiltered($searchAttr, $searchValue);
+        $numPages = ceil($count / $numRows);
 
-            $count = $model->countFiltered($searchAttr, $searchValue);
-            $numPages = ceil($count / $numRows);
-
-            return $this->successResponse([
-                'collection' => $collection,
-                'numPages' => $numPages,
-                'count' => $count,
-            ]);
-        } catch (Exception $e) {
-            dd( 'Exception: ' .  $e->getMessage() );
-        }
+        return $this->successResponse([
+            'collection' => $collection,
+            'numPages' => $numPages,
+            'count' => $count,
+        ]);
     }
 
     /**
@@ -52,16 +46,20 @@ class ApiController extends Controller
      */
     public function store(ApiRequest $request, $crudeName)
     {
-        try {
-            $model = (new ProjectInstance)->model($crudeName);
-            $model = $model->create($request->all());
-            return $this->successResponse([
-                'model' => $model,
-                'message' => trans('admin.item_has_been_saved')
-            ]);
-        } catch (Exception $e) {
-            dd( 'Exception: ' .  $e->getMessage() );
-        }
+        $crude = CrudeInstance::get($crudeName);
+
+        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeInterface)
+            return $this->forbiddenResponse();
+
+        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeStoreInterface)
+            return $this->forbiddenResponse();
+
+        $model = $crude->store($request->all());
+
+        return $this->successResponse([
+            'model' => $model,
+            'message' => trans('crude.item_has_been_saved')
+        ]);
     }
 
     /**
@@ -69,15 +67,19 @@ class ApiController extends Controller
      */
     public function update(ApiRequest $request, $crudeName, $id)
     {
-        try {
-            $model = (new ProjectInstance)->model($crudeName);
-            $model->updateById($id, $request->all());
-            return $this->successResponse([
-                'message' => trans('admin.item_has_been_updated')
-            ]);
-        } catch (Exception $e) {
-            dd( 'Exception: ' .  $e->getMessage() );
-        }
+        $crude = CrudeInstance::get($crudeName);
+
+        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeInterface)
+            return $this->forbiddenResponse();
+
+        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeUpdateInterface)
+            return $this->forbiddenResponse();
+
+        $model = $crude->updateById($id, $request->all());
+
+        return $this->successResponse([
+            'message' => trans('admin.item_has_been_updated')
+        ]);
     }
 
     /**
@@ -85,15 +87,15 @@ class ApiController extends Controller
      */
     public function destroy($crudeName, $id)
     {
-        try {
-            $model = (new ProjectInstance)->model($crudeName);
-            $model->deleteById($id);
-            return $this->successResponse([
-                'message' => trans('admin.item_has_been_removed')
-            ]);
-        } catch (Exception $e) {
-            dd( 'Exception: ' .  $e->getMessage() );
-        }
+        // try {
+        //     $model = (new ProjectInstance)->model($crudeName);
+        //     $model->deleteById($id);
+        //     return $this->successResponse([
+        //         'message' => trans('admin.item_has_been_removed')
+        //     ]);
+        // } catch (Exception $e) {
+        //     dd( 'Exception: ' .  $e->getMessage() );
+        // }
     }
 
 }

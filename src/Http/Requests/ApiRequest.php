@@ -3,7 +3,7 @@
 namespace JanDolata\CrudeCRUD\Http\Requests;
 
 use App\Http\Requests\Request;
-use JanDolata\CrudeCRUD\Engine\ProjectInstance;
+use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
 class ApiRequest extends Request
 {
@@ -24,8 +24,11 @@ class ApiRequest extends Request
      */
     public function rules()
     {
-        $model = (new ProjectInstance)->model($this->modelName, true);
-        return $model->getValidationRules();
+        return [];
+        // $crude = CrudeInstance::get()
+
+        // $model = (new ProjectInstance)->model($this->modelName, true);
+        // return $model->getValidationRules();
     }
 }
 
