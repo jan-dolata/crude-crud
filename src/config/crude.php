@@ -2,13 +2,17 @@
 
 return [
 
-
+    /**
+     * Route prefix
+     * @var string
+     */
+    'routePrefix' => 'crude',
 
     /**
-     * Eloquent Models namespace
-     * @var array
+     * Namespace of crude setups class
+     * @var string
      */
-    'modelNamespace' => '\App\\',
+    'crudeSetupsNamespace' => '\App\Engine\CrudeSetups\\',
 
     /**
      * Routes middleware

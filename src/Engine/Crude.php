@@ -6,10 +6,10 @@ class Crude
 {
 
     /**
-     * Model name
+     * Setup name
      * @var string
      */
-    protected $modelName = '';
+    protected $setupName = '';
 
     /**
      * Model attributes on list
@@ -54,30 +54,43 @@ class Crude
      */
     protected $deleteOption = true;
 
-    function __construct($modelName)
+    /**
+     * Construct
+     * @param string $setupName
+     * @param array  $modelAttr
+     * @return self
+     */
+    function __construct($setupName, $modelAttr)
     {
-        $this->modelName = $modelName;
+        $this->setupName = $setupName;
+        $modelAttr = $this->makeArray($modelAttr);
 
-        $model = (new ProjectInstance)->model($modelName);
-        $fillable = $model->getFillable();
+        $formAttr = array_diff($modelAttr, ['id', 'created_at', 'updated_at', 'deleted_at']);
 
-        $this->column = array_values(array_merge(['id'], $fillable, ['created_at']));
-        $this->addForm = $fillable;
-        $this->editForm = $fillable;
+        $this->column = $modelAttr;
+        $this->addForm = $formAttr;
+        $this->editForm = $formAttr;
 
         // add default form view
         $this->setFormAction();
 
         // add map view
-        if (in_array('address', $fillable))
+        if (in_array('address', $formAttr))
             $this->setMapAction();
 
         // add file view
-        if (in_array('files', $fillable))
+        if (in_array('files', $formAttr))
             $this->setFileAction();
 
-        foreach ($fillable as $attr)
+        foreach ($formAttr as $attr)
             $this->inputType[$attr] = 'text';
+
+        return $this;
+    }
+
+    public function makeArray($value)
+    {
+        return is_array($value) ? $value : [$value];
     }
 
     /**
@@ -87,7 +100,7 @@ class Crude
     public function getJSData()
     {
         return [
-            'modelName'     => $this->modelName,
+            'setupName'     => $this->setupName,
             'column'        => $this->column,
             'addForm'       => $this->addForm,
             'editForm'      => $this->editForm,
