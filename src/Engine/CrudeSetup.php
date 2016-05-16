@@ -9,7 +9,7 @@ class CrudeSetup
      * Setup name
      * @var string
      */
-    protected $crudeName = '';
+    protected $name = '';
 
     /**
      * Model attributes on list
@@ -68,13 +68,13 @@ class CrudeSetup
 
     /**
      * Construct
-     * @param  string $crudeName
+     * @param  string $name
      * @param  array  $modelAttr
      * @return self
      */
-    function __construct($crudeName, $modelAttr)
+    function __construct($name, $modelAttr)
     {
-        $this->crudeName = $crudeName;
+        $this->name = $name;
         $modelAttr = is_array($modelAttr) ? $modelAttr : [$modelAttr];
 
         $formAttr = array_diff($modelAttr, ['id', 'created_at', 'updated_at', 'deleted_at']);
@@ -107,7 +107,7 @@ class CrudeSetup
     public function getJSData()
     {
         return [
-            'setupName'     => $this->setupName,
+            'name'          => $this->name,
             'column'        => $this->column,
             'addForm'       => $this->addForm,
             'editForm'      => $this->editForm,
@@ -119,6 +119,7 @@ class CrudeSetup
             'modelDefaults' => $this->modelDefaults,
 
             'config' => [
+                'routePrefix' => config('crude.routePrefix'),
                 'numRowsOptions' => config('crude.numRowsOptions'),
                 'iconClassName'  => config('crude.iconClassName')
             ],

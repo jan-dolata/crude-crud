@@ -39,14 +39,36 @@ class ApiController extends Controller
         $searchAttr = $request->input('searchAttr', config('crude.defaults.searchAttr'));
         $searchValue = $request->input('searchValue', '');
 
-        $collection = $this->crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
         $count = $this->crude->countFiltered($searchAttr, $searchValue);
         $numPages = ceil($count / $numRows);
 
+        if ($page < 1)
+            $page = 1;
+        if ($page > $numPages)
+            $page = $numPages;
+
+        if ($numRows > $count)
+            $numRows = $count;
+
+
+        $collection = $this->crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
+
         return $this->successResponse([
             'collection' => $collection,
-            'numPages' => $numPages,
-            'count' => $count
+            'pagination' => [
+                'page' => $page,
+                'numRows' => $numRows,
+                'numPages' => $numPages,
+                'count' => $count,
+            ],
+            'sort' => [
+                'attr' => $sortAttr,
+                'order' => $sortOrder
+            ],
+            'search' => [
+                'attr' => $searchAttr,
+                'value' => $searchValue
+            ],
         ]);
     }
 

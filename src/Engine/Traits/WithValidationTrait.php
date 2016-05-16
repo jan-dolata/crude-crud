@@ -5,7 +5,7 @@ namespace JanDolata\CrudeCRUD\Engine\Traits;
 trait WithValidationTrait
 {
     /**
-     * Validation rules
+     * Validation rules for update
      * @var array
      */
     protected $validationRules = [];

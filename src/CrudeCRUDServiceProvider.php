@@ -13,6 +13,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
     /**
      * Perform post-registration booting of services.
      *
@@ -53,6 +54,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
             require __DIR__.'/Http/routes.php';
         });
     }
+
     /**
      * Register any package services.
      *
@@ -62,14 +64,25 @@ class CrudeCRUDServiceProvider extends ServiceProvider
     {
         $this->registerCrudeCRUD();
 
-        // use this if your package has a config file
         config([
             'config/crude.php',
         ]);
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Crude', 'JanDolata\CrudeCRUD\Engine\Crude');
+        $loader->alias('CrudeListInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\ListInterface');
+        $loader->alias('CrudeUpdateInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface');
+        $loader->alias('CrudeDeleteInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface');
+        $loader->alias('CrudeStoreInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface');
+        $loader->alias('CrudeWithValidationInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface');
+        $loader->alias('CrudeFromModelTrait', 'JanDolata\CrudeCRUD\Engine\Traits\FromModelTrait');
+        $loader->alias('CrudeWithValidationTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithValidationTrait');
+        $loader->alias('CrudeCrudeSetup', 'JanDolata\CrudeCRUD\Engine\CrudeSetup');
     }
+
     private function registerCrudeCRUD()
     {
-        $this->app->bind('CrudeCRUD',function($app){
+        $this->app->bind('CrudeCRUD', function($app) {
             return new CrudeCRUD($app);
         });
     }
