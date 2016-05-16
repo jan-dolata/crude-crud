@@ -30,6 +30,7 @@ elixir(function(mix) {
         'js/modules/file.js',
         'js/modules/map.js',
         'js/list.js',
+        'js/layout.js',
         'js/strat.js',
     ], 'src/public/js/app.js', assets);
 

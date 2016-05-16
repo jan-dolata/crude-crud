@@ -1,3 +1,5 @@
+<div id="crudeContainer"></div>
+
 @include('CrudeCRUD::partials.modal')
 @include('CrudeCRUD::partials.alert')
 
@@ -13,3 +15,7 @@
 <script src="{{ asset('vendor/jan-dolata/crude-crud/js/lib.js') }}"></script>
 <script src="{{ asset('vendor/jan-dolata/crude-crud/js/app.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY') }}&libraries=places" async defer></script>
+
+<script type="text/javascript">
+    Crude.data.crudeSetup = {!! empty($crudeSetup) ? '{}' : json_encode($crudeSetup, JSON_NUMERIC_CHECK) !!};
+</script>

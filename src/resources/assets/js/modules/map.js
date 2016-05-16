@@ -1,4 +1,4 @@
-Global.Views.Map = Crude.Views.Module.extend(
+Global.Views.MapModule = Crude.Views.Module.extend(
 {
     template: '#mapTemplate',
     moduleName: 'map',

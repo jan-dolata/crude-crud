@@ -75,7 +75,7 @@ Crude.Collections.Base = Backbone.Collection.extend(
     }
 });
 
-Crude.Models.setup = Backbone.Model.extend(
+Crude.Models.Setup = Backbone.Model.extend(
 {
     idAttribute: 'name',
     defaults:
@@ -110,6 +110,11 @@ Crude.Models.setup = Backbone.Model.extend(
     autocompleteRoute: function(url)
     {
         return this.config('routePrefix') + '/autocomplete/' + url;
+    },
+
+    containerId: function ()
+    {
+        return 'crudeSetup_' + this.getName();
     },
 
     getNewCollection: function ()

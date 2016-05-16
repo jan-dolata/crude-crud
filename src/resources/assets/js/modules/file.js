@@ -1,4 +1,4 @@
-Crude.Views.File = Crude.Views.Module.extend(
+Crude.Views.FileModule = Crude.Views.Module.extend(
 {
     template: '#fileTemplate',
     moduleName: 'file',
