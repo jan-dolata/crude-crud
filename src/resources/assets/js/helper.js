@@ -63,6 +63,15 @@ Crude.clearAllAlerts = function()
 },
 
 /**
+ * Short for error alert
+ */
+Crude.showError = function (msg)
+{
+    Crude.showAlert('danger', msg);
+};
+
+
+/**
  * Show modal
  * @param  {string} title
  * @param  {string} content
@@ -109,7 +118,7 @@ Crude.getFormValues = function (inputList)
 {
     var values = {};
 
-    inputList.each( function() {
+    inputList.each(function() {
         var $this = $(this);
 
         values[$this.data('attr')] = $this.attr('type') == 'checkbox'
@@ -132,16 +141,14 @@ Crude.getAttrName = function (attr)
 
 /**
  * Render input
- * @param  {object} section
+ * @param  {object} setup
  * @param  {string} attr    - attribute name
  * @param  {object} model   - model data
  * @return {HTML}
  */
-Crude.renderInput = function (section, attr, model)
+Crude.renderInput = function (type, attr, model)
 {
     var defaultName = '#crude_textInputTemplate';
-
-    var type = section.inputType[attr];
     var templateName = _.isUndefined(type)
         ? defaultName
         : '#crude_' + type + 'InputTemplate';
@@ -152,5 +159,5 @@ Crude.renderInput = function (section, attr, model)
 
     var template = _.template($(templateName).html());
 
-    return template({ section: section, attr: attr, model: model });
+    return template({ attr: attr, model: model });
 };

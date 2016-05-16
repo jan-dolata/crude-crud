@@ -1,5 +1,5 @@
 <script type="text/template" id="crude_mapTemplate">
-    @include('admin.partials.save-icon-template-part')
+    @include('CrudeCRUD::modules.partials.save-icon')
 
     <div class="row">
         <div class="col-xs-12">

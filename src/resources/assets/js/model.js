@@ -107,6 +107,11 @@ Crude.Models.setup = Backbone.Model.extend(
         return this.config('routePrefix') + '/api/' + this.getName();
     },
 
+    autocompleteRoute: function(url)
+    {
+        return this.config('routePrefix') + '/autocomplete/' + url;
+    },
+
     getNewCollection: function ()
     {
         var apiRoute = this.apiRoute();

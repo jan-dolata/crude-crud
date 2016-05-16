@@ -25,7 +25,11 @@ elixir(function(mix) {
         'js/app.js',
         'js/helper.js',
         'js/model.js',
-        'js/view/list.js',
+        'js/modules/module.js',
+        'js/modules/form.js',
+        'js/modules/file.js',
+        'js/modules/map.js',
+        'js/list.js',
         'js/strat.js',
     ], 'src/public/js/app.js', assets);
 

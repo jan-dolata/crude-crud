@@ -32,8 +32,12 @@ class CrudeCRUDServiceProvider extends ServiceProvider
 
         // use this if your package needs a config file
         $this->publishes([
-            __DIR__.'/config/crude.php' => config_path('crude.php'),
-        ]);
+            __DIR__.'/config/crude.php' => config_path('crude.php')
+        ], 'config');
+
+        $this->publishes([
+            __DIR__.'/public/' => public_path('vendor/jan-dolata/crude-crud')
+        ], 'assets');
 
         // use the vendor configuration file as fallback
         $this->mergeConfigFrom(

@@ -1,5 +1,5 @@
 <script type="text/template" id="crude_formTemplate">
-    @include('admin.partials.save-icon-template-part')
+    @include('CrudeCRUD::modules.partials.save-icon')
 
     <%
     var list = model.id ? setup.editForm : setup.addForm;
@@ -13,7 +13,7 @@
             </div>
 
             <div class="col-sm-8">
-                <%= Crude.renderInput(setup, attr, model) %>
+                <%= Crude.renderInput(setup.inputType[attr], attr, model) %>
             </div>
         </div>
     <% }); %>

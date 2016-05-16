@@ -1,5 +1,5 @@
 <script type="text/template" id="crude_fileTemplate">
-    @include('admin.partials.save-icon-template-part')
+    @include('CrudeCRUD::modules.partials.save-icon')
 
     <label>{{ trans('crude.drop_file_here') }}</label>
     <div id="upload_file_dropzone" class="well pointer" style="background: #fafafa"></div>
