@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Traits;
 
-trait CrudeWithValidationTrait
+trait WithValidationTrait
 {
     /**
      * Validation rules

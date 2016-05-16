@@ -26,15 +26,4 @@ trait ApiResponseTrait
        ], 200);
     }
 
-    /**
-     * Return a 403 forbidden response with a message.
-     */
-    protected function forbiddenResponse($message = 'Access forbidden')
-    {
-        return response()->json([
-            'error' => [
-                'message' => $message
-            ]
-        ], 403);
-    }
 }

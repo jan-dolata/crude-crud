@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace JanDolata\CrudeCRUD\Http\Controllers;
 
-use Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use DB;
+use JanDolata\CrudeCRUD\Http\Requests\AutocompleteRequest;
+use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
 /**
  * Controller for autocomplete field
@@ -14,39 +13,44 @@ class AutocompleteController extends Controller
 {
 
     /**
-     * Call method to get list for $attr autocomplete input in $model form
-     * @param  Request $request - with 'term' string value
-     * @param  string  $model   - form model name
-     * @param  string  $attr    - form input attribute name
+     * Call method to get list for $attr autocomplete input
+     * @param  Request $request     - with 'term' string value
+     * @param  string  $crudeName
+     * @param  string  $attr        - form input attribute name
      * @return JSON with array
      */
-    public function get(Request $request, $model, $attr)
+    public function get(AutocompleteRequest $request, $crudeName, $attr)
     {
-        $term = $request->input('term');
-        $attr = $this->underscoreToCamelCase($attr);
+        $crude = CrudeInstance::get($crudeName);
+        $methodName = 'autocomplete' . $this->underscoreToCamelCase($attr);
 
-        $result = call_user_func([$this, 'autocomplete' . $model . $attr], $term);
+        if (! method_exists($crude, $methodName))
+            return response()->json([], 200);
+
+        $term = $request->input('term');
+        $result = call_user_func([$crude, $methodName], $term);
 
         return response()->json($result, 200);
     }
 
     /**
-     * Call mathod to get first label for $attr autocomplete input in $model form
+     * Call mathod to get first label for $attr autocomplete input
      * @param  Request $request - with
-     *                          'model' - model name
+     *                          'crudeName' - crude class name
      *                          'attr'  - attribute name
      *                          'value' - model[attr]
      * @return JSON with string
      */
-    public function label(Request $request)
+    public function label(AutocompleteRequest $request)
     {
-        $model = ucwords($request->input('model'));
+        $crude = CrudeInstance::get($request->input('crudeName'));
         $attr = $this->underscoreToCamelCase($request->input('attr'));
         $value = $request->input('value');
+        $methodName = 'label' . $attr;
 
-        $result = call_user_func([$this, 'label' . $model . $attr], $value);
-        if(empty($result))
-            $result = '';
+        $result = '';
+        if (method_exists($crude, $methodName))
+            $result = call_user_func([$crude, $methodName], $value);
 
         return response()->json($result, 200);
     }
@@ -56,7 +60,7 @@ class AutocompleteController extends Controller
      * @param  string $string
      * @return string
      */
-    public function underscoreToCamelCase($string)
+    private function underscoreToCamelCase($string)
     {
         return str_replace('_', '', ucwords($string, '_'));
     }

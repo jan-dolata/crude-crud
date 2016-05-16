@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Interfaces;
 
-interface CrudeInterface
+interface ListInterface
 {
     public function getCrudeSetup();
     public function getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);

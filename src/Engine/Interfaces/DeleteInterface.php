@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Interfaces;
 
-interface CrudeDeleteInterface
+interface DeleteInterface
 {
     public function deleteById($id);
 }

@@ -8,12 +8,15 @@ class CrudeInstance
     /**
      * Create crude instance
      * @param  string $name
-     * @return Model
+     * @return Model|null
      */
     public static function get($name)
     {
         $name = config('crude.namespace') . $name;
-        return new $name();
+
+        return class_exists($name)
+            ? new $name()
+            : null;
     }
 
 }

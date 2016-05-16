@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Interfaces;
 
-interface CrudeUpdateInterface
+interface UpdateInterface
 {
     public function updateById($id, $attributes);
 }

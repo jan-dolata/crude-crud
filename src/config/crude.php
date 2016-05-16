@@ -21,6 +21,17 @@ return [
     'middleware' => ['web', 'auth'],
 
     /**
+     * Defaults filters
+     * @var array
+     */
+    'defaults' => [
+        'numRows' => 20,
+        'sortAttr' => 'id',
+        'sortOrder' => 'asc',
+        'searchAttr' => 'id'
+    ],
+
+    /**
      * Number of rows on list, select option
      * @var array
      */

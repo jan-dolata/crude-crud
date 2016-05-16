@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Interfaces;
 
-interface CrudeWithValidationInterface
+interface WithValidationInterface
 {
     public function getValidationRules($attrList = []);
     public function setValidationRules($validationRules);

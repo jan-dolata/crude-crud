@@ -5,8 +5,11 @@ namespace JanDolata\CrudeCRUD\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use JanDolata\CrudeCRUD\Http\Controllers\Traits\ApiResponseTrait;
-use JanDolata\CrudeCRUD\Http\Requests\ApiRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
+use JanDolata\CrudeCRUD\Http\Requests\ApiRequest;
+use JanDolata\CrudeCRUD\Http\Requests\ApiUpdateRequest;
+use JanDolata\CrudeCRUD\Http\Requests\ApiStoreRequest;
+
 
 class ApiController extends Controller
 {
@@ -14,47 +17,48 @@ class ApiController extends Controller
     use ApiResponseTrait;
 
     /**
+     * Releated crude instance
+     * @var Crude instance
+     */
+    protected $crude;
+
+    function __construct(Request $request)
+    {
+        $this->crude = CrudeInstance::get($request->crudeName);
+    }
+
+    /**
      * Fetch collection
      */
-    public function index(Request $request, $crudeName)
+    public function index(ApiRequest $request)
     {
-        $crude = CrudeInstance::get($crudeName);
-
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeInterface)
-            return $this->forbiddenResponse();
-
         $page = $request->input('page', 1);
-        $numRows = $request->input('numRows', 20);
-        $sortAttr = $request->input('sortAttr', 'id');
-        $sortOrder = $request->input('sortOrder', 'asc');
-        $searchAttr = $request->input('searchAttr', 'id');
+        $numRows = $request->input('numRows', config('crude.defaults.numRows'));
+        $sortAttr = $request->input('sortAttr', config('crude.defaults.sortAttr'));
+        $sortOrder = $request->input('sortOrder', config('crude.defaults.sortOrder'));
+        $searchAttr = $request->input('searchAttr', config('crude.defaults.searchAttr'));
         $searchValue = $request->input('searchValue', '');
 
-        $collection = $crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
-        $count = $crude->countFiltered($searchAttr, $searchValue);
+        $collection = $this->crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
+        $count = $this->crude->countFiltered($searchAttr, $searchValue);
         $numPages = ceil($count / $numRows);
 
         return $this->successResponse([
             'collection' => $collection,
             'numPages' => $numPages,
-            'count' => $count,
+            'count' => $count
         ]);
     }
 
     /**
      * Add new model
      */
-    public function store(ApiRequest $request, $crudeName)
+    public function store(ApiStoreRequest $request, $crudeName)
     {
-        $crude = CrudeInstance::get($crudeName);
+        if (! $this->crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface)
+            return $request->forbiddenResponse();
 
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeInterface)
-            return $this->forbiddenResponse();
-
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeStoreInterface)
-            return $this->forbiddenResponse();
-
-        $model = $crude->store($request->all());
+        $model = $this->crude->store($request->all());
 
         return $this->successResponse([
             'model' => $model,
@@ -65,17 +69,12 @@ class ApiController extends Controller
     /**
      * Update model
      */
-    public function update(ApiRequest $request, $crudeName, $id)
+    public function update(ApiUpdateRequest $request, $crudeName, $id)
     {
-        $crude = CrudeInstance::get($crudeName);
+        if (! $this->crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface)
+            return $request->forbiddenResponse();
 
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeInterface)
-            return $this->forbiddenResponse();
-
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeUpdateInterface)
-            return $this->forbiddenResponse();
-
-        $model = $crude->updateById($id, $request->all());
+        $model = $this->crude->updateById($id, $request->all());
 
         return $this->successResponse([
             'message' => trans('admin.item_has_been_updated')
@@ -85,17 +84,16 @@ class ApiController extends Controller
     /**
      * Remove model
      */
-    public function destroy($crudeName, $id)
+    public function destroy(ApiRequest $request, $crudeName, $id)
     {
-        // try {
-        //     $model = (new ProjectInstance)->model($crudeName);
-        //     $model->deleteById($id);
-        //     return $this->successResponse([
-        //         'message' => trans('admin.item_has_been_removed')
-        //     ]);
-        // } catch (Exception $e) {
-        //     dd( 'Exception: ' .  $e->getMessage() );
-        // }
+        if (! $this->crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface)
+            return $request->forbiddenResponse();
+
+        $model = $this->crude->deleteById($id);
+
+        return $this->successResponse([
+            'message' => trans('admin.item_has_been_removed')
+        ]);
     }
 
 }

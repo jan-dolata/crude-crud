@@ -4,7 +4,7 @@ namespace JanDolata\CrudeCRUD\Engine\Traits;
 
 use JanDolata\CrudeCRUD\Engine\CrudeSetup;
 
-trait CrudeFromModelTrait
+trait FromModelTrait
 {
     /**
      * Eloquent model

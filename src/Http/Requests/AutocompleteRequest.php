@@ -5,7 +5,7 @@ namespace JanDolata\CrudeCRUD\Http\Requests;
 use App\Http\Requests\Request;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class ApiRequest extends Request
+class AutocompleteRequest extends Request
 {
 
     /**
@@ -18,9 +18,6 @@ class ApiRequest extends Request
         $crude = CrudeInstance::get($this->crudeName);
 
         if ($crude == null)
-            return false;
-
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\ListInterface)
             return false;
 
         return true;

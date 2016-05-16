@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Interfaces;
 
-interface CrudeStoreInterface
+interface StoreInterface
 {
     public function store($attributes);
 }
