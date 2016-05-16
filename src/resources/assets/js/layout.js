@@ -17,19 +17,7 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
     initialize: function (options)
     {
         this.title = options.title;
-
-        var views = [], view;
-        this.collection.each(function (model)
-        {
-            view = new Global.Views[model.getViewName()]({
-                settings: model
-            });
-
-            views[model.get('key')] = view;
-        });
-        this.view = views;
-
-        this.listenTo(Global.vent, 'sectionLinkClick', this.sectionLinkClick);
+        this.setup = options.setup;
     },
 
     serializeData: function()
@@ -47,6 +35,24 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
                 this.addRegion(regionName, '#' + regionName);
                 this.getRegion(regionName).show(this.view[key]);
             }
+
+            if (this.setup.isActionAvailable('form'))
+                new Global.Views.Form({
+                    el: '#formContainer',
+                    section: section
+                }).render();
+
+    if (section.isActionAvailable('map'))
+        new Global.Views.Map({
+            el: '#mapContainer',
+            section: section
+        }).render();
+
+    if (section.isActionAvailable('file'))
+        new Global.Views.File({
+            el: '#fileContainer',
+            section: section
+        }).render();
 
             this.firstRender = false;
         }
