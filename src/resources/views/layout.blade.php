@@ -8,6 +8,6 @@
     </div>
 
     <div class="m-t">
-        <table id="listRegion" class="table table-hover"></table>
+        <div id="listRegion"></div>
     </div>
 </script>

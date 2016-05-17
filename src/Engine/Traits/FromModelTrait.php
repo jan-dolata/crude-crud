@@ -25,6 +25,15 @@ trait FromModelTrait
     }
 
     /**
+     * Get model
+     * @return Eloquent model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Prepare default crude setup
      * @return self
      */
@@ -35,13 +44,13 @@ trait FromModelTrait
 
         $crudeSetup = new CrudeSetup($crudeName, $modelAttr);
 
-        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeUpdateInterface)
+        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface)
             $crudeSetup->lockEditOption();
 
-        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeStoreInterface)
+        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface)
             $crudeSetup->lockAddOption();
 
-        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeDeleteInterface)
+        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface)
             $crudeSetup->lockDeleteOption();
 
         $this->crudeSetup = $crudeSetup;
@@ -166,15 +175,12 @@ trait FromModelTrait
      */
     public function updateById($id, $attributes)
     {
-        $model = $this->getById($id);
+        $model = $this->model->find($id);
 
         if (empty($model))
             return $this;
 
-        unset($attributes['canBeEdited']);
-        unset($attributes['canBeRemoved']);
-
-        $model->fill($attributes)->save();
+        $model->update($attributes);
 
         return $model;
     }

@@ -36,7 +36,7 @@
 
 <script type="text/template" id="crude_listEmptyTemplate">
     <td class="text-center" colspan="<%- setup.get('column').length + 1 %>">
-        <h4>{{ trans('crude.empty_list') }}</h4>
+        <h4>{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
     </td>
 </script>
 

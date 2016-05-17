@@ -40,14 +40,14 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
                     new Crude.Views.FormModule({ setup: setup })
                 );
 
-            if (this.setup.isActionAvailable('map'))
-                this.map.show(
-                    new Crude.Views.MapModule({ setup: setup })
-                );
-
             if (this.setup.isActionAvailable('file'))
                 this.file.show(
                     new Crude.Views.FileModule({ setup: setup })
+                );
+
+            if (this.setup.isActionAvailable('map'))
+                this.map.show(
+                    new Crude.Views.MapModule({ setup: setup })
                 );
 
             this.firstRender = false;

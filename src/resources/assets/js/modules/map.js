@@ -11,9 +11,9 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
         save: '#save',
         cancel: '#cancel',
         input: '.input',
-        'mapRegion': '#mapRegion',
-        'infoRegion': '#infoRegion',
-        'positionRegion': '#positionRegion',
+        'mapContainer': '#mapContainer',
+        'info': '#info',
+        'position': '#position',
         'search': '#search',
     },
 
@@ -28,7 +28,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     },
 
     initMap: function () {
-        this.map = new google.maps.Map(document.getElementById('mapRegion'), {
+        this.map = new google.maps.Map(document.getElementById('mapContainer'), {
             center: this.model.getLatLngObject(),
             zoom: 6
         });
@@ -52,17 +52,17 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
 
     showSelectedLocation: function()
     {
-        this.ui.positionRegion.html(this.model.get('lat') + ' x ' + this.model.get('lng'));
+        this.ui.position.html(this.model.get('lat') + ' x ' + this.model.get('lng'));
 
         var geocoder = new google.maps.Geocoder;
 
         geocoder.geocode({'location': this.model.getLatLngObject()}, function(results, status) {
-            this.ui.infoRegion.html('');
+            this.ui.info.html('');
 
             if (status !== google.maps.GeocoderStatus.OK)
                 return;
 
-            this.ui.infoRegion.html(results[0].formatted_address);
+            this.ui.info.html(results[0].formatted_address);
             this.model.set('address', results[0].formatted_address);
         }.bind(this));
     },

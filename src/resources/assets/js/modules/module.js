@@ -38,26 +38,26 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     onActionEnd: function (setupName)
     {
-        if (this.setup.getName() == onActionEnd)
+        if (this.setup.getName() == setupName)
             this.slideUp();
     },
 
     onAction: function (setupName, model)
     {
-        if (this.setup.getName() == onActionEnd)
+        if (this.setup.getName() == setupName)
             this.setNewModel(model);
     },
 
     setNewModel: function (model)
     {
-        this.$el.slideDown(100);
+        this.$el.parent().slideDown(100);
         this.model = model;
         this.render();
     },
 
     slideUp: function ()
     {
-        this.$el.slideUp(100);
+        this.$el.parent().slideUp(100);
     },
 
     cancel: function ()
@@ -69,14 +69,12 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     {
         this.model
             .save()
-
             .done(function(response) {
                 if ('message' in  response)
                     Crude.showAlert('success', response.message);
 
                 this.setup.triggerNextAction(this.model);
             }.bind(this))
-
             .fail(function(response) {
                 var responseTextJSON = JSON.parse(response.responseText);
 

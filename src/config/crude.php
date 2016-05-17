@@ -47,4 +47,15 @@ return [
         'file' => 'fa fa-file fa-lg'
     ],
 
+    /**
+     * Upload folder name in storage/app
+     * @var string
+     */
+    'uploadFolder' => 'upload',
+
+    /**
+     * File log model namespace
+     * @var string
+     */
+    'fileLogModelNamespace' => 'App\Engine\Models\FileLog',
 ];

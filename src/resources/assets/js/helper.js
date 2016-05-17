@@ -51,7 +51,7 @@ Crude.showAlert = function (type, msg)
         type = 'info';
 
     var template = _.template($('#crude_alertTemplate').html());
-    $('#crude_alertContainer').find('#alertList').append(template({ type: type, msg: msg }));
+    $('#crude_alertContainer').append(template({ type: type, msg: msg }));
 };
 
 /**

@@ -1,11 +1,11 @@
 <script type="text/template" id="crude_fileTemplate">
     @include('CrudeCRUD::modules.partials.save-icon')
 
-    <label>{{ trans('crude.drop_file_here') }}</label>
+    <label>{{ trans('CrudeCRUD::crude.drop_file_here') }}</label>
     <div id="upload_file_dropzone" class="well pointer" style="background: #fafafa"></div>
 </script>
 
-<script type="text/template" id="dropzoneTemplate">
+<script type="text/template" id="crude_dropzoneTemplate">
     <div class="dz-preview dz-file-preview p" style="display: inline-block">
         <div class="dz-details">
             <img data-dz-thumbnail />

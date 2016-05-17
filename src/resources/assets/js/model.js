@@ -96,25 +96,30 @@ Crude.Models.Setup = Backbone.Model.extend(
         actionToTrigger: []
     },
 
-    getName: function()
+    getName: function ()
     {
         return this.get('name');
     },
 
-    config: function(attr)
+    config: function (attr)
     {
         var config = this.get('config');
         return config[attr];
     },
 
-    apiRoute: function()
+    apiRoute: function ()
     {
-        return this.config('routePrefix') + '/api/' + this.getName();
+        return '/' + this.config('routePrefix') + '/api/' + this.getName();
     },
 
     autocompleteRoute: function(url)
     {
-        return this.config('routePrefix') + '/autocomplete/' + url;
+        return '/' + this.config('routePrefix') + '/autocomplete/' + url;
+    },
+
+    filesRoute: function (url)
+    {
+        return '/' + this.config('routePrefix') + '/files/' + url;
     },
 
     containerId: function ()

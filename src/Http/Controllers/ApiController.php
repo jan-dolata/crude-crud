@@ -40,15 +40,17 @@ class ApiController extends Controller
         $searchValue = $request->input('searchValue', '');
 
         $count = $this->crude->countFiltered($searchAttr, $searchValue);
-        $numPages = ceil($count / $numRows);
+        $numPages = $numRows > 0
+            ? ceil($count / $numRows)
+            : 1;
 
         if ($page < 1)
             $page = 1;
         if ($page > $numPages)
             $page = $numPages;
 
-        if ($numRows > $count)
-            $numRows = $count;
+        // if ($numRows > $count)
+            // $numRows = $count;
 
 
         $collection = $this->crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);

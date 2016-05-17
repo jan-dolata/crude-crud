@@ -22,7 +22,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
     public function boot()
     {
         // use this if your package has views
-        $this->loadViewsFrom(realpath(__DIR__.'/resources/views'), 'CrudeCRUD');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'CrudeCRUD');
 
         // use this if your package has lang files
         $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'CrudeCRUD');

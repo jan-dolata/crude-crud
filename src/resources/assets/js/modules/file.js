@@ -25,10 +25,10 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "/files-upload",
+            url: that.setup.filesRoute('upload'),
+            previewTemplate: $('#crude_dropzoneTemplate').html(),
             maxFiles: 10,
             parallelUploads: 10,
-            previewTemplate: $('#dropzoneTemplate').html(),
             uploadMultiple: true,
             autoProcessQueue: false,
             init: function()
@@ -65,7 +65,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                         $.ajax({
                             dataType: "json",
                             type: 'delete',
-                            url: '/delete-file',
+                            url: that.setup.filesRoute('delete'),
                             data: {
                                 file_path   : file.serverPath,
                                 file_log_id : file.fileLogId
@@ -93,7 +93,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                 });
             },
             sending: function(file, xhr, formData) {
-                formData.append("modelName", that.setup.getModelName());
+                formData.append("crudeName", that.setup.getName());
                 formData.append("modelId", that.model.id);
             },
             maxfilesexceeded: function(file) {

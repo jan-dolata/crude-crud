@@ -53,11 +53,11 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
     delete: function ()
     {
         $modal = Crude.showModal(
-            Crude.getTrans('admin.confirm_delete', 'title'),
-            Crude.getTrans('admin.confirm_delete', 'content'),
+            Crude.getTrans('crude.confirm_delete', 'title'),
+            Crude.getTrans('crude.confirm_delete', 'content'),
             {
-                cancel: Crude.getTrans('admin.confirm_delete', 'cancel'),
-                delete: Crude.getTrans('admin.confirm_delete', 'confirm')
+                cancel: Crude.getTrans('crude.confirm_delete', 'cancel'),
+                delete: Crude.getTrans('crude.confirm_delete', 'confirm')
             }
         );
 
@@ -113,6 +113,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     childView: Crude.Views.ListItem,
     emptyView: Crude.Views.ListEmpty,
     childViewContainer: '#childViewContainer',
+    tagName: 'table',
+    className: 'table table-hover',
 
     ui: {
         add: '#add',

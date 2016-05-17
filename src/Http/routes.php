@@ -20,4 +20,11 @@ Route::group($group, function () {
         Route::get('get/{crudeName}/{attr}', 'AutocompleteController@get');
         Route::post('label', 'AutocompleteController@label');
     });
+
+    // File
+    Route::group(['prefix' => 'files'], function() {
+        Route::post('upload', 'FilesController@upload');
+        Route::post('delete', 'FilesController@delete');
+    });
+
 });

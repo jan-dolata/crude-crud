@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use JanDolata\CrudeCRUD\Http\Controllers\Controller;
 use JanDolata\CrudeCRUD\Http\Requests\AutocompleteRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 

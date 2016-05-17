@@ -43,7 +43,7 @@
                 <% }) }) %>
             </ul>
         </div>
-        <input id="searchValue" size="20" type="text" class="form-control input-sm" value="<%- search.value %>" placeholder="{{ trans('admin.search_value') }}" />
+        <input id="searchValue" size="20" type="text" class="form-control input-sm" value="<%- search.value %>" placeholder="{{ trans('CrudeCRUD::crude.search_value') }}" />
         <div class="input-group-btn">
             <button type="button" id="clearSearch" class="btn btn-default btn-sm">
                 <i class="fa fa-times"></i>

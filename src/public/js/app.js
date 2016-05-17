@@ -34,6 +34,12 @@ $(function()
     app.start();
 });
 
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 
 /**
  * Get data from Crude.data
@@ -87,7 +93,7 @@ Crude.showAlert = function (type, msg)
         type = 'info';
 
     var template = _.template($('#crude_alertTemplate').html());
-    $('#crude_alertContainer').find('#alertList').append(template({ type: type, msg: msg }));
+    $('#crude_alertContainer').append(template({ type: type, msg: msg }));
 };
 
 /**
@@ -296,25 +302,30 @@ Crude.Models.Setup = Backbone.Model.extend(
         actionToTrigger: []
     },
 
-    getName: function()
+    getName: function ()
     {
         return this.get('name');
     },
 
-    config: function(attr)
+    config: function (attr)
     {
         var config = this.get('config');
         return config[attr];
     },
 
-    apiRoute: function()
+    apiRoute: function ()
     {
-        return this.config('routePrefix') + '/api/' + this.getName();
+        return '/' + this.config('routePrefix') + '/api/' + this.getName();
     },
 
     autocompleteRoute: function(url)
     {
-        return this.config('routePrefix') + '/autocomplete/' + url;
+        return '/' + this.config('routePrefix') + '/autocomplete/' + url;
+    },
+
+    filesRoute: function (url)
+    {
+        return '/' + this.config('routePrefix') + '/files/' + url;
     },
 
     containerId: function ()
@@ -436,26 +447,26 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     onActionEnd: function (setupName)
     {
-        if (this.setup.getName() == onActionEnd)
+        if (this.setup.getName() == setupName)
             this.slideUp();
     },
 
     onAction: function (setupName, model)
     {
-        if (this.setup.getName() == onActionEnd)
+        if (this.setup.getName() == setupName)
             this.setNewModel(model);
     },
 
     setNewModel: function (model)
     {
-        this.$el.slideDown(100);
+        this.$el.parent().slideDown(100);
         this.model = model;
         this.render();
     },
 
     slideUp: function ()
     {
-        this.$el.slideUp(100);
+        this.$el.parent().slideUp(100);
     },
 
     cancel: function ()
@@ -467,14 +478,12 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     {
         this.model
             .save()
-
             .done(function(response) {
                 if ('message' in  response)
                     Crude.showAlert('success', response.message);
 
                 this.setup.triggerNextAction(this.model);
             }.bind(this))
-
             .fail(function(response) {
                 var responseTextJSON = JSON.parse(response.responseText);
 
@@ -617,10 +626,10 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "/files-upload",
+            url: that.setup.filesRoute('upload'),
+            previewTemplate: $('#crude_dropzoneTemplate').html(),
             maxFiles: 10,
             parallelUploads: 10,
-            previewTemplate: $('#dropzoneTemplate').html(),
             uploadMultiple: true,
             autoProcessQueue: false,
             init: function()
@@ -657,7 +666,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                         $.ajax({
                             dataType: "json",
                             type: 'delete',
-                            url: '/delete-file',
+                            url: that.setup.filesRoute('delete'),
                             data: {
                                 file_path   : file.serverPath,
                                 file_log_id : file.fileLogId
@@ -685,7 +694,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                 });
             },
             sending: function(file, xhr, formData) {
-                formData.append("modelName", that.setup.getModelName());
+                formData.append("crudeName", that.setup.getName());
                 formData.append("modelId", that.model.id);
             },
             maxfilesexceeded: function(file) {
@@ -709,9 +718,9 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
         save: '#save',
         cancel: '#cancel',
         input: '.input',
-        'mapRegion': '#mapRegion',
-        'infoRegion': '#infoRegion',
-        'positionRegion': '#positionRegion',
+        'mapContainer': '#mapContainer',
+        'info': '#info',
+        'position': '#position',
         'search': '#search',
     },
 
@@ -726,7 +735,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     },
 
     initMap: function () {
-        this.map = new google.maps.Map(document.getElementById('mapRegion'), {
+        this.map = new google.maps.Map(document.getElementById('mapContainer'), {
             center: this.model.getLatLngObject(),
             zoom: 6
         });
@@ -750,17 +759,17 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
 
     showSelectedLocation: function()
     {
-        this.ui.positionRegion.html(this.model.get('lat') + ' x ' + this.model.get('lng'));
+        this.ui.position.html(this.model.get('lat') + ' x ' + this.model.get('lng'));
 
         var geocoder = new google.maps.Geocoder;
 
         geocoder.geocode({'location': this.model.getLatLngObject()}, function(results, status) {
-            this.ui.infoRegion.html('');
+            this.ui.info.html('');
 
             if (status !== google.maps.GeocoderStatus.OK)
                 return;
 
-            this.ui.infoRegion.html(results[0].formatted_address);
+            this.ui.info.html(results[0].formatted_address);
             this.model.set('address', results[0].formatted_address);
         }.bind(this));
     },
@@ -882,11 +891,11 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
     delete: function ()
     {
         $modal = Crude.showModal(
-            Crude.getTrans('admin.confirm_delete', 'title'),
-            Crude.getTrans('admin.confirm_delete', 'content'),
+            Crude.getTrans('crude.confirm_delete', 'title'),
+            Crude.getTrans('crude.confirm_delete', 'content'),
             {
-                cancel: Crude.getTrans('admin.confirm_delete', 'cancel'),
-                delete: Crude.getTrans('admin.confirm_delete', 'confirm')
+                cancel: Crude.getTrans('crude.confirm_delete', 'cancel'),
+                delete: Crude.getTrans('crude.confirm_delete', 'confirm')
             }
         );
 
@@ -942,6 +951,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     childView: Crude.Views.ListItem,
     emptyView: Crude.Views.ListEmpty,
     childViewContainer: '#childViewContainer',
+    tagName: 'table',
+    className: 'table table-hover',
 
     ui: {
         add: '#add',
@@ -1104,14 +1115,14 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
                     new Crude.Views.FormModule({ setup: setup })
                 );
 
-            if (this.setup.isActionAvailable('map'))
-                this.map.show(
-                    new Crude.Views.MapModule({ setup: setup })
-                );
-
             if (this.setup.isActionAvailable('file'))
                 this.file.show(
                     new Crude.Views.FileModule({ setup: setup })
+                );
+
+            if (this.setup.isActionAvailable('map'))
+                this.map.show(
+                    new Crude.Views.MapModule({ setup: setup })
                 );
 
             this.firstRender = false;
