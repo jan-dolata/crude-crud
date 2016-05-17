@@ -16,7 +16,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     initialize: function (options)
     {
-        this.moduleInitialize();
+        this.moduleInitialize(options);
     },
 
     moduleInitialize: function (options)
@@ -24,8 +24,8 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         this.setup = options.setup;
         this.model = this.setup.getNewModel();
 
-        this.listenTo(Global.vent, 'action_' + this.moduleName, this.onAction);
-        this.listenTo(Global.vent, 'action_end', this.onActionEnd);
+        this.listenTo(Crude.vent, 'action_' + this.moduleName, this.onAction);
+        this.listenTo(Crude.vent, 'action_end', this.onActionEnd);
     },
 
     serializeData: function ()
@@ -36,13 +36,13 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         };
     },
 
-    onActionEnd: funcion (setupName)
+    onActionEnd: function (setupName)
     {
         if (this.setup.getName() == onActionEnd)
             this.slideUp();
     },
 
-    onAction: funcion (setupName, model)
+    onAction: function (setupName, model)
     {
         if (this.setup.getName() == onActionEnd)
             this.setNewModel(model);

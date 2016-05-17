@@ -25,26 +25,28 @@ trait FromModelTrait
     }
 
     /**
-     * Get default crude setup
-     * @return CrudeSetup
+     * Prepare default crude setup
+     * @return self
      */
-    public function getModelCrudeSetup()
+    public function prepareModelCrudeSetup()
     {
         $crudeName = $this->getCalledClassName();
         $modelAttr = array_merge(['id'], $this->model->getFillable(), ['created_at']);
 
-        $crude = new CrudeSetup($crudeName, $modelAttr);
+        $crudeSetup = new CrudeSetup($crudeName, $modelAttr);
 
         if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeUpdateInterface)
-            $crude->lockEditOption();
+            $crudeSetup->lockEditOption();
 
         if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeStoreInterface)
-            $crude->lockAddOption();
+            $crudeSetup->lockAddOption();
 
         if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\CrudeDeleteInterface)
-            $crude->lockDeleteOption();
+            $crudeSetup->lockDeleteOption();
 
-        return $crude;
+        $this->crudeSetup = $crudeSetup;
+
+        return $this;
     }
 
     /**

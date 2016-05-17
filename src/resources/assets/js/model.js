@@ -81,14 +81,19 @@ Crude.Models.Setup = Backbone.Model.extend(
     defaults:
     {
         name: null,
+        title: '',
         column: [],
         addForm: [],
         editForm: [],
         inputType: [],
         actions: [],
         deleteOption: true,
-        actionToTrigger: [],
-        config: []
+        editOption: true,
+        addOption: true,
+        modelDefaults: [],
+        config: [],
+
+        actionToTrigger: []
     },
 
     getName: function()

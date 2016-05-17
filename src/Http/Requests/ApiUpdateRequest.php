@@ -23,7 +23,9 @@ class ApiUpdateRequest extends ApiRequest
         if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface)
             return [];
 
-        return $crude->getValidationRules();
+        $attr = $crude->getCrudeSetup()->getEditForm();
+
+        return $crude->getValidationRules($attr);
     }
 }
 

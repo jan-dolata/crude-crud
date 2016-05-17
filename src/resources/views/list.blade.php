@@ -16,13 +16,19 @@
     <% }) %>
     <td class="text-right">
         <%
-            var iconClassName = setup.config('iconClassName');
-            _.each(setup.get('actions'), function(action) {
-                if(setup.isActionAvailable(action)) { %>
-                    <span data-action="<%- action %>" class="action btn-icon <%- iconClassName[action] %> pointer"></span>
-            <% } }) %>
+            if(setup.get('editOption') && model.get('canBeEdited')) {
+                var iconClassName = setup.config('iconClassName');
+                _.each(setup.get('actions'), function(action) {
+                    if(setup.isActionAvailable(action)) {
+                        %>
+                        <span data-action="<%- action %>" class="action btn-icon <%- iconClassName[action] %> pointer"></span>
+                        <%
+                    }
+                })
+            }
+        %>
 
-        <% if(setup.get('deleteOption')) { %>
+        <% if(setup.get('deleteOption') && model.get('canBeRemoved')) { %>
             <span id="delete" class="fa fa-trash fa-lg pointer"></span>
         <% } %>
     </td>
@@ -56,7 +62,7 @@
             <% }) %>
 
             <th class="text-right">
-                <% if(setup.get('actions').length > 0) { %>
+                <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
                     <span id="add" class="fa fa-plus fa-lg pointer"></span>
                 <% } %>
             </th>

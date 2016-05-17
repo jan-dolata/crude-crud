@@ -1,6 +1,6 @@
 Crude.Views.FileModule = Crude.Views.Module.extend(
 {
-    template: '#fileTemplate',
+    template: '#crude_fileTemplate',
     moduleName: 'file',
 
     dropzone: '',

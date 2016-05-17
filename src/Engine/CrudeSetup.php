@@ -12,6 +12,12 @@ class CrudeSetup
     protected $name = '';
 
     /**
+     * Setup title
+     * @var string
+     */
+    protected $title = '';
+
+    /**
      * Model attributes on list
      * @var array
      */
@@ -108,6 +114,7 @@ class CrudeSetup
     {
         return [
             'name'          => $this->name,
+            'title'         => $this->title,
             'column'        => $this->column,
             'addForm'       => $this->addForm,
             'editForm'      => $this->editForm,
@@ -161,6 +168,18 @@ class CrudeSetup
     }
 
     /**
+     * Set title
+     * @param  string $title
+     * @return self
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
      * Set new column list
      * @param  array $column
      * @return self
@@ -206,6 +225,24 @@ class CrudeSetup
         $this->editForm = $editForm;
 
         return $this;
+    }
+
+    /**
+     * Get add form attributes list
+     * @return  array $addForm
+     */
+    public function getAddForm()
+    {
+        return $this->addForm;
+    }
+
+    /**
+     * Get edit form attributes list
+     * @return  array $editForm
+     */
+    public function getEditForm()
+    {
+        return $this->editForm;
     }
 
     public function lockEditOption()

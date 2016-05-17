@@ -1,4 +1,4 @@
-Crude.Views.Layout = Backbone.Marionette.Layout.extend(
+Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
 {
     template: '#crude_layoutTemplate',
     tagName:  'div',
@@ -8,6 +8,7 @@ Crude.Views.Layout = Backbone.Marionette.Layout.extend(
     title: '',
 
     regions: {
+        'list': '#listRegion',
         'form': '#formRegion',
         'map': '#mapRegion',
         'file': '#fileRegion'
@@ -21,32 +22,32 @@ Crude.Views.Layout = Backbone.Marionette.Layout.extend(
     serializeData: function()
     {
         return {
-            title: ''
+            title: this.setup.get('title')
         };
     },
 
     onRender: function()
     {
         if (this.firstRender) {
-            for (var key in this.view) {
-                var regionName = key + 'Region';
-                this.addRegion(regionName, '#' + regionName);
-                this.getRegion(regionName).show(this.view[key]);
-            }
+            var setup = this.setup;
+
+            this.list.show(
+                new Crude.Views.List({ setup: setup })
+            );
 
             if (this.setup.isActionAvailable('form'))
-                this.regions.form.show(
-                    new Global.Views.FormModule({ setup: this.setup })
+                this.form.show(
+                    new Crude.Views.FormModule({ setup: setup })
                 );
 
             if (this.setup.isActionAvailable('map'))
-                this.regions.map.show(
-                    new Global.Views.MapModule({ setup: this.setup })
+                this.map.show(
+                    new Crude.Views.MapModule({ setup: setup })
                 );
 
             if (this.setup.isActionAvailable('file'))
-                this.regions.file.show(
-                    new Global.Views.FileModule({ setup: this.setup })
+                this.file.show(
+                    new Crude.Views.FileModule({ setup: setup })
                 );
 
             this.firstRender = false;

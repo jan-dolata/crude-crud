@@ -281,14 +281,19 @@ Crude.Models.Setup = Backbone.Model.extend(
     defaults:
     {
         name: null,
+        title: '',
         column: [],
         addForm: [],
         editForm: [],
         inputType: [],
         actions: [],
         deleteOption: true,
-        actionToTrigger: [],
-        config: []
+        editOption: true,
+        addOption: true,
+        modelDefaults: [],
+        config: [],
+
+        actionToTrigger: []
     },
 
     getName: function()
@@ -409,7 +414,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     initialize: function (options)
     {
-        this.moduleInitialize();
+        this.moduleInitialize(options);
     },
 
     moduleInitialize: function (options)
@@ -417,8 +422,8 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         this.setup = options.setup;
         this.model = this.setup.getNewModel();
 
-        this.listenTo(Global.vent, 'action_' + this.moduleName, this.onAction);
-        this.listenTo(Global.vent, 'action_end', this.onActionEnd);
+        this.listenTo(Crude.vent, 'action_' + this.moduleName, this.onAction);
+        this.listenTo(Crude.vent, 'action_end', this.onActionEnd);
     },
 
     serializeData: function ()
@@ -429,13 +434,13 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         };
     },
 
-    onActionEnd: funcion (setupName)
+    onActionEnd: function (setupName)
     {
         if (this.setup.getName() == onActionEnd)
             this.slideUp();
     },
 
-    onAction: funcion (setupName, model)
+    onAction: function (setupName, model)
     {
         if (this.setup.getName() == onActionEnd)
             this.setNewModel(model);
@@ -485,9 +490,9 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     }
 });
 
-Global.Views.FormModule = Crude.Views.Module.extend(
+Crude.Views.FormModule = Crude.Views.Module.extend(
 {
-    template: '#formTemplate',
+    template: '#crude_formTemplate',
     moduleName: 'form',
 
     ui: {
@@ -587,7 +592,7 @@ Global.Views.FormModule = Crude.Views.Module.extend(
 
 Crude.Views.FileModule = Crude.Views.Module.extend(
 {
-    template: '#fileTemplate',
+    template: '#crude_fileTemplate',
     moduleName: 'file',
 
     dropzone: '',
@@ -691,9 +696,9 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
     },
 });
 
-Global.Views.MapModule = Crude.Views.Module.extend(
+Crude.Views.MapModule = Crude.Views.Module.extend(
 {
-    template: '#mapTemplate',
+    template: '#crude_mapTemplate',
     moduleName: 'map',
 
     map: null,
@@ -1057,7 +1062,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     },
 });
 
-Crude.Views.Layout = Backbone.Marionette.Layout.extend(
+Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
 {
     template: '#crude_layoutTemplate',
     tagName:  'div',
@@ -1067,6 +1072,7 @@ Crude.Views.Layout = Backbone.Marionette.Layout.extend(
     title: '',
 
     regions: {
+        'list': '#listRegion',
         'form': '#formRegion',
         'map': '#mapRegion',
         'file': '#fileRegion'
@@ -1080,32 +1086,32 @@ Crude.Views.Layout = Backbone.Marionette.Layout.extend(
     serializeData: function()
     {
         return {
-            title: ''
+            title: this.setup.get('title')
         };
     },
 
     onRender: function()
     {
         if (this.firstRender) {
-            for (var key in this.view) {
-                var regionName = key + 'Region';
-                this.addRegion(regionName, '#' + regionName);
-                this.getRegion(regionName).show(this.view[key]);
-            }
+            var setup = this.setup;
+
+            this.list.show(
+                new Crude.Views.List({ setup: setup })
+            );
 
             if (this.setup.isActionAvailable('form'))
-                this.regions.form.show(
-                    new Global.Views.FormModule({ setup: this.setup })
+                this.form.show(
+                    new Crude.Views.FormModule({ setup: setup })
                 );
 
             if (this.setup.isActionAvailable('map'))
-                this.regions.map.show(
-                    new Global.Views.MapModule({ setup: this.setup })
+                this.map.show(
+                    new Crude.Views.MapModule({ setup: setup })
                 );
 
             if (this.setup.isActionAvailable('file'))
-                this.regions.file.show(
-                    new Global.Views.FileModule({ setup: this.setup })
+                this.file.show(
+                    new Crude.Views.FileModule({ setup: setup })
                 );
 
             this.firstRender = false;

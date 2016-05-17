@@ -6,6 +6,11 @@ use JanDolata\CrudeCRUD\Engine\CrudeSetup;
 
 abstract class Crude
 {
+    /**
+     * Crude Setup instance
+     * @var CrudeSetup
+     */
+    protected $crudeSetup;
 
     /**
      * Get crude setup
@@ -13,10 +18,26 @@ abstract class Crude
      */
     public function getCrudeSetup()
     {
-        if (method_exists($this, 'getModelCrudeSetup'))
-            return $this->getModelCrudeSetup();
+        return $this->crudeSetup;
+    }
 
-        return new CrudeSetup($this->getCalledClassName(), []);
+    public function getCrudeSetupData()
+    {
+        return $this->crudeSetup->getJSData();
+    }
+
+    /**
+     * Prepare default crude setup
+     * @return self
+     */
+    public function prepareCrudeSetup()
+    {
+        if (method_exists($this, 'prepareModelCrudeSetup'))
+            return $this->prepareModelCrudeSetup();
+
+        $this->crudeSetup = new CrudeSetup($this->getCalledClassName(), []);
+
+        return $this;
     }
 
     /**
