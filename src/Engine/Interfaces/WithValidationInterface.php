@@ -6,5 +6,4 @@ interface WithValidationInterface
 {
     public function getValidationRules($attrList = []);
     public function setValidationRules($validationRules);
-
 }

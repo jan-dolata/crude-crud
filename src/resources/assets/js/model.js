@@ -119,7 +119,7 @@ Crude.Models.Setup = Backbone.Model.extend(
 
     filesRoute: function (url)
     {
-        return '/' + this.config('routePrefix') + '/files/' + url;
+        return '/' + this.config('routePrefix') + '/file/' + url;
     },
 
     containerId: function ()

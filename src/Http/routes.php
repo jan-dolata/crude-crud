@@ -22,9 +22,9 @@ Route::group($group, function () {
     });
 
     // File
-    Route::group(['prefix' => 'files'], function() {
-        Route::post('upload', 'FilesController@upload');
-        Route::post('delete', 'FilesController@delete');
+    Route::group(['prefix' => 'file'], function() {
+        Route::post('upload', 'FileController@upload');
+        Route::post('delete', 'FileController@delete');
     });
 
 });

@@ -39,6 +39,10 @@ class CrudeCRUDServiceProvider extends ServiceProvider
             __DIR__.'/public/' => public_path('vendor/jan-dolata/crude-crud')
         ], 'assets');
 
+        $this->publishes([
+            __DIR__.'/database/migrations/2016_05_04_091202_create_file_logs_table.php' => app_path('../database/migrations/2016_05_04_091202_create_file_logs_table.php')
+        ], 'files');
+
         // use the vendor configuration file as fallback
         $this->mergeConfigFrom(
             __DIR__.'/config/crude.php', 'crude'
@@ -79,8 +83,10 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         $loader->alias('CrudeDeleteInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface');
         $loader->alias('CrudeStoreInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface');
         $loader->alias('CrudeWithValidationInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface');
+        $loader->alias('CrudeWithFileInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithFileInterface');
         $loader->alias('CrudeFromModelTrait', 'JanDolata\CrudeCRUD\Engine\Traits\FromModelTrait');
         $loader->alias('CrudeWithValidationTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithValidationTrait');
+        $loader->alias('CrudeWithFileTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithFileTrait');
         $loader->alias('CrudeCrudeSetup', 'JanDolata\CrudeCRUD\Engine\CrudeSetup');
     }
 

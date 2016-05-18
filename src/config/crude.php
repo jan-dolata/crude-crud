@@ -48,14 +48,9 @@ return [
     ],
 
     /**
-     * Upload folder name in storage/app
+     * Upload path in storage/app
      * @var string
      */
     'uploadFolder' => 'upload',
 
-    /**
-     * File log model namespace
-     * @var string
-     */
-    'fileLogModelNamespace' => 'App\Engine\Models\FileLog',
 ];
