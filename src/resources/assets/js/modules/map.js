@@ -28,7 +28,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     },
 
     initMap: function () {
-        this.map = new google.maps.Map(document.getElementById('mapContainer'), {
+        this.map = new google.maps.Map(this.ui.mapContainer[0], {
             center: this.model.getLatLngObject(),
             zoom: 6
         });

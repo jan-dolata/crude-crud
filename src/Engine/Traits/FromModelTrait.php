@@ -162,6 +162,8 @@ trait FromModelTrait
      */
     public function store($attributes)
     {
+        $attributes = $this->filterWithForm($attributes, $this->crudeSetup->getAddForm());
+
         $model = $this->model->create($attributes);
 
         return $this->getById($model->id);
@@ -175,6 +177,8 @@ trait FromModelTrait
      */
     public function updateById($id, $attributes)
     {
+        $attributes = $this->filterWithForm($attributes, $this->crudeSetup->getEditForm());
+
         $model = $this->model->find($id);
 
         if (empty($model))
@@ -183,6 +187,17 @@ trait FromModelTrait
         $model->update($attributes);
 
         return $model;
+    }
+
+    private function filterWithForm($attr, $setupAttr)
+    {
+        return array_filter(
+            $attr,
+            function ($key) use ($setupAttr) {
+                return in_array($key, $setupAttr);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
     }
 
     /**
