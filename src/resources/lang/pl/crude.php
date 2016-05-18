@@ -31,5 +31,6 @@ return [
         'textarea' => 'długi tekst',
         'autocomplete' => 'autouzupełnianie',
         'datetime' => 'data i godzina',
+        'select' => 'lista'
     ],
 ];

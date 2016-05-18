@@ -73,6 +73,12 @@ class CrudeSetup
     protected $editOption = true;
 
     /**
+     * Data to select field
+     * @var array
+     */
+    protected $selectOptions = [];
+
+    /**
      * Construct
      * @param  string $name
      * @param  array  $modelAttr
@@ -124,9 +130,10 @@ class CrudeSetup
             'editOption'    => $this->editOption,
             'addOption'     => $this->addOption,
             'modelDefaults' => $this->modelDefaults,
+            'selectOptions' => $this->selectOptions,
 
             'config' => [
-                'routePrefix' => config('crude.routePrefix'),
+                'routePrefix'    => config('crude.routePrefix'),
                 'numRowsOptions' => config('crude.numRowsOptions'),
                 'iconClassName'  => config('crude.iconClassName')
             ],
@@ -245,6 +252,17 @@ class CrudeSetup
         return $this->editForm;
     }
 
+    public function setSelectOptions($attr, $options = null)
+    {
+        $optionsList = is_array($attr)
+            ? $attr
+            : [$attr => $options];
+
+        $this->selectOptions = array_merge($this->selectOptions, $optionsList);
+
+        return $this;
+    }
+
     public function lockEditOption()
     {
         $this->editOption = false;
@@ -268,18 +286,18 @@ class CrudeSetup
         return $this;
     }
 
-    public function setFormAction()
+    private function setFormAction()
     {
         array_push($this->actions, 'form');
     }
 
-    public function setMapAction()
+    private function setMapAction()
     {
         array_push($this->actions, 'map');
 
         $this->modelDefaults = array_merge($this->modelDefaults, [
-            'lat' => 52.03,
-            'lng' => 19.27,
+            'lat' => config('crude.mapDefaults')['lat'],
+            'lng' => config('crude.mapDefaults')['lng'],
             'address' => ''
         ]);
 
@@ -287,7 +305,7 @@ class CrudeSetup
         $this->editForm = array_diff($this->addForm, ['lat', 'lng', 'address']);
     }
 
-    public function setFileAction()
+    private function setFileAction()
     {
         array_push($this->actions, 'file');
 

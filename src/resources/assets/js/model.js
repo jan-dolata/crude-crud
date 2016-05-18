@@ -91,6 +91,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         editOption: true,
         addOption: true,
         modelDefaults: [],
+        selectOptions: [],
         config: [],
 
         actionToTrigger: []
@@ -130,9 +131,11 @@ Crude.Models.Setup = Backbone.Model.extend(
     getNewCollection: function ()
     {
         var apiRoute = this.apiRoute();
+        var defaults = this.get('modelDefaults');
 
         var model = Crude.Models.Base.extend({
-            urlRoot: apiRoute
+            urlRoot: apiRoute,
+            defaults: defaults
         });
         var collection = Crude.Collections.Base.extend({
             model: model,
@@ -145,9 +148,11 @@ Crude.Models.Setup = Backbone.Model.extend(
     getNewModel: function ()
     {
         var apiRoute = this.apiRoute();
+        var defaults = this.get('modelDefaults');
 
         var model = Crude.Models.Base.extend({
-            urlRoot: apiRoute
+            urlRoot: apiRoute,
+            defaults: defaults
         });
 
         return new model;

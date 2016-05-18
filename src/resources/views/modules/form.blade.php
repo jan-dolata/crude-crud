@@ -13,7 +13,7 @@
             </div>
 
             <div class="col-sm-8">
-                <%= Crude.renderInput(setup.inputType[attr], attr, model) %>
+                <%= Crude.renderInput(setup, attr, model) %>
             </div>
         </div>
     <% }); %>

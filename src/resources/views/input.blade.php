@@ -11,7 +11,7 @@
 </script>
 
 <script type="text/template" id="crude_infoInputTemplate">
-    <input readonly class="form-control" value="<%- model[attr] %>" />
+    <input type="text" readonly class="form-control" value="<%- model[attr] %>" />
 </script>
 
 <script type="text/template" id="crude_checkboxInputTemplate">
@@ -32,4 +32,16 @@
             </button>
         </div>
     </div>
+</script>
+
+<script type="text/template" id="crude_selectInputTemplate">
+    <select type="select" class="input form-control" data-attr="<%- attr %>" placeholder="<%- Crude.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.select') }}">
+        <% for (var i in setup.selectOptions[attr]) { %>
+            <% var option = setup.selectOptions[attr][i] %>
+            <option value="<%- option.id %>" <%- model[attr] == option.id ? 'select' : '' %>>
+                <%- option.label %>
+            </option>
+        <% } %>
+    </select>
+
 </script>

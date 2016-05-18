@@ -38,6 +38,15 @@ return [
     ],
 
     /**
+     * Map defaults
+     * @var array
+     */
+    'mapDefaults' => [
+        'lat' => 52.03,
+        'lng' => 19.27
+    ],
+
+    /**
      * Number of rows on list, select option
      * @var array
      */
