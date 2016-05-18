@@ -7,7 +7,10 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-[TOC]
+# Table of content
+- [Install](#install)
+- [Usage](#usage)
+- [Api](#api)
 
 ## Install
 
