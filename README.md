@@ -32,11 +32,123 @@ Check config file `config/crude.php`.
 
 ## Usage
 
+create dir
+`app/Engine/Crude`
 
+create model with migration, if model is related to files include
+
+```$table->text('files');```
+
+if model is related to map
+
+```$table->double('lat', 17, 14);
+$table->double('lng', 17, 14);
+$table->string('address');```
+
+in app/Engine/Crude directory create class for list
+
+```<?php
+
+namespace App\Engine\Crude;
+
+use Crude;
+use CrudeListInterface;
+use CrudeFromModelTrait;
+
+class ListName extends Crude implements
+    CrudeListInterface
+{
+
+    use CrudeFromModelTrait;
+
+    public function __construct()
+    {
+        $this->setModel(new \App\Engine\Models\ModelName);
+
+        $this->prepareCrudeSetup();
+    }
+
+}```
+
+in controller action
+```
+return view('viewName', [
+    'crudeSetup' => [(new \App\Engine\Crude\ListName)->getCrudeSetupData()]
+]);```
+
+in view
+```@include('CrudeCRUD::start')```
+
+it works.
+
+attribute labels translation
+=============
+
+You can change attribute names in resources/lang files
+
+``` resources/lang/en/validation.php
+'attributes' => [
+    'id' => 'id attribute name'
+],
+```
+
+to add ability to store implement interface
+
+```CrudeStoreInterface```
+
+setting title, types and columns
+
+```
+$this->crudeSetup
+    ->setTitle(trans('titles.admin_district'))
+    ->setTypes(['province' => 'autocomplete'])
+    ->setColumn(['id', 'name', 'province', 'points', 'created_at'])
+    ;
+```
+
+to turn on validation implement interface
+
+```CrudeWithValidationInterface```
+
+and use trait
+```use CrudeWithValidationTrait;```
+
+define validation rules
+```
+$this->setValidationRules([
+    'name' => 'required',
+    'province' => 'required'
+]);
+```
+
+to update implement interface
+
+```CrudeUpdateInterface```
+
+to delete interface
+
+```CrudeDeleteInterface```
+
+to join data to list or add aliases to attribute names
+
+```
+public function prepareQuery()
+{
+    return $this->model
+        ->select(
+            'districts.id',
+            'districts.name',
+            'districts.province',
+            'districts.points',
+            'districts.created_at',
+            'districts.updated_at'
+        );
+}
+```
 
 ## Api
 
-GET `routePrefix/api/{crudeName}` 
+GET `routePrefix/api/{crudeName}`
 
 
 

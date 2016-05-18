@@ -33,7 +33,7 @@ elixir(function(mix) {
         'js/modules/map.js',
         'js/list.js',
         'js/layout.js',
-        'js/strat.js',
+        'js/start.js',
     ], 'src/public/js/app.js', assets);
 
 });
