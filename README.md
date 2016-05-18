@@ -168,7 +168,7 @@ GET `'routePrefix'/api/{crudeName}`
 
 with
 
-```json
+```
 {
     page:           1,      // integer, page
     numRows:        10,     // integer, number of rows on page
@@ -181,7 +181,7 @@ with
 
 response
 
-```json
+```
 {
     "data":
     {
@@ -212,7 +212,7 @@ PUT `'routePrefix'/api/{crudeName}/{id}` with model attributes to update
 
 response
 
-```json
+```
 {
     "data":
     {
@@ -224,7 +224,7 @@ response
 
 or response with validation errors
 
-```json
+```
 {
     "attrName1":    ["error 1", "error 2" ...],
     "attrName2":    [...],
@@ -238,7 +238,7 @@ DELETE `'routePrefix'/api/{crudeName}/{id}`
 
 response
 
-```json
+```
 {
     "data": {
         "message":  'Item has been removed.'
@@ -252,7 +252,7 @@ GET `'routePrefix'/autocomplete/get/{crudeName}/{attr}`
 
 with
 
-```json
+```
 {
     term: '' // string, part of label
 }
@@ -260,7 +260,7 @@ with
 
 response
 
-```json
+```
 {
     0: {
         id: "1",            // mixed, first value id
@@ -277,17 +277,17 @@ POST `'routePrefix'/autocomplete/label`
 
 with
 
-```json
+```
 {
-    crudeName:  'name',     # string
-    attr:       'attrName', # string, attribute name
-    value:      '1'         # string
+    crudeName:  'name',     // string
+    attr:       'attrName', // string, attribute name
+    value:      '1'         // string
 }
 ```
 
 return
 
-```json
+```
 'label' // 'string', label
 ```
 
