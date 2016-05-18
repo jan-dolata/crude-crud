@@ -14,7 +14,7 @@
     "underscore": "^1.8.3",
     "underscore.string": "^3.3.4"
   },
-  "version": "1.0.7",
+  "version": "1.0.8",
   "scripts": {
     "version": "git add package.json",
     "postversion": "git push && git push --tags"
