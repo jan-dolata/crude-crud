@@ -186,7 +186,7 @@ trait FromModelTrait
 
         $model->update($attributes);
 
-        return $model;
+        return $this->getById($model->id);
     }
 
     private function filterWithForm($attr, $setupAttr)
