@@ -279,9 +279,9 @@ with
 
 ```json
 {
-    crudeName:  'name',     // string
-    attr:       'attrName', // string, attribute name
-    value:      '1'         // string
+    crudeName:  'name',     # string
+    attr:       'attrName', # string, attribute name
+    value:      '1'         # string
 }
 ```
 
