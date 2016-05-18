@@ -37,17 +37,22 @@ create dir
 
 create model with migration, if model is related to files include
 
-```$table->text('files');```
+```php
+$table->text('files');
+```
 
 if model is related to map
 
-```$table->double('lat', 17, 14);
+```php
+$table->double('lat', 17, 14);
 $table->double('lng', 17, 14);
-$table->string('address');```
+$table->string('address');
+```
 
 in app/Engine/Crude directory create class for list
 
-```<?php
+```php
+<?php
 
 namespace App\Engine\Crude;
 
@@ -68,25 +73,30 @@ class ListName extends Crude implements
         $this->prepareCrudeSetup();
     }
 
-}```
+}
+```
 
 in controller action
-```
+
+```php
 return view('viewName', [
     'crudeSetup' => [(new \App\Engine\Crude\ListName)->getCrudeSetupData()]
-]);```
+]);
+```
 
 in view
-```@include('CrudeCRUD::start')```
+
+```
+@include('CrudeCRUD::start')
+```
 
 it works.
 
-attribute labels translation
 =============
 
-You can change attribute names in resources/lang files
+You can change attribute names in `resources/lang/en/validation.php` files
 
-``` resources/lang/en/validation.php
+```php
 'attributes' => [
     'id' => 'id attribute name'
 ],
@@ -94,7 +104,7 @@ You can change attribute names in resources/lang files
 
 to add ability to store implement interface
 
-```CrudeStoreInterface```
+`CrudeStoreInterface`
 
 setting title, types and columns
 
@@ -108,13 +118,17 @@ $this->crudeSetup
 
 to turn on validation implement interface
 
-```CrudeWithValidationInterface```
+`CrudeWithValidationInterface`
 
 and use trait
-```use CrudeWithValidationTrait;```
+
+```php
+use CrudeWithValidationTrait;
+```
 
 define validation rules
-```
+
+```php
 $this->setValidationRules([
     'name' => 'required',
     'province' => 'required'
@@ -123,15 +137,15 @@ $this->setValidationRules([
 
 to update implement interface
 
-```CrudeUpdateInterface```
+`CrudeUpdateInterface`
 
 to delete interface
 
-```CrudeDeleteInterface```
+`CrudeDeleteInterface`
 
 to join data to list or add aliases to attribute names
 
-```
+```php
 public function prepareQuery()
 {
     return $this->model
@@ -148,10 +162,134 @@ public function prepareQuery()
 
 ## Api
 
-GET `routePrefix/api/{crudeName}`
+### Get collection
+
+GET `'routePrefix'/api/{crudeName}`
+
+with
+
+```json
+{
+    page:           1,      // integer, page
+    numRows:        10,     // integer, number of rows on page
+    sortAttr:       'id',   // string, name of attribute
+    sortOrder:      'asc',  // string, 'asc' / 'desc'
+    searchAttr:     'id',   // string, name of attribute
+    searchValue:    ''      // string, part of model value
+}
+```
+
+response
+
+```json
+{
+    "data":
+    {
+        "collection": [],
+        "pagination": {
+            "page":     1,
+            "numRows":  20,
+            "numPages": 1,      // number of all pages
+            "count":    1       // number of all rows
+        },
+        "sort": {
+            "attr":     "id",
+            "order":    "asc"
+        },
+        "search": {
+            "attr":     "id",
+            "value":    ""
+        }
+    }
+}
+```
 
 
+### Store / Update
 
+POST `'routePrefix'/api/{crudeName}` with new model attributes to store
+PUT `'routePrefix'/api/{crudeName}/{id}` with model attributes to update
+
+response
+
+```json
+{
+    "data":
+    {
+        "model":    {...},  // object, all new model attributes
+        "message":  ' '
+    }
+}
+```
+
+or response with validation errors
+
+```json
+{
+    "attrName1":    ["error 1", "error 2" ...],
+    "attrName2":    [...],
+    ...
+}
+```
+
+### Desroy
+
+DELETE `'routePrefix'/api/{crudeName}/{id}`
+
+response
+
+```json
+{
+    "data": {
+        "message":  'Item has been removed.'
+    }
+}
+```
+
+### Autocomplete
+
+GET `'routePrefix'/autocomplete/get/{crudeName}/{attr}`
+
+with
+
+```json
+{
+    term: '' // string, part of label
+}
+```
+
+response
+
+```json
+{
+    0: {
+        id: "1",            // mixed, first value id
+        label: "Label 1"    // string, first value label
+    },
+    1: {
+        ...
+    }
+    ...
+}
+```
+
+POST `'routePrefix'/autocomplete/label`
+
+with
+
+```json
+{
+    crudeName:  'name',     // string
+    attr:       'attrName', // string, attribute name
+    value:      '1'         // string
+}
+```
+
+return
+
+```json
+'label' // 'string', label
+```
 
 ## Change log
 
