@@ -21,6 +21,12 @@ return [
     'middleware' => ['web', 'auth'],
 
     /**
+     * Upload path in storage/app
+     * @var string
+     */
+    'uploadFolder' => 'upload',
+
+    /**
      * Defaults filters
      * @var array
      */
@@ -46,11 +52,5 @@ return [
         'map' => 'fa fa-map-marker fa-lg',
         'file' => 'fa fa-file fa-lg'
     ],
-
-    /**
-     * Upload path in storage/app
-     * @var string
-     */
-    'uploadFolder' => 'upload',
 
 ];
