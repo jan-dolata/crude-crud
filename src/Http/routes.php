@@ -24,7 +24,7 @@ Route::group($group, function () {
     // File
     Route::group(['prefix' => 'file'], function() {
         Route::post('upload', 'FileController@upload');
-        Route::post('delete', 'FileController@delete');
+        Route::delete('delete', 'FileController@delete');
     });
 
 });
