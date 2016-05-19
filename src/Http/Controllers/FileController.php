@@ -49,7 +49,7 @@ class FileController extends Controller
     {
         $log = (new FileLog)->findOrFail($request->input('file_log_id'));
         $crude = CrudeInstance::get($log->model_name);
-        $model = $crude->deleteFileById($log);
+        $model = $crude->deleteFileByFileLog($log);
 
         return ['model' => $model];
     }

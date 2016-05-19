@@ -73,7 +73,6 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                             },
                             success: function(response){
                                 that.model = response.model;
-                                that.setup.triggerNextAction(that.model);
                             }
                         });
                     }

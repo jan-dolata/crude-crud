@@ -74,7 +74,7 @@ trait WithFileTrait
 
         $log->delete();
 
-        return $this->updateById($id, ['files' => $updatedFiles]);
+        return $this->updateById($log->model_id, ['files' => $updatedFiles]);
     }
 
     /**
