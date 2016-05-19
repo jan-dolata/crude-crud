@@ -13,13 +13,12 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
         uploadFileDropzone: '#upload_file_dropzone'
     },
 
-    save: function()
-    {
-        this.dropzone.processQueue();
-    },
+    save: function() { },
 
     onRender: function()
     {
+        this.ui.save.hide(100);
+
         var that = this;
         this.ui.uploadFileDropzone.dropzone({
             headers: {
@@ -30,7 +29,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
             maxFiles: 10,
             parallelUploads: 10,
             uploadMultiple: true,
-            autoProcessQueue: false,
+            autoProcessQueue: true,
             init: function()
             {
                 that.dropzone = this;
@@ -42,7 +41,8 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                         that.errorMessages = response.errors.file;
                         return;
                     }
-                    that.setup.triggerNextAction(that.model);
+
+                    Crude.vent.trigger('action_update', that.setup.getName());
                 });
 
                 this.on("queuecomplete", function()
@@ -57,7 +57,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                         return;
                     }
 
-                    that.slideUp();
+                    Crude.vent.trigger('action_update', that.setup.getName());
                 });
 
                 this.on("removedfile", function(file) {
@@ -73,6 +73,8 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                             },
                             success: function(response){
                                 that.model = response.model;
+
+                                Crude.vent.trigger('action_update', that.setup.getName());
                             }
                         });
                     }
