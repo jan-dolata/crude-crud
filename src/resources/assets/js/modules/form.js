@@ -48,10 +48,10 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
                 }
             );
 
-            var updateAutocompleteValues = function (el, valueEl)
+            var updateAutocompleteValues = function (label, id)
             {
-                $el.val(el);
-                $valueEl.val(valueEl);
+                $el.val(label);
+                $valueEl.val(id);
                 $valueEl.trigger('change');
                 return;
             };
