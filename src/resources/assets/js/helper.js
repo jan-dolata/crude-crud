@@ -169,3 +169,23 @@ Crude.renderInput = function (setup, attr, model)
         model: model
     });
 };
+
+Crude.renderCell = function (setup, attr, model)
+{
+    var defaultName = '#crude_textColumFormatTemplate';
+    var format = setup.getColumnFormat(attr);
+    var templateName = '#crude_' + format.type + 'ColumnFormatTemplate';
+
+    var templateScript = $(templateName);
+    if (templateScript.lenght == 0)
+        templateScript = $(defaultName);
+
+    var template = _.template($(templateName).html());
+
+    return template({
+        setup: setup,
+        format: format,
+        attr: attr,
+        model: model
+    });
+};

@@ -3,13 +3,7 @@
         <% if(! _.isArray(attr)) attr = [attr]; %>
         <td>
             <% _.each(attr, function(a) { %>
-                <% value = model.get(a) %>
-                <% if (_.isObject(value)) { %>
-                    <%- value.length %>
-                <% } else { %>
-                    <%- String(value).substring(0, 40) %>
-                    <%= String(value).length > 40 ? '...' : '' %>
-                <% } %>
+                <%= Crude.renderCell(setup, a, model) %>
                 <br>
             <% }); %>
         </td>
@@ -32,6 +26,22 @@
             <span id="delete" class="fa fa-trash fa-lg pointer"></span>
         <% } %>
     </td>
+</script>
+
+<script type="text/template" id="crude_textColumnFormatTemplate">
+    <% value = model.get(attr) %>
+    <% if (_.isObject(value)) { %>
+        <%- value.length %>
+    <% } else { %>
+        <%- String(value).substring(0, 40) %>
+        <%= String(value).length > 40 ? '...' : '' %>
+    <% } %>
+</script>
+
+<script type="text/template" id="crude_linkColumnFormatTemplate">
+    <a href="<%- format.url %>/<%- model.get(format.attr) %>">
+        <%- model.get(attr) %>
+    </a>
 </script>
 
 <script type="text/template" id="crude_listEmptyTemplate">

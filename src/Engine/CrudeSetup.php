@@ -24,6 +24,13 @@ class CrudeSetup
     protected $column = [];
 
     /**
+     * Model attributes format on list
+     * ['name' => ['type' => 'link', 'url' => route(), 'attribute' => 'name']]
+     * @var array
+     */
+    protected $columnFormat = [];
+
+    /**
      * Type of add / edit form inputs
      * ['name_of_attr' => 'input_type']
      * @var array
@@ -122,6 +129,7 @@ class CrudeSetup
             'name'          => $this->name,
             'title'         => $this->title,
             'column'        => $this->column,
+            'columnFormat'  => $this->columnFormat,
             'addForm'       => $this->addForm,
             'editForm'      => $this->editForm,
             'inputType'     => $this->inputType,
@@ -152,6 +160,22 @@ class CrudeSetup
             $this->inputType = array_merge($this->inputType, $attr);
         else
             $this->inputType[$attr] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Set new or change input types
+     * @param  string|array $attr
+     * @param  string $format
+     * @return self
+     */
+    public function setColumnFormat($attr, $format = null)
+    {
+        if (is_array($attr))
+            $this->columnFormat = array_merge($this->columnFormat, $attr);
+        else
+            $this->columnFormat[$attr] = $format;
 
         return $this;
     }
