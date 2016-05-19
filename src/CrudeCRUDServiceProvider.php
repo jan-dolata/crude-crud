@@ -37,7 +37,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/public/' => public_path('vendor/jan-dolata/crude-crud')
-        ], 'assets');
+        ], 'tg_assets');
 
         $this->publishes([
             __DIR__.'/database/migrations/2016_05_04_091202_create_file_logs_table.php' => app_path('../database/migrations/2016_05_04_091202_create_file_logs_table.php')

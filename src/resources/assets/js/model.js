@@ -83,6 +83,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         name: null,
         title: '',
         column: [],
+        columnFormat: [],
         addForm: [],
         editForm: [],
         inputType: [],
@@ -126,6 +127,15 @@ Crude.Models.Setup = Backbone.Model.extend(
     containerId: function ()
     {
         return 'crudeSetup_' + this.getName();
+    },
+
+    getColumnFormat: function(attr)
+    {
+        var columnFormat = this.get('columnFormat');
+
+        return attr in columnFormat
+            ? columnFormat[attr]
+            : {type: 'text'};
     },
 
     getNewCollection: function ()
