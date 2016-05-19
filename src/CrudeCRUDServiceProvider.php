@@ -35,8 +35,11 @@ class CrudeCRUDServiceProvider extends ServiceProvider
             __DIR__.'/config/crude.php' => config_path('crude.php')
         ], 'config');
 
+        $directory = public_path('vendor/jan-dolata/crude-crud');
+        \File::deleteDirectory($directory);
+
         $this->publishes([
-            __DIR__.'/public/' => public_path('vendor/jan-dolata/crude-crud')
+            __DIR__.'/public/' => $directory
         ], 'assets');
 
         $this->publishes([
