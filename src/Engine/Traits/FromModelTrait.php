@@ -42,6 +42,9 @@ trait FromModelTrait
         $crudeName = $this->getCalledClassName();
         $modelAttr = array_merge(['id'], $this->model->getFillable(), ['created_at']);
 
+        foreach ($modelAttr as $attr)
+            $this->scope[$attr] = $this->model->getTable() . '.' . $attr;
+
         $crudeSetup = new CrudeSetup($crudeName, $modelAttr);
 
         if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface)
@@ -113,15 +116,15 @@ trait FromModelTrait
     {
         $toSkip = ($page - 1) * $numRows;
 
-        $collection = $this
+        $query = $this
             ->prepareQuery()
-            ->where($this->model->getTable() . '.' . $searchAttr, 'like', '%' . $searchValue . '%' )
             ->orderBy($sortAttr, $sortOrder)
             ->skip($toSkip)
-            ->take($numRows)
-            ->get();
+            ->take($numRows);
 
-        return $this->formatCollection($collection);
+        $query = $this->_filter($query, $searchAttr, $searchValue);
+
+        return $this->formatCollection($query->get());
     }
 
     /**
@@ -132,10 +135,17 @@ trait FromModelTrait
      */
     public function countFiltered($searchAttr, $searchValue)
     {
-        return $this
-            ->prepareQuery()
-            ->where($this->model->getTable() . '.' . $searchAttr, 'like', '%' . $searchValue . '%' )
-            ->count();
+        $query = $this->prepareQuery();
+        $query = $this->_filter($query, $searchAttr, $searchValue);
+        return $query->count();
+    }
+
+    private function _filter($query, $attr, $value)
+    {
+        return isset($this->scope[$attr])
+            ? $query->where($this->scope[$attr], 'like', '%' . $value . '%' )
+            : $query;
+
     }
 
     /**

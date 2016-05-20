@@ -13,6 +13,12 @@ abstract class Crude
     protected $crudeSetup;
 
     /**
+     * Selected attributes
+     * @var array
+     */
+    protected $scope = [];
+
+    /**
      * Get crude setup
      * @return CrudeSetup
      */
