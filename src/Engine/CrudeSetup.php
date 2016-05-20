@@ -278,6 +278,13 @@ class CrudeSetup
         return $this;
     }
 
+    public function setAddAndEditForm($form)
+    {
+        return $this
+            ->setAddForm($form)
+            ->setEditForm($form);
+    }
+
     /**
      * Get add form attributes list
      * @return  array $addForm
