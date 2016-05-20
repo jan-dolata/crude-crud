@@ -56,6 +56,8 @@ trait FromModelTrait
         if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface)
             $crudeSetup->lockDeleteOption();
 
+        $crudeSetup->setFilters(['id']);
+
         $this->crudeSetup = $crudeSetup;
 
         return $this;
@@ -142,10 +144,11 @@ trait FromModelTrait
 
     private function _filter($query, $attr, $value)
     {
-        return isset($this->scope[$attr])
-            ? $query->where($this->scope[$attr], 'like', '%' . $value . '%' )
-            : $query;
+        if (! isset($this->scope[$attr]))
+            return $query;
 
+        $scope = $this->scope[$attr];
+        return $query->where($scope, 'like', '%' . $value . '%');
     }
 
     /**

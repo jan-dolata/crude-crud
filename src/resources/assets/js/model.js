@@ -94,6 +94,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         modelDefaults: [],
         selectOptions: [],
         config: [],
+        filters: [],
 
         actionToTrigger: []
     },

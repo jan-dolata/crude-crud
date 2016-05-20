@@ -33,14 +33,13 @@
                 <span id="selectedSearchAttr"><%- Crude.getAttrName(search.attr) %></span>
             </button>
             <ul class="dropdown-menu">
-                <%
-                _.each(setup.get('column'), function(attr) {
-                    if(! _.isArray(attr)) attr = [attr];
-                    _.each(attr, function(a) {
-                        if(a == 'files') return;
-                %>
-                    <li><a class="changeSearchAttr" href="javascript:;" data-attr="<%- a %>"><%- Crude.getAttrName(a) %></a></li>
-                <% }) }) %>
+                <% _.each(setup.get('filters'), function(attr) { %>
+                    <li>
+                        <a class="changeSearchAttr" href="javascript:;" data-attr="<%- attr %>">
+                            <%- Crude.getAttrName(attr) %>
+                        </a>
+                    </li>
+                <% }) %>
             </ul>
         </div>
         <input id="searchValue" size="20" type="text" class="form-control input-sm" value="<%- search.value %>" placeholder="{{ trans('CrudeCRUD::crude.search_value') }}" />
