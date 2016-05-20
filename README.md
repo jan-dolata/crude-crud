@@ -10,7 +10,7 @@
 # Table of content
 - [Install](#install)
 - [Usage](#usage)
-- [wiki/Inputs](#wiki/INPUTS.md)
+- [wiki/Inputs](wiki/INPUTS.md)
 - [wiki/api](wiki/API.md)
 - [wiki/tutorials](wiki/TUTORIALS.md)
 
