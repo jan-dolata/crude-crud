@@ -24,6 +24,11 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
         this.listenTo(Crude.vent, 'item_selected', this.itemSelected);
     },
 
+    onRender: function ()
+    {
+        this.$('[data-toggle="tooltip"]').tooltip();
+    },
+
     serializeData: function ()
     {
         return {

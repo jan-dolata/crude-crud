@@ -3,12 +3,12 @@
 
 <div id="crudeContainer"></div>
 
+@include('CrudeCRUD::column-format')
 @include('CrudeCRUD::list')
 @include('CrudeCRUD::input')
 @include('CrudeCRUD::modules.form')
 @include('CrudeCRUD::modules.map')
 @include('CrudeCRUD::modules.file')
-
 @include('CrudeCRUD::layout')
 
 <link rel="stylesheet" href="{{ asset('vendor/jan-dolata/crude-crud/css/app.css') }}">

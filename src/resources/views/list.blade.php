@@ -28,22 +28,6 @@
     </td>
 </script>
 
-<script type="text/template" id="crude_textColumnFormatTemplate">
-    <% value = model.get(attr) %>
-    <% if (_.isObject(value)) { %>
-        <%- value.length %>
-    <% } else { %>
-        <%- String(value).substring(0, 40) %>
-        <%= String(value).length > 40 ? '...' : '' %>
-    <% } %>
-</script>
-
-<script type="text/template" id="crude_linkColumnFormatTemplate">
-    <a href="<%- format.url %>/<%- model.get(format.attr) %>">
-        <%- model.get(attr) %>
-    </a>
-</script>
-
 <script type="text/template" id="crude_listEmptyTemplate">
     <td class="text-center" colspan="<%- setup.get('column').length + 1 %>">
         <h4>{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
