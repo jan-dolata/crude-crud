@@ -203,6 +203,22 @@ class CrudeSetup
     }
 
     /**
+     * Set new model defaults value
+     * @param  string|array $attr
+     * @param  array $value
+     * @return self
+     */
+    public function setModelDefaults($attr, $value = null)
+    {
+        if (is_array($attr))
+            $this->modelDefaults = array_merge($this->modelDefaults, $attr);
+        else
+            $this->modelDefaults[$attr] = $value;
+
+        return $this;
+    }
+
+    /**
      * Set title
      * @param  string $title
      * @return self

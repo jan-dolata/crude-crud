@@ -201,6 +201,12 @@ $this->crudeSetup->setTypes([
 or
 
 ```php
+$this->crudeSetup->setTypesGroup('text', ['first_name', 'last_name']);
+```
+
+or
+
+```php
 $this->crudeSetup->setTypesGroup([
     'text' => ['first_name', 'last_name'],
     'number' => 'points'
