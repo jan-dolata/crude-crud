@@ -3,9 +3,9 @@
 [Readme](../README.md)
 
 ## Table of content
-- [List with pre filtered collection (many-to-many relationship)](#list-with-pre-filtered-collection-(many-to-many-relationship))
+- [List with pre filtered collection example](#list-with-pre-filtered-collection-example)
 
-## List with pre filtered collection (many-to-many relationship)
+## List with pre filtered collection example
 
 Database
 
