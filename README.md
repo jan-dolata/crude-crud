@@ -13,6 +13,8 @@
 - [Inputs](#inputs)
 - [Api](#api)
 
+[wiki/tutorials](wiki/TUTORIALS.md)
+
 ## Install
 
 Via Composer
