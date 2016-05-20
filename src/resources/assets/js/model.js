@@ -195,7 +195,7 @@ Crude.Models.Setup = Backbone.Model.extend(
      */
     triggerNextAction: function (model)
     {
-        Crude.vent.trigger('item_selected');
+        Crude.vent.trigger('item_selected', this.getName());
 
         var actionToTrigger = this.get('actionToTrigger');
         if (actionToTrigger.length == 0) {
@@ -211,6 +211,7 @@ Crude.Models.Setup = Backbone.Model.extend(
 
     triggerCancel: function ()
     {
+        Crude.data.selectedItem = null;
         Crude.vent.trigger('action_end', this.getName());
         Crude.vent.trigger('action_update', this.getName());
     },
