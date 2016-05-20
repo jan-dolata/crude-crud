@@ -17,6 +17,6 @@
   "version": "1.0.14",
   "scripts": {
     "version": "git add package.json",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push origin && git push --tags"
   }
 }
