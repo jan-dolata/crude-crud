@@ -182,11 +182,15 @@ class CrudeSetup
 
     /**
      * Set new or change input types
-     * @param  array $types
+     * @param  string|array $types
+     * @param  array $attr
      * @return self
      */
-    public function setTypesGroup($types)
+    public function setTypesGroup($types, $attr = null)
     {
+        if (! is_array($types))
+            $types = [$types => $attr];
+
         foreach ($types as $type => $attrList) {
             if (! is_array($attrList))
                 $attrList = [$attrList];
