@@ -1,8 +1,8 @@
 # Tutorials
 
-[Readme](README.md)
+[Readme](../README.md)
 
-# Table of content
+## Table of content
 - [List with pre filtered collection (many-to-many relationship)](#list-with-pre-filtered-collection-(many-to-many-relationship))
 
 ## List with pre filtered collection (many-to-many relationship)
@@ -29,7 +29,7 @@ Database
     });
 ```
 
-`App\Engine\Models\BookAuthor`
+App\Engine\Models\BookAuthor
 
 ```php
 namespace App\Engine\Models;
@@ -46,13 +46,13 @@ class BookAuthor extends Model
 
 ```
 
-`routes.php`
+routes.php
 
 ```php
     Route::get('book-authors/{book_id?}', 'Controller@bookAuthors');
 ```
 
-`App\Http\Controllers\Controller.php`
+App\Http\Controllers\Controller
 
 ```php
     public function bookAuthors($book_id = null)
@@ -64,7 +64,7 @@ class BookAuthor extends Model
     }
 ```
 
-`App\Engine\Crude\BookAuthors.php`
+App\Engine\Crude\BookAuthors
 
 ```php
 namespace App\Engine\Crude;
