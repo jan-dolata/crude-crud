@@ -38,7 +38,7 @@
     <select type="select" class="input form-control" data-attr="<%- attr %>" placeholder="<%- Crude.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.select') }}">
         <% for (var i in setup.selectOptions[attr]) { %>
             <% var option = setup.selectOptions[attr][i] %>
-            <option value="<%- option.id %>" <%- model[attr] == option.id ? 'select' : '' %>>
+            <option value="<%- option.id %>" <%- model[attr] == option.id ? 'selected' : '' %>>
                 <%- option.label %>
             </option>
         <% } %>
