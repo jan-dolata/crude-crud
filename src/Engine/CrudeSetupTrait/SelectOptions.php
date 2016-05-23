@@ -28,7 +28,7 @@ trait SelectOptions
      *
      * @return self
      */
-    protected function setSelectOptions($attr, $options = null)
+    public function setSelectOptions($attr, $options = null)
     {
         $optionsList = is_array($attr)
             ? $attr
