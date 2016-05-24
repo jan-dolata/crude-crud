@@ -5,6 +5,7 @@ namespace JanDolata\CrudeCRUD\Engine\Traits;
 use JanDolata\CrudeCRUD\Engine\Models\FileLog;
 use Illuminate\Support\Str;
 use Storage;
+use JanDolata\CrudeCRUD\Helpers\CrudeFiles;
 
 trait WithFileTrait
 {
@@ -19,38 +20,10 @@ trait WithFileTrait
     {
         $crudeName = $this->getCalledClassName();
         $model = $this->getById($id);
-        $filesArray = $model->files;
 
-        foreach ($files as $file) {
+        $model = (new CrudeFiles)->upload($model, $crudeName, $files);
 
-            $log = (new FileLog)->create([
-                'model_id' => $id,
-                'model_name' => $crudeName,
-                'file_original_name' => $file->getClientOriginalName(),
-            ]);
-
-            $systemFileName = $this->createSystemFileName($log, $file);
-            $filePath = $this->createFilePath($crudeName, $systemFileName);
-            $folderPath = $this->createFilePath($crudeName);
-
-            Storage::put(
-                $filePath,
-                file_get_contents($file->path())
-            );
-
-            $log->fill([
-                'file_path' => $filePath,
-                'file_system_name' => $systemFileName
-            ])->save();
-
-            $filesArray[] = [
-                'file_log_id' => $log->id,
-                'path' => asset($log->file_path),
-                'file_original_name' => $log->file_original_name
-            ];
-        }
-
-        return $this->updateById($id, ['files' => $filesArray]);
+        return $this->updateById($id, ['files' => $model->files]);
     }
 
     /**
@@ -62,19 +35,12 @@ trait WithFileTrait
     public function deleteFileByFileLog(FileLog $log)
     {
         Storage::delete($log->file_path);
+        $id = $log->model_id;
 
-        $model = $this->getById($log->model_id);
+        $model = $this->getById($id);
+        $model = (new CrudeFiles)->delete($model, $log);
 
-        $updatedFiles = [];
-        foreach ($model->files as $file) {
-            if ($file['file_log_id'] == $log->id) continue;
-
-            $updatedFiles[] = $file;
-        }
-
-        $log->delete();
-
-        return $this->updateById($log->model_id, ['files' => $updatedFiles]);
+        return $this->updateById($id, ['files' => $model->files]);
     }
 
     /**
