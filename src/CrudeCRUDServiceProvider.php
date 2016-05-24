@@ -88,6 +88,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         $loader->alias('CrudeWithValidationTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithValidationTrait');
         $loader->alias('CrudeWithFileTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithFileTrait');
         $loader->alias('CrudeCrudeSetup', 'JanDolata\CrudeCRUD\Engine\CrudeSetup');
+        $loader->alias('CrudeFiles', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeFiles');
     }
 
     private function registerCrudeCRUD()
