@@ -3,9 +3,7 @@
 namespace JanDolata\CrudeCRUD\Engine\Traits;
 
 use JanDolata\CrudeCRUD\Engine\Models\FileLog;
-use Illuminate\Support\Str;
-use Storage;
-use JanDolata\CrudeCRUD\Helpers\CrudeFiles;
+use JanDolata\CrudeCRUD\Engine\Helpers\CrudeFiles;
 
 trait WithFileTrait
 {
@@ -41,27 +39,5 @@ trait WithFileTrait
         $model = (new CrudeFiles)->delete($model, $log);
 
         return $this->updateById($id, ['files' => $model->files]);
-    }
-
-    /**
-     * Create file path
-     * @param  string $crudeName
-     * @param  string $fileName = ''
-     * @return string
-     */
-    private function createFilePath($crudeName, $fileName = '')
-    {
-        return config('crude.uploadFolder') . '/' . Str::lower($crudeName) . '/' . $fileName;
-    }
-
-    /**
-     * Create system file name
-     * @param  FileLog $log
-     * @param  File    $file
-     * @return string
-     */
-    private function createSystemFileName(FileLog $log, $file)
-    {
-        return $log->id . '_' . time() . '.' . $file->getClientOriginalExtension();
     }
 }

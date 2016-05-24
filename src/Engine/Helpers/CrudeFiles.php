@@ -1,8 +1,10 @@
 <?php
 
-namespace JanDolata\CrudeCRUD\Helpers;
+namespace JanDolata\CrudeCRUD\Engine\Helpers;
 
 use JanDolata\CrudeCRUD\Engine\Models\FileLog;
+use Illuminate\Support\Str;
+use Storage;
 
 class CrudeFiles
 {
@@ -21,7 +23,7 @@ class CrudeFiles
         foreach ($files as $file) {
 
             $log = (new FileLog)->create([
-                'model_id' => $id,
+                'model_id' => $model->id,
                 'model_name' => $folderName,
                 'file_original_name' => $file->getClientOriginalName(),
             ]);
