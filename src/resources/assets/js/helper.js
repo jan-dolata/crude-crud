@@ -121,12 +121,13 @@ Crude.getFormValues = function (inputList)
     inputList.each(function() {
         var $this = $(this);
 
-        if ($this.attr('type') == 'checkbox')
+        if ($this.attr('type') == 'custom')
+            values[$this.data('attr')] = window[$this.data('method')]($this);
+        else if ($this.attr('type') == 'checkbox')
             values[$this.data('attr')] = $this.is(':checked');
         else if ($this.attr('type') == 'select')
             values[$this.data('attr')] = $this.find(':selected').val();
         else if ($this.attr('type') == 'json') {
-            console.log(JSON.parse($this.val()), $this.val());
             values[$this.data('attr')] = JSON.parse($this.val());
         }
         else

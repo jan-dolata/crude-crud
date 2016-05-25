@@ -11,7 +11,7 @@
 </script>
 
 <script type="text/template" id="crude_jsonInputTemplate">
-    <textarea type="json" class="well input form-control" data-attr="<%- attr %>" rows="2" placeholder="<%- Crude.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.json') }}"><%- JSON.stringify(model[attr]) %></textarea>
+    <textarea type="json" class="well input form-control" data-attr="<%- attr %>" rows="4" placeholder="<%- Crude.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.json') }}"><%- JSON.stringify(model[attr], null, 4) %></textarea>
 </script>
 
 <script type="text/template" id="crude_infoInputTemplate">
