@@ -10,6 +10,9 @@ return [
     'empty_list' => 'Lista jest pusta',
     'tools' => 'Narzędzia',
 
+    'yes' => 'Tak',
+    'no' => 'Nie',
+
     'search_value' => 'Szukaj',
     'drop_file_here' => 'Upuść plik lub kliknij tutaj',
 

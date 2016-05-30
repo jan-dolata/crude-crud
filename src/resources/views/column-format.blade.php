@@ -19,3 +19,7 @@
         <sup><i class="fa fa-external-link"></i></sup>
     </a>
 </script>
+
+<script type="text/template" id="crude_boolColumnFormatTemplate">
+    <%- model.get(attr) ? '{{ trans('CrudeCRUD::crude.yes') }}' : '{{ trans('CrudeCRUD::crude.no') }}' %>
+</script>
