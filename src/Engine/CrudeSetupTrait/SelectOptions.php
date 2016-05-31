@@ -34,7 +34,7 @@ trait SelectOptions
             ? $attr
             : [$attr => $options];
 
-        $this->selectOptions = array_merge($this->selectOptions, $optionsList);
+        $this->selectOptions = array_unique(array_merge($this->selectOptions, $optionsList));
 
         return $this;
     }
