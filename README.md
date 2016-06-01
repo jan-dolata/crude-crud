@@ -10,9 +10,10 @@
 # Table of content
 - [Install](#install)
 - [Usage](#usage)
-- [wiki/Inputs](wiki/INPUTS.md)
-- [wiki/api](wiki/API.md)
-- [wiki/tutorials](wiki/TUTORIALS.md)
+- [wiki Inputs](wiki/INPUTS.md)
+- [wiki Api](wiki/API.md)
+- [wiki Tutorials](wiki/TUTORIALS.md)
+- [wiki Crude setup](wiki/CRUDE_SETUP.md)
 
 ## Install
 

@@ -149,7 +149,7 @@ Crude.getAttrName = function (attr)
 
 /**
  * Render input
- * @param  {object} setup
+ * @param  {model} setup
  * @param  {string} attr    - attribute name
  * @param  {object} model   - model data
  * @return {HTML}
@@ -157,7 +157,7 @@ Crude.getAttrName = function (attr)
 Crude.renderInput = function (setup, attr, model)
 {
     var defaultName = '#crude_textInputTemplate';
-    var type = setup.inputType[attr];
+    var type = setup.get('inputType')[attr];
     var templateName = _.isUndefined(type)
         ? defaultName
         : '#crude_' + type + 'InputTemplate';

@@ -32,7 +32,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     {
         return {
             model: this.model.toJSON(),
-            setup: this.setup.toJSON()
+            setup: this.setup
         };
     },
 

@@ -16,6 +16,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\SelectOptions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Filters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModelDefaults;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Trans;
 
     /**
      * Construct
@@ -72,6 +73,7 @@ class CrudeSetup
             'modelDefaults' => $this->modelDefaults,
             'selectOptions' => $this->selectOptions,
             'filters'       => $this->filters,
+            'trans'         => $this->trans,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),

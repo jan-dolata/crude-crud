@@ -42,7 +42,7 @@
                 <th>
                     <% _.each(attr, function(a) { %>
                         <div class="sort pointer" data-attr="<%- a %>">
-                            <%- Crude.getAttrName(a) %>
+                            <%- setup.getAttrName(a) %>
 
                             <% if(sort.attr == a) { %>
                                 <span class="fa-stack">
