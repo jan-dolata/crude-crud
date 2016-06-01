@@ -143,6 +143,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.changePage': 'changePage',
         'click @ui.changeSearchAttr': 'changeSearchAttr',
         'click @ui.search': 'search',
+        'keyup @ui.searchValue': 'searchOnEnter',
         'click @ui.clearSearch': 'clearSearch'
     },
 
@@ -209,6 +210,12 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.collection.search.attr = $target.data('attr');
         this.ui.selectedSearchAttr.html($target.html());
+    },
+
+    searchOnEnter: function (event)
+    {
+        if (event.keyCode == 13)
+            this.search();
     },
 
     search: function ()
