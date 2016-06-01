@@ -10,6 +10,9 @@ return [
     'empty_list' => 'Empty list',
     'tools' => 'Tools',
 
+    'yes' => 'Yes',
+    'no' => 'No',
+
     'search_value' => 'Search',
     'drop_file_here' => 'Drop file here or click',
 

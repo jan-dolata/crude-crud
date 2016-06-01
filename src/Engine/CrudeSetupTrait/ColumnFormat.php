@@ -30,12 +30,21 @@ trait ColumnFormat
      */
     public function setColumnFormat($attr, $format = null)
     {
-        if (is_array($attr))
-            $this->columnFormat = array_merge($this->columnFormat, $attr);
-        else
-            $this->columnFormat[$attr] = $format;
+        $formats = is_array($attr)
+            ? $attr
+            : [$attr => $format];
+
+        foreach ($formats as $a => $f)
+            $this->_setSingleColumnFormat($a, $f);
 
         return $this;
+    }
+
+    private function _setSingleColumnFormat($attr, $format)
+    {
+        $this->columnFormat[$attr] = is_array($format)
+            ? $format
+            : ['type' => $format];
     }
 
 }

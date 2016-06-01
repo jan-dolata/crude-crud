@@ -33,7 +33,7 @@ trait Filters
         if (! is_array($filters))
             $filters = [$filters];
 
-        $this->filters = array_merge($this->filters, $filters);
+        $this->filters = array_unique(array_merge($this->filters, $filters));
 
         return $this;
     }

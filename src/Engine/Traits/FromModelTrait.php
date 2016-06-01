@@ -177,6 +177,8 @@ trait FromModelTrait
     {
         // $attributes = $this->filterWithForm($attributes, $this->crudeSetup->getAddForm());
 
+        $attributes = $this->mapAttributesWithScope($attributes);
+
         $model = $this->model->create($attributes);
 
         return $this->getById($model->id);
@@ -192,6 +194,8 @@ trait FromModelTrait
     {
         // $attributes = $this->filterWithForm($attributes, $this->crudeSetup->getEditForm());
 
+        $attributes = $this->mapAttributesWithScope($attributes);
+
         $model = $this->model->find($id);
 
         if (empty($model))
@@ -200,6 +204,23 @@ trait FromModelTrait
         $model->update($attributes);
 
         return $this->getById($model->id);
+    }
+
+    private function mapAttributesWithScope($attributes)
+    {
+        $modelAttr = [];
+        $table = $this->model->getTable();
+        foreach ($attributes as $attr => $value) {
+            $scope = isset($this->scope[$attr])
+                ? $this->scope[$attr]
+                : '';
+
+            if (strpos($scope, $table) === 0) {
+                $scopeArray = explode(".", $scope);
+                $modelAttr[end($scopeArray)] = $value;
+            }
+        }
+        return $modelAttr;
     }
 
     private function filterWithForm($attr, $setupAttr)
