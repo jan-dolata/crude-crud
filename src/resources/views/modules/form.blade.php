@@ -2,13 +2,13 @@
     @include('CrudeCRUD::modules.partials.save-icon')
 
     <%
-    var list = model.id ? setup.editForm : setup.addForm;
+    var list = model.id ? setup.get('editForm') : setup.get('addForm');
     _.each(list, function(attr) {
     %>
         <div class="row m-sm-b">
             <div class="col-sm-4">
                 <label>
-                    <%- Crude.getAttrName(attr) %>
+                    <%- setup.getAttrName(attr) %>
                 </label>
             </div>
 

@@ -30,13 +30,13 @@
     <div class="input-group">
         <div class="input-group-btn">
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span id="selectedSearchAttr"><%- Crude.getAttrName(search.attr) %></span>
+                <span id="selectedSearchAttr"><%- setup.getAttrName(search.attr) %></span>
             </button>
             <ul class="dropdown-menu">
                 <% _.each(setup.get('filters'), function(attr) { %>
                     <li>
                         <a class="changeSearchAttr" href="javascript:;" data-attr="<%- attr %>">
-                            <%- Crude.getAttrName(attr) %>
+                            <%- setup.getAttrName(attr) %>
                         </a>
                     </li>
                 <% }) %>

@@ -24,7 +24,8 @@ trait SelectOptions
     /**
      * Sets the Select options.
      *
-     * @param array $selectOptions the select options
+     * @param  string|array $attr
+     * @param  array $options = null
      *
      * @return self
      */
@@ -34,7 +35,8 @@ trait SelectOptions
             ? $attr
             : [$attr => $options];
 
-        $this->selectOptions = array_unique(array_merge($this->selectOptions, $optionsList));
+        foreach ($optionsList as $key => $value)
+            $this->selectOptions[$key] = $value;
 
         return $this;
     }

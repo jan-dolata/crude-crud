@@ -95,6 +95,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         selectOptions: [],
         config: [],
         filters: [],
+        trans: [],
 
         actionToTrigger: []
     },
@@ -216,4 +217,14 @@ Crude.Models.Setup = Backbone.Model.extend(
         Crude.vent.trigger('action_end', this.getName());
         Crude.vent.trigger('action_update', this.getName());
     },
+
+    getAttrName: function (attr)
+    {
+        var trans = this.get('trans');
+
+        if (attr in trans)
+            return trans[attr];
+
+        return Crude.getAttrName(attr);
+    }
 });
