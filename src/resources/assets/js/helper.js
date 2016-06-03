@@ -7,7 +7,7 @@
  */
 Crude.getData = function(key, defaultValue)
 {
-    if (_.isUndefined('undefined'))
+    if (_.isUndefined(defaultValue))
         defaultValue = null;
 
     if (_.isUndefined(this.data[key]))
