@@ -15,8 +15,8 @@
         data-placement="bottom"
         title="<%- format.title ? format.title : format.url %>"
         >
+        <sub><i class="fa fa-external-link"></i></sub>
         <%- model.get(attr) %>
-        <sup><i class="fa fa-external-link"></i></sup>
     </a>
 </script>
 
