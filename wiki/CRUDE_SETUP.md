@@ -69,9 +69,6 @@ Example:
     // $attr = ['id', 'name', 'email']
 ```
 
-Example:
-```php
-
 ## Trans
 
 Change default attribute names in `resources/lang/en/validation.php` files.
