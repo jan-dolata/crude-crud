@@ -55,7 +55,7 @@ Example:
     $this->crudeSetup->hideColumn('id');
     // current column: [['name', 'email'], 'created_at']
     $this->crudeSetup->hideColumn(['email', 'created_at']);
-    // current column: ['email']
+    // current column: ['name']
 ```
 
 To get current column attributes use `getColumn` or `getColumnAttr`.
