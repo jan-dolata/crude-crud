@@ -79,7 +79,7 @@ class ApiController extends Controller
      */
     public function store(ApiStoreRequest $request, $crudeName)
     {
-        if (! $this->crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface)
+        if ($this->crude->cannot('add'))
             return $request->forbiddenResponse();
 
         $model = $this->crude->store($request->all());
@@ -95,7 +95,7 @@ class ApiController extends Controller
      */
     public function update(ApiUpdateRequest $request, $crudeName, $id)
     {
-        if (! $this->crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface)
+        if ($this->crude->cannot('edit'))
             return $request->forbiddenResponse();
 
         $model = $this->crude->updateById($id, $request->all());
@@ -110,7 +110,7 @@ class ApiController extends Controller
      */
     public function destroy(ApiRequest $request, $crudeName, $id)
     {
-        if (! $this->crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface)
+        if ($this->crude->cannot('delete'))
             return $request->forbiddenResponse();
 
         $model = $this->crude->deleteById($id);

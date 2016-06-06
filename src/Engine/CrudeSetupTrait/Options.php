@@ -47,4 +47,18 @@ trait Options
 
         return $this;
     }
+
+    public function haveOption($optionName = '')
+    {
+        if ($optionName == 'add')
+            return $this->addOption;
+
+        if ($optionName == 'edit')
+            return $this->editOption;
+
+        if ($optionName == 'delete')
+            return $this->deleteOption;
+
+        return false;
+    }
 }

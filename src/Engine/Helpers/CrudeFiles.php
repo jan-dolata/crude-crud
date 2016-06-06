@@ -65,9 +65,8 @@ class CrudeFiles
 
         $updatedFiles = [];
         foreach ($model->files as $file) {
-            if ($file['file_log_id'] == $log->id) continue;
-
-            $updatedFiles[] = $file;
+            if ($file['file_log_id'] != $log->id)
+                $updatedFiles[] = $file;
         }
 
         $log->delete();

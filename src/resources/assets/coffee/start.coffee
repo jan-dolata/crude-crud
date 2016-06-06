@@ -8,7 +8,10 @@ $ ->
         el: '#' + setup.containerId()
         setup: setup
 
-    newContainer = (id) -> '<div id="' + id + '" class="container"></div>'
+    newContainer = (id) -> """
+        <div id="' + id + '" class="container">
+        </div>
+        """
 
     createView = (setup) ->
         model = newModel setup
