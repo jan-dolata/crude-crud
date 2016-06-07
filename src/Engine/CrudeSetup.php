@@ -39,7 +39,8 @@ class CrudeSetup
         $this->setFormAction();
 
         // add map view
-        if (in_array('address', $formAttr))
+        $mapAttr = ['lat', 'lng', 'address'];
+        if (count(array_intersect($mapAttr, $formAttr)) == count($mapAttr))
             $this->setMapAction();
 
         // add file view
