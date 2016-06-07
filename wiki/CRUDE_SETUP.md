@@ -4,6 +4,7 @@
 
 ## Table of content
 - [Column](#column)
+- [Filters](#filters)
 - [Trans](#trans)
 - [Module in popup](#module-in-popup)
 
@@ -70,6 +71,25 @@ Example:
     // $attr = ['id', 'name', 'email']
 ```
 
+## Filters
+
+Filters attributes will fill list in search box under the table.
+After `prepareCrudeSetup()` when `FromModelTrait` is used, filters have `'id'` attribute.
+
+Example:
+```php
+    $this->crudeSetup->setFilters('name');
+    // current filters: ['id', 'name']
+    $this->crudeSetup->setFilters(['email', 'phone']);
+    // current filters: ['id', 'email', 'phone']
+    $this->crudeSetup->setFilters(['email', 'phone', 'age', 'phone']);
+    // current filters: ['id', 'email', 'phone', 'age']
+    $this->crudeSetup->resetFilters(['id', 'name']);
+    // current filters: ['id', 'name']
+    $this->crudeSetup->resetFilters();
+    // current filters: []
+```
+
 ## Trans
 
 Change default attribute names in `resources/lang/en/validation.php` files.
@@ -81,6 +101,7 @@ Example:
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
         ...
+    ]
 ```
 
 or add custome attributes name
@@ -96,7 +117,7 @@ or add custome attributes name
 
 ## Module in popup
 
-If you want to change the method of displaing forms on the pop-ups use
+If you want to change the method of displaing forms to pop-ups use
 
 ```php
     $this->crudeSetup->usePopup()
