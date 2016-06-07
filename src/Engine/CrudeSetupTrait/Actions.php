@@ -50,7 +50,7 @@ trait Actions
     {
         array_push($this->actions, 'map');
 
-        $this->modelDefaults = array_merge($this->modelDefaults, [
+        $this->setModelDefaults([
             'lat' => config('crude.mapDefaults')['lat'],
             'lng' => config('crude.mapDefaults')['lng'],
             'address' => ''
@@ -67,11 +67,10 @@ trait Actions
     {
         array_push($this->actions, 'file');
 
-        $this->modelDefaults = array_merge($this->modelDefaults, [
-            'files' => []
-        ]);
-
         $this->addForm = array_diff($this->addForm, ['files']);
         $this->editForm = array_diff($this->addForm, ['files']);
+
+        $this->setModelDefaults('files', []);
+        $this->setColumnFormat('files', 'files');
     }
 }

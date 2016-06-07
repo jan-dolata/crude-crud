@@ -23,3 +23,15 @@
 <script type="text/template" id="crude_boolColumnFormatTemplate">
     <%- model.get(attr) ? '{{ trans('CrudeCRUD::crude.yes') }}' : '{{ trans('CrudeCRUD::crude.no') }}' %>
 </script>
+
+<script type="text/template" id="crude_filesColumnFormatTemplate">
+    <% files = model.get(attr) %>
+    <% for (var i in files) { %>
+        <div>
+            <a href="<%- files[i]['path'] %>">
+                <sub><i class="fa fa-external-link"></i></sub>
+                <%- files[i]['file_original_name'] %>
+            </a>
+        </div>
+    <% } %>
+</script>
