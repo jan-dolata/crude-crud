@@ -5,6 +5,7 @@
 ## Table of content
 - [Column](#column)
 - [Trans](#trans)
+- [Module in popup](#module-in-popup)
 
 ## Column
 
@@ -91,5 +92,19 @@ or add custome attributes name
             'name' => 'First name',
             'created_at' => 'Start date'
         ]);
+```
+
+## Module in popup
+
+If you want to change the method of displaing forms on the pop-ups use
+
+```php
+    $this->crudeSetup->usePopup()
+```
+
+or
+
+```php
+    $this->crudeSetup->setModuleInPopup(true)
 ```
 

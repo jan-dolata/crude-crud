@@ -22,7 +22,7 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
     serializeData: function()
     {
         return {
-            title: this.setup.get('title')
+            setup: this.setup
         };
     },
 

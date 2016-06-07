@@ -26,6 +26,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
         this.listenTo(Crude.vent, 'action_' + this.moduleName, this.onAction);
         this.listenTo(Crude.vent, 'action_end', this.onActionEnd);
+        this.listenTo(Crude.vent, 'action_change', this.onActionChange);
     },
 
     serializeData: function ()
@@ -42,6 +43,12 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
             this.slideUp();
     },
 
+    onActionChange: function (setupName)
+    {
+        if (this.setup.getName() == setupName)
+            this.changeUp();
+    },
+
     onAction: function (setupName, model)
     {
         if (this.setup.getName() == setupName)
@@ -50,14 +57,32 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     setNewModel: function (model)
     {
-        this.$el.parent().slideDown(100);
+        if (! this.setup.get('moduleInPopup')) {
+            this.$el.parent().slideDown(100);
+        } else {
+            this.$el.parent().show();
+            this.$el.parents('#moduleModal').modal('show');
+        }
+
         this.model = model;
         this.render();
     },
 
     slideUp: function ()
     {
+        if (this.setup.get('moduleInPopup')) {
+            this.$el.parent().hide();
+            this.$el.parents('#moduleModal').modal('hide');
+            Crude.clearAllAlerts(this.$el.parents('#moduleModal').find('#alertContainer'));
+            return;
+        }
+
         this.$el.parent().slideUp(100);
+    },
+
+    changeUp: function ()
+    {
+        this.$el.parent().hide();
     },
 
     cancel: function ()
@@ -79,11 +104,19 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
                 var responseTextJSON = JSON.parse(response.responseText);
 
                 if (response.status == 422) {
-                    Crude.showError(_.values(responseTextJSON).join('<br>'));
+                    var msg = _.values(responseTextJSON).join('<br>');
+                    if (this.setup.get('moduleInPopup'))
+                        Crude.showError(msg, this.$el.parents('#moduleModal').find('#alertContainer'));
+                    else
+                        Crude.showError(msg);
                 }
 
                 if (response.status == 403) {
-                    Crude.showError(responseTextJSON.error.message);
+                    var msg = responseTextJSON.error.message;
+                    if (this.setup.get('moduleInPopup'))
+                        Crude.showError(msg, this.$el.parents('#moduleModal').find('#alertContainer'));
+                    else
+                        Crude.showError(msg);
                     this.setup.triggerCancel();
                 }
             }.bind(this));

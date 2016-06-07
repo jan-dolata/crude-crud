@@ -28,7 +28,7 @@
     <% files = model.get(attr) %>
     <% for (var i in files) { %>
         <div>
-            <a href="<%- files[i]['path'] %>">
+            <a href="<%- files[i]['path'] %>" target="_blank">
                 <sub><i class="fa fa-external-link"></i></sub>
                 <%- files[i]['file_original_name'] %>
             </a>

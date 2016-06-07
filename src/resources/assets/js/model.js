@@ -96,6 +96,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         config: [],
         filters: [],
         trans: [],
+        moduleInPopup: false,
 
         actionToTrigger: []
     },
@@ -207,7 +208,7 @@ Crude.Models.Setup = Backbone.Model.extend(
 
         var action = actionToTrigger[0];
         actionToTrigger.shift();
-        Crude.vent.trigger('action_end', this.getName());
+        Crude.vent.trigger('action_change', this.getName());
         Crude.vent.trigger('action_' + action, this.getName(), model);
     },
 
