@@ -45,20 +45,18 @@ trait FromModelTrait
         foreach ($modelAttr as $attr)
             $this->scope[$attr] = $this->model->getTable() . '.' . $attr;
 
-        $crudeSetup = new CrudeSetup($crudeName, $modelAttr);
+        $this->crudeSetup = new CrudeSetup($crudeName, $modelAttr);
 
-        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface)
-            $crudeSetup->lockEditOption();
+        if (! $this->canUpdate())
+            $this->crudeSetup->lockEditOption();
 
-        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface)
-            $crudeSetup->lockAddOption();
+        if (! $this->canStore('check with permission'))
+            $this->crudeSetup->lockAddOption();
 
-        if (! $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface)
-            $crudeSetup->lockDeleteOption();
+        if (! $this->canDelete())
+            $this->crudeSetup->lockDeleteOption();
 
-        $crudeSetup->setFilters(['id']);
-
-        $this->crudeSetup = $crudeSetup;
+        $this->crudeSetup->setFilters(['id']);
 
         return $this;
     }
@@ -73,35 +71,43 @@ trait FromModelTrait
     }
 
     /**
-     * Format collection - filter collection by permision etc.
+     * Format collection to overwrite in child class - filter collection etc.
      * @param  Collection $collection
      * @return Collection
      */
     public function formatCollection($collection)
     {
-        $newCollection = collect([]);
-
-        $collection->each(function ($model) use ($newCollection) {
-            $newCollection->push($this->formatModel($model));
-        });
-
-        return $newCollection;
+        return $collection;
     }
 
     /**
-     * Format model - add or change attribues etc.
-     * Returned model should contain Boolean parameters:
-     *     canBeEdited - true when the model have permission to be edit
-     *     canBeRemoved - true when the model have permission to be remove
+     * Format model to overwrite in child class - add or change attribues etc.
      * @param  Model $model
      * @return Model
      */
     public function formatModel($model)
     {
-        $model->canBeEdited = true;
-        $model->canBeRemoved = true;
-
         return $model;
+    }
+
+    /**
+     * Format attributes in store action
+     * @param  array $attributes
+     * @return array
+     */
+    public function formatStoreAttributes($attributes)
+    {
+        return $attributes;
+    }
+
+    /**
+     * Format attributes in update action
+     * @param  array $attributes
+     * @return array
+     */
+    public function formatUpdateAttributes($attributes)
+    {
+        return $attributes;
     }
 
     /**
@@ -116,17 +122,31 @@ trait FromModelTrait
      */
     public function getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue)
     {
-        $toSkip = ($page - 1) * $numRows;
+        $query = $this->prepareQuery();
 
-        $query = $this
-            ->prepareQuery()
-            ->orderBy($sortAttr, $sortOrder)
-            ->skip($toSkip)
-            ->take($numRows);
+        if ($sortAttr && $sortOrder) {
+            $query = $query->orderBy($sortAttr, $sortOrder);
+        }
 
-        $query = $this->_filter($query, $searchAttr, $searchValue);
+        if ($page && $numRows) {
+            $toSkip = ($page - 1) * $numRows;
+            $query = $query->skip($toSkip)->take($numRows);
+        }
 
-        return $this->formatCollection($query->get());
+        if ($searchAttr && $searchValue && isset($this->scope[$searchAttr])) {
+            $scope = $this->scope[$attr];
+            $query = $query->where($scope, 'like', '%' . $searchValue . '%');
+        }
+
+        $collection = $this->addPermissions($query->get());
+
+        $collection = $this->formatCollection($collection);
+
+        $collection = $collection->each(function ($model) {
+            $model = $this->formatModel($model);
+        });
+
+        return $collection;
     }
 
     /**
@@ -137,18 +157,28 @@ trait FromModelTrait
      */
     public function countFiltered($searchAttr, $searchValue)
     {
-        $query = $this->prepareQuery();
-        $query = $this->_filter($query, $searchAttr, $searchValue);
-        return $query->count();
+        $collection = $this->getFiltered(null, null, null, null, $searchAttr, $searchValue);
+        return count($collection);
     }
 
-    private function _filter($query, $attr, $value)
+    /**
+     * Filter collection by permissions and add attributes canBeEdited and canBeRemoved
+     * @param Collection $collection
+     * @return Collection
+     */
+    public function addPermissions($collection)
     {
-        if (! isset($this->scope[$attr]))
-            return $query;
+        $newCollection = collect([]);
 
-        $scope = $this->scope[$attr];
-        return $query->where($scope, 'like', '%' . $value . '%');
+        $collection->each(function ($model) use ($newCollection) {
+            if ($this->permissionView($model)) {
+                $model->canBeEdited = $this->permissionStore($model);
+                $model->canBeRemoved = $this->permissionDelete($model);
+                $newCollection->push($model);
+            }
+        });
+
+        return $newCollection;
     }
 
     /**
@@ -179,6 +209,8 @@ trait FromModelTrait
 
         $attributes = $this->mapAttributesWithScope($attributes);
 
+        $attributes = $this->formatStoreAttributes($attributes);
+
         $model = $this->model->create($attributes);
 
         return $this->getById($model->id);
@@ -195,6 +227,8 @@ trait FromModelTrait
         // $attributes = $this->filterWithForm($attributes, $this->crudeSetup->getEditForm());
 
         $attributes = $this->mapAttributesWithScope($attributes);
+
+        $attributes = $this->formatUpdateAttributes($attributes);
 
         $model = $this->model->find($id);
 

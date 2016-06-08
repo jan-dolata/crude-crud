@@ -9,7 +9,7 @@ use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 use JanDolata\CrudeCRUD\Http\Requests\ApiRequest;
 use JanDolata\CrudeCRUD\Http\Requests\ApiUpdateRequest;
 use JanDolata\CrudeCRUD\Http\Requests\ApiStoreRequest;
-
+use JanDolata\CrudeCRUD\Http\Requests\ApiDeleteRequest;
 
 class ApiController extends Controller
 {
@@ -79,9 +79,6 @@ class ApiController extends Controller
      */
     public function store(ApiStoreRequest $request, $crudeName)
     {
-        if ($this->crude->cannot('add'))
-            return $request->forbiddenResponse();
-
         $model = $this->crude->store($request->all());
 
         return $this->successResponse([
@@ -95,9 +92,6 @@ class ApiController extends Controller
      */
     public function update(ApiUpdateRequest $request, $crudeName, $id)
     {
-        if ($this->crude->cannot('edit'))
-            return $request->forbiddenResponse();
-
         $model = $this->crude->updateById($id, $request->all());
 
         return $this->successResponse([
@@ -108,11 +102,8 @@ class ApiController extends Controller
     /**
      * Remove model
      */
-    public function destroy(ApiRequest $request, $crudeName, $id)
+    public function destroy(ApiDeleteRequest $request, $crudeName, $id)
     {
-        if ($this->crude->cannot('delete'))
-            return $request->forbiddenResponse();
-
         $model = $this->crude->deleteById($id);
 
         return $this->successResponse([

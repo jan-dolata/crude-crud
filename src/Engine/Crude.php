@@ -3,6 +3,7 @@
 namespace JanDolata\CrudeCRUD\Engine;
 
 use JanDolata\CrudeCRUD\Engine\CrudeSetup;
+use JanDolata\CrudeCRUD\Engine\Traits\FromModelTrait;
 use JanDolata\CrudeCRUD\Engine\Traits\WithPermissionTrait;
 
 abstract class Crude
@@ -36,30 +37,6 @@ abstract class Crude
         return $this->crudeSetup->getJSData();
     }
 
-    public function can($optionName)
-    {
-        $option = $this->crudeSetup->haveOption($optionName);
-
-        if ($optionName == 'add')
-            return $option &&
-                $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface;
-
-        if ($optionName == 'edit')
-            return $option &&
-                $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface;
-
-        if ($optionName == 'delete')
-            return $option &&
-                $this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface;
-
-        return $option;
-    }
-
-    public function cannot($optionName)
-    {
-        return ! $this->can($optionName);
-    }
-
     /**
      * Prepare default crude setup
      * @return self
@@ -83,6 +60,21 @@ abstract class Crude
         $class = get_called_class();
         $class = explode('\\', $class);
         return end($class);
+    }
+
+    public function getScope()
+    {
+        return $this->scope;
+    }
+
+    public function setScope($attr, $value = null)
+    {
+        if (! is_array($attr))
+            $attr = [$attr => $value];
+
+        $this->scope = array_merge($this->scope, $attr);
+
+        return $this;
     }
 
 }

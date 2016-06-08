@@ -5,7 +5,7 @@ namespace JanDolata\CrudeCRUD\Http\Requests;
 use App\Http\Requests\Request;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class ApiStoreRequest extends Request
+class ApiDeleteRequest extends Request
 {
 
     /**
@@ -20,7 +20,12 @@ class ApiStoreRequest extends Request
         if ($crude == null)
             return false;
 
-        return $crude->canView() && $crude->canStore('check with permission');
+        if ($crude->cannotView())
+            return false;
+
+        $model = $crude->getById($this->id);
+
+        return $crude->canDelete($model);
     }
 
     /**
@@ -30,17 +35,7 @@ class ApiStoreRequest extends Request
      */
     public function rules()
     {
-        $crude = CrudeInstance::get($this->crudeName);
-
-        if ($crude == null)
-            return [];
-
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface)
-            return [];
-
-        $attr = $crude->getCrudeSetup()->getAddForm();
-
-        return $crude->getValidationRules($attr);
+        return [];
     }
 }
 
