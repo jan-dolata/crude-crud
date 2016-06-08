@@ -62,8 +62,11 @@ abstract class Crude
         return end($class);
     }
 
-    public function getScope()
+    public function getScope($attr = null)
     {
+        if ($attr != null)
+            return $this->scope[$attr];
+
         return $this->scope;
     }
 
@@ -75,6 +78,11 @@ abstract class Crude
         $this->scope = array_merge($this->scope, $attr);
 
         return $this;
+    }
+
+    public function inScope($attr)
+    {
+        return isset($this->scope[$attr]) && ! empty($this->scope[$attr]);
     }
 
 }

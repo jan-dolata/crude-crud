@@ -124,8 +124,9 @@ trait FromModelTrait
     {
         $query = $this->prepareQuery();
 
-        if ($sortAttr && $sortOrder) {
-            $query = $query->orderBy($sortAttr, $sortOrder);
+        if ($sortAttr && $sortOrder && $this->inScope($sortAttr)) {
+            $scope = $this->getScope($sortAttr);
+            $query = $query->orderBy($scope, $sortOrder);
         }
 
         if ($page && $numRows) {
@@ -133,8 +134,8 @@ trait FromModelTrait
             $query = $query->skip($toSkip)->take($numRows);
         }
 
-        if ($searchAttr && $searchValue && isset($this->scope[$searchAttr])) {
-            $scope = $this->scope[$attr];
+        if ($searchAttr && $searchValue && $this->inScope($searchAttr)) {
+            $scope = $this->getScope($searchAttr);
             $query = $query->where($scope, 'like', '%' . $searchValue . '%');
         }
 
@@ -146,8 +147,26 @@ trait FromModelTrait
             $model = $this->formatModel($model);
         });
 
-        return $collection;
+        if ($sortAttr && $sortOrder && ! $this->inScope($sortAttr)) {
+            if ($sortOrder == 'asc')
+                $collection = $collection->sortBy($sortAttr)->toArray();
+            if ($sortOrder == 'desc')
+                $collection = $collection->sortByDesc($sortAttr)->toArray();
+        }
+
+        if ($searchAttr && $searchValue && ! $this->inScope($searchAttr)) {
+            $collection = $collection->filter(function ($model) use ($searchAttr, $searchValue) {
+                $value = (string) $model->$searchAttr;
+                $value = strtolower($value);
+                $search = strtolower($searchValue);
+                return strpos($value, $search) !== false;
+            });
+        }
+
+        return collect(array_values($collection->toArray()));
     }
+
+
 
     /**
      * Count all rows with condition
