@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Interfaces;
 
-interface RestInterface extends
+interface CRUDInterface extends
     \JanDolata\CrudeCRUD\Engine\Interfaces\ListInterface,
     \JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface,
     \JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface,

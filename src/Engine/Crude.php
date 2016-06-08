@@ -3,9 +3,13 @@
 namespace JanDolata\CrudeCRUD\Engine;
 
 use JanDolata\CrudeCRUD\Engine\CrudeSetup;
+use JanDolata\CrudeCRUD\Engine\Traits\WithPermissionTrait;
 
 abstract class Crude
 {
+
+    use WithPermissionTrait;
+
     /**
      * Crude Setup instance
      * @var CrudeSetup

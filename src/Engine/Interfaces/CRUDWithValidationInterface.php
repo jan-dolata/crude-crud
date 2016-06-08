@@ -2,7 +2,7 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Interfaces;
 
-interface RestWithValidationInterface extends
+interface CRUDWithValidationInterface extends
     \JanDolata\CrudeCRUD\Engine\Interfaces\RestInterface,
     \JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface
 { }

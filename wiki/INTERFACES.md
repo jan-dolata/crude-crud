@@ -34,7 +34,7 @@ Activates the possibility to store files.
 
 ## Shortcuts
 
-### CrudeRestInterface
+### CrudeCRUDInterface
 
 Contains:
 - CrudeListInterface
@@ -42,7 +42,7 @@ Contains:
 - CrudeDeleteInterface
 - CrudeStoreInterface
 
-### CrudeRestWithValidationInterface
+### CrudeCRUDWithValidationInterface
 
 Contains:
 - CrudeListInterface
