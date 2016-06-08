@@ -32,8 +32,8 @@ Example:
 ## Custome Store / Update method
 
 To change attributes before add or edit new model, just overwrite the methods:
-    - `formatStoreAttributes($attributes)`,
-    - `formatUpdateAttributes($attributes)`.
+- `formatStoreAttributes($attributes)`,
+- `formatUpdateAttributes($attributes)`.
 
 Methods should return array with attributes.
 
@@ -47,8 +47,8 @@ Example:
 ```
 
 To change add or edit action, just overwrite the methods:
-    - `store($attributes)`,
-    - `updateById($id, $attributes)`.
+- `store($attributes)`,
+- `updateById($id, $attributes)`.
 
 ! Methods `formatStoreAttributes` and `formatUpdateAttributes` are used in parent `store` and `updateById`.
 
@@ -68,10 +68,10 @@ Example:
 ## Permissions
 
 To change model permission, just overwrite the methods:
-    - `permissionStore($options)`,
-    - `permissionUpdate($model)`,
-    - `permissionDelete($model)`,
-    - `permissionView($model)`.
+- `permissionStore($options)`,
+- `permissionUpdate($model)`,
+- `permissionDelete($model)`,
+- `permissionView($model)`.
 
 Methods should return boolean.
 
