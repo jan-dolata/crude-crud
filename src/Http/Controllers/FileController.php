@@ -11,6 +11,8 @@ use JanDolata\CrudeCRUD\Http\Requests\FileRequest;
 use Storage;
 use Validator;
 
+use JanDolata\CrudeCRUD\Engine\Helpers\Interfaces;
+
 class FileController extends Controller
 {
     /**
@@ -20,7 +22,8 @@ class FileController extends Controller
      */
     public function upload(FileRequest $request)
     {
-        $crude = CrudeInstance::get($request->input('crudeName'));
+        $crudeName = $request->input('crudeName');
+        $crude = CrudeInstance::get($crudeName);
         $files = $request->file()['file'];
 
         if ($crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface) {
