@@ -15,6 +15,7 @@
 - [wiki Tutorials](wiki/TUTORIALS.md)
 - [wiki Crude setup](wiki/CRUDE_SETUP.md)
 - [wiki Interfaces](wiki/INTERFACES.md)
+- [wiki Work with model](wiki/WORKWITHMODEL.md)
 
 ## Install
 
