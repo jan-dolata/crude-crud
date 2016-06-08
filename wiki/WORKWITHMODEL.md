@@ -4,6 +4,7 @@
 
 ## Table of content
 - [Trait](#trait)
+- [Prepare list](#prepare-list)
 - [Custome Store / Update method](#custome-store-/-update-method)
 - [Permissions](#permissions)
 
@@ -29,9 +30,35 @@ Example:
     }
 ```
 
+## Prepare list
+
+To filter or change list item, just overwrite the method `prepareQuery()`.
+Method `prepareQuery()` should return query.
+
+Example:
+```php
+    public function prepareQuery()
+    {
+        return $this->model->where('status', 'active')->select('id');
+    }
+```
+
+To change collection or model, just overwrite methods:
+- `formatCollection($collection)`,
+- `formatModel($model)`.
+
+Example:
+```php
+    public function formatModel($model)
+    {
+        $model->formated_name = $model->id . ': ' . $model->name;
+        return $model;
+    }
+```
+
 ## Custome Store / Update method
 
-To change attributes before add or edit new model, just overwrite the methods:
+To change attributes before add or edit new model, just overwrite methods:
 - `formatStoreAttributes($attributes)`,
 - `formatUpdateAttributes($attributes)`.
 
@@ -46,7 +73,7 @@ Example:
     }
 ```
 
-To change add or edit action, just overwrite the methods:
+To change add or edit action, just overwrite methods:
 - `store($attributes)`,
 - `updateById($id, $attributes)`.
 
@@ -67,7 +94,7 @@ Example:
 
 ## Permissions
 
-To change model permission, just overwrite the methods:
+To change model permission, just overwrite methods:
 - `permissionStore($options)`,
 - `permissionUpdate($model)`,
 - `permissionDelete($model)`,
@@ -77,7 +104,7 @@ Methods should return boolean.
 
 ```php
 
-    // All model on list
+    // Show all model on list
     public function permissionView($model)
     {
         return true;
@@ -89,7 +116,7 @@ Methods should return boolean.
         return Auth::user()->isAdmin();
     }
 
-    // Can edit model when have `updatePermission`
+    // Can edit model when user have `updatePermission`
     public function permissionUpdate($model)
     {
         return Gate::allows('updatePermission', $model);
