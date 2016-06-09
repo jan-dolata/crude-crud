@@ -191,7 +191,7 @@ trait FromModelTrait
 
         $collection->each(function ($model) use ($newCollection) {
             if ($this->permissionView($model)) {
-                $model->canBeEdited = $this->permissionStore($model);
+                $model->canBeEdited = $this->permissionUpdate($model);
                 $model->canBeRemoved = $this->permissionDelete($model);
                 $newCollection->push($model);
             }

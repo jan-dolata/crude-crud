@@ -34,6 +34,8 @@ abstract class Crude
 
     public function getCrudeSetupData()
     {
+        $this->crudeSetup->setFilters($this->crudeSetup->getColumnAttr());
+
         return $this->crudeSetup->getJSData();
     }
 
