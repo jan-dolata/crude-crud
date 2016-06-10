@@ -16,6 +16,8 @@ return [
     'search_value' => 'Search',
     'drop_file_here' => 'Drop file here or click',
 
+    'update_delay' => 'Last update',
+
     'confirm_delete' => [
         'title' => 'Delete',
         'content' => 'Are you sure?',

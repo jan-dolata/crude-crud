@@ -16,6 +16,8 @@ return [
     'search_value' => 'Szukaj',
     'drop_file_here' => 'Upuść plik lub kliknij tutaj',
 
+    'update_delay' => 'Dane z przed',
+
     'confirm_delete' => [
         'title' => 'Usuń',
         'content' => 'Jesteś pewny/a?',

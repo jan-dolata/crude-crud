@@ -235,6 +235,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         this.collection.fetchWithOptions().done(function ()
         {
+            Crude.vent.trigger('fetched_completed');
             this.render();
         }.bind(this));
     },

@@ -149,9 +149,9 @@ trait FromModelTrait
 
         if ($sortAttr && $sortOrder && ! $this->inScope($sortAttr)) {
             if ($sortOrder == 'asc')
-                $collection = $collection->sortBy($sortAttr)->toArray();
+                $collection = $collection->sortBy($sortAttr);
             if ($sortOrder == 'desc')
-                $collection = $collection->sortByDesc($sortAttr)->toArray();
+                $collection = $collection->sortByDesc($sortAttr);
         }
 
         if ($searchAttr && $searchValue && ! $this->inScope($searchAttr)) {

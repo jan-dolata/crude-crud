@@ -33,12 +33,17 @@ trait WithValidationTrait
 
     /**
      * Set validation rules array
-     * @param  array $validationRules
+     * @param  string|array $attr
+     * @param  string $validationRules = null
      * @return self
      */
-    public function setValidationRules($validationRules)
+    public function setValidationRules($attr, $validationRules = null)
     {
-        $this->validationRules = $validationRules;
+        $rules = is_array($attr)
+            ? $attr
+            : [$attr => $validationRules];
+
+        $this->validationRules = array_merge($this->validationRules, $rules);
 
         return $this;
     }

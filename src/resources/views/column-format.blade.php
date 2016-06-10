@@ -8,6 +8,10 @@
     <% } %>
 </script>
 
+<script type="text/template" id="crude_longtextColumnFormatTemplate">
+    <%- model.get(attr) %>
+</script>
+
 <script type="text/template" id="crude_linkColumnFormatTemplate">
     <a
         href="<%- format.url %>/<%- model.get(format.attr) %>"

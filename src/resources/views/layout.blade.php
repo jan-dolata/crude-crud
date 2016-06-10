@@ -1,6 +1,15 @@
 <script type="text/template" id="crude_layoutTemplate">
     <div class="m-t">
-        <h4><%- setup.get('title') %></h4>
+        <h4>
+            <%- setup.get('title') %>
+            <div class="pull-right">
+                <small>
+                    {{ trans('CrudeCRUD::crude.update_delay') }}
+                    <span id="updateDelay"></span>
+                    <i id="refresh" class="fa fa-refresh m-sm-l pointer"></i>
+                </small>
+            </div>
+        </h4>
 
         <% if (setup.get('moduleInPopup')) { %>
             <div id="moduleModal" class="modal fade" role="dialog">
