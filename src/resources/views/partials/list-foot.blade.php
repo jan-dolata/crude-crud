@@ -1,7 +1,16 @@
 <div class="pull-right text-right form-inline">
     <div class="input-group">
+        <button id="refresh" type="button" class="btn btn-default btn-sm">
+            {{ trans('CrudeCRUD::crude.update_delay') }}
+            <span id="updateDelay"></span>s
+            <i class="fa fa-refresh m-sm-l"></i>
+        </button>
+    </div>
+
+    <div class="input-group">
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%- pagination.count > pagination.numRows ? pagination.numRows : pagination.count %> / <%- pagination.count %>
+            <%- pagination.count > pagination.numRows ? pagination.numRows : pagination.count %>
+            / <%- pagination.count %>
             <i class="fa fa-list m-sm-l"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
@@ -14,7 +23,8 @@
     <% if(pagination.numPages > 1) { %>
         <div class="input-group">
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%- pagination.page %> / <%- pagination.numPages %>
+                <%- pagination.page %>
+                / <%- pagination.numPages %>
                 <i class="fa fa-clone m-sm-l"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-right">

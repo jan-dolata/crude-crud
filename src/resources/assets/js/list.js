@@ -121,7 +121,12 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     tagName: 'table',
     className: 'table table-hover',
 
+    updateTime: '',
+
     ui: {
+        updateDelay: '#updateDelay',
+        refresh: '#refresh',
+
         add: '#add',
         sort: '.sort',
 
@@ -144,7 +149,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.changeSearchAttr': 'changeSearchAttr',
         'click @ui.search': 'search',
         'keyup @ui.searchValue': 'searchOnEnter',
-        'click @ui.clearSearch': 'clearSearch'
+        'click @ui.clearSearch': 'clearSearch',
+        'click @ui.refresh': 'updateList'
     },
 
     initialize: function (options)
@@ -172,6 +178,21 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             pagination: this.collection.pagination,
             search: this.collection.search
         };
+    },
+
+    onRender: function ()
+    {
+        setInterval(function()
+        {
+            var delay = Date.now() - this.updateTime;
+            delay = parseInt(delay / 1000);
+            var s = delay % 60;
+            var m = parseInt(delay / 60);
+
+            s = String("00" + s).slice(-2);
+
+            this.ui.updateDelay.html( m + ':' + s );
+        }.bind(this), 1000);
     },
 
     add: function ()
@@ -236,6 +257,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         this.collection.fetchWithOptions().done(function ()
         {
             Crude.vent.trigger('fetched_completed');
+            this.updateTime = Date.now();
             this.render();
         }.bind(this));
     },

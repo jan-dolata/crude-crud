@@ -5,8 +5,6 @@
 
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
 
-@import "common";
-
 $bodyBg: #f5f5f5;
 $btnBg: #F7E454;
 $txtColor: #333;
@@ -19,6 +17,9 @@ $margin: 50px;
 $mapMarginRight: 300px;
 $activeBg: #555;
 $arrowSize: 16px;
+
+@import "common";
+@import "grid";
 
 body {
     overflow-y: scroll;
@@ -78,19 +79,6 @@ body {
 
 .map-region {
     height: 400px;
-}
-
-tbody {
-    .active {
-        color: #fff;
-        background-color: $activeBg !important;
-        box-shadow: $boxShadow;
-
-        td {
-            color: #fff;
-            background-color: $activeBg !important;
-        }
-    }
 }
 
 .ui-widget-content {

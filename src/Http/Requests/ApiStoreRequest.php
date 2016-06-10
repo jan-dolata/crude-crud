@@ -40,7 +40,7 @@ class ApiStoreRequest extends Request
 
         $attr = $crude->getCrudeSetup()->getAddForm();
 
-        return $crude->getValidationRules($attr);
+        return $crude->getValidationRules($attr, $this->all());
     }
 }
 

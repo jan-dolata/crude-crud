@@ -1,0 +1,87 @@
+$first-bg: #FFFFFF;
+$first-color: #333333;
+$second-bg: #66ABCC;
+$second-color: #FFFFFF;
+
+$horizontal-margin: 20px;
+$vertical-margin: 10px;
+
+@mixin first() {
+    background: $first-bg !important;
+    color: $first-color !important;
+}
+
+@mixin second() {
+    background: $second-bg !important;
+    color: $second-color !important;
+    text-shadow: 0px 1px 4px #666666;
+}
+
+.crude-box {
+    border-radius: 3px;
+    border: 3px solid $second-bg;
+    background: $first-bg;
+    box-shadow: 0 3px 4px 1px rgba(0,0,0,.1);
+    margin-bottom: 40px;
+    padding: 0px;
+
+    .crude-header {
+
+        .crude-header-title {
+            font-size: 16px;
+            padding: $vertical-margin $horizontal-margin;
+            @include second();
+        }
+
+        .crude-module {
+            padding: $vertical-margin $horizontal-margin;
+            border-bottom: 1px solid $second-bg;
+        }
+
+        .crude-alert-container {
+            .crude-alert {
+                padding-top: $vertical-margin;
+                padding-bottom: $vertical-margin;
+                padding-left: $horizontal-margin;
+                padding-right: $horizontal-margin + 20px;
+                margin: 0;
+                border: 0;
+                border-bottom: 1px solid $second-bg;
+                border-radius: 0;
+            }
+        }
+    }
+
+    .crude-list {
+        table {
+            margin-bottom: 5px;
+
+            thead {
+                tr {
+                    vertical-align: middle;
+                    border-bottom: 0 !important;
+                }
+            }
+
+            tr {
+                td, th {
+                    &:first-child {
+                        padding-left: $horizontal-margin;
+                    }
+                    &:last-child {
+                        padding-right: $horizontal-margin;
+                    }
+                }
+            }
+
+            tbody {
+                .active {
+                    @include second();
+                    td {
+                        @include second();
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,15 +1,8 @@
 <script type="text/template" id="crude_layoutTemplate">
-    <div class="m-t">
-        <h4>
+    <div id="header" class="crude-header">
+        <div class="crude-header-title">
             <%- setup.get('title') %>
-            <div class="pull-right">
-                <small>
-                    {{ trans('CrudeCRUD::crude.update_delay') }}
-                    <span id="updateDelay"></span>
-                    <i id="refresh" class="fa fa-refresh m-sm-l pointer"></i>
-                </small>
-            </div>
-        </h4>
+        </div>
 
         <% if (setup.get('moduleInPopup')) { %>
             <div id="moduleModal" class="modal fade" role="dialog">
@@ -27,14 +20,14 @@
                 </div>
             </div>
         <% } else { %>
-            <div id="formRegion" style="display: none"></div>
-            <div id="mapRegion" style="display: none"></div>
-            <div id="fileRegion" style="display: none"></div>
-            <hr>
+            <div id="formRegion" class="crude-module" style="display: none"></div>
+            <div id="mapRegion" class="crude-module" style="display: none"></div>
+            <div id="fileRegion" class="crude-module" style="display: none"></div>
+            <div id="alertContainer" class="crude-alert-container"></div>
         <% } %>
     </div>
 
-    <div class="m-t">
+    <div class="crude-list">
         <div id="listRegion"></div>
     </div>
 </script>

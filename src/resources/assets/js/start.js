@@ -8,7 +8,7 @@ $(function()
         var setup = new Crude.Models.Setup(setup);
 
         $crudeContainer.append(
-            '<div id="' + setup.containerId() + '" class="container"></div>'
+            '<div id="' + setup.containerId() + '" class="container crude-box"></div>'
         );
 
         var view = new Crude.Views.Layout({

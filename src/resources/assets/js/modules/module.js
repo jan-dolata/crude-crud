@@ -68,16 +68,22 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         this.render();
     },
 
+    alertContainer: function()
+    {
+        return this.$el.parents('#header').find('#alertContainer');
+    },
+
     slideUp: function ()
     {
         if (this.setup.get('moduleInPopup')) {
             this.$el.parent().hide();
             this.$el.parents('#moduleModal').modal('hide');
-            Crude.clearAllAlerts(this.$el.parents('#moduleModal').find('#alertContainer'));
+            Crude.clearAllAlerts(this.alertContainer());
             return;
         }
 
         this.$el.parent().slideUp(100);
+        Crude.clearAllAlerts(this.alertContainer());
     },
 
     changeUp: function ()
@@ -105,18 +111,12 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
                 if (response.status == 422) {
                     var msg = _.values(responseTextJSON).join('<br>');
-                    if (this.setup.get('moduleInPopup'))
-                        Crude.showError(msg, this.$el.parents('#moduleModal').find('#alertContainer'));
-                    else
-                        Crude.showError(msg);
+                    Crude.showError(msg, this.alertContainer());
                 }
 
                 if (response.status == 403) {
                     var msg = responseTextJSON.error.message;
-                    if (this.setup.get('moduleInPopup'))
-                        Crude.showError(msg, this.$el.parents('#moduleModal').find('#alertContainer'));
-                    else
-                        Crude.showError(msg);
+                    Crude.showError(msg, this.alertContainer());
                     this.setup.triggerCancel();
                 }
             }.bind(this));

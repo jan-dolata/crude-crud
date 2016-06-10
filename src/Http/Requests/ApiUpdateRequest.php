@@ -45,7 +45,7 @@ class ApiUpdateRequest extends Request
 
         $attr = $crude->getCrudeSetup()->getEditForm();
 
-        return $crude->getValidationRules($attr);
+        return $crude->getValidationRules($attr, $this->all());
     }
 }
 
