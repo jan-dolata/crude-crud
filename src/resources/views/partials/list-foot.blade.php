@@ -13,11 +13,16 @@
             / <%- pagination.count %>
             <i class="fa fa-list m-sm-l"></i>
         </button>
-        <ul class="dropdown-menu dropdown-menu-right">
-            <% _.each(setup.config('numRowsOptions'), function(n) { %>
-                <li><a class="changeNumRows" href="javascript:;"><%- n %></a></li>
-            <% }) %>
-        </ul>
+        <% if (setup.config('numRowsOptions')[0] < pagination.count) { %>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <% _.each(setup.config('numRowsOptions'), function(n) { %>
+                    <% if (n < pagination.count) { %>
+                        <li><a class="changeNumRows" href="javascript:;"><%- n %></a></li>
+                    <% } %>
+                <% }) %>
+                <li><a class="changeNumRows" href="javascript:;"><%- pagination.count %></a></li>
+            </ul>
+        <% } %>
     </div>
 
     <% if(pagination.numPages > 1) { %>

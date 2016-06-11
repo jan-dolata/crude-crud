@@ -17,9 +17,23 @@ $vertical-margin: 10px;
     text-shadow: 0px 1px 4px #666666;
 }
 
+@mixin likeHeader() {
+    font-size: 16px;
+    padding: $vertical-margin $horizontal-margin;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    @include second();
+    position: relative;
+}
+
+.crude-container {
+    font-family: 'Lato', sans-serif;
+    color: $txtColor;
+}
+
 .crude-box {
     border-radius: 3px;
-    border: 3px solid $second-bg;
+    border: 2px solid $first-bg;
     background: $first-bg;
     box-shadow: 0 3px 4px 1px rgba(0,0,0,.1);
     margin-bottom: 40px;
@@ -28,14 +42,12 @@ $vertical-margin: 10px;
     .crude-header {
 
         .crude-header-title {
-            font-size: 16px;
-            padding: $vertical-margin $horizontal-margin;
-            @include second();
+            @include likeHeader();
         }
 
         .crude-module {
             padding: $vertical-margin $horizontal-margin;
-            border-bottom: 1px solid $second-bg;
+            border-bottom: 2px solid $second-bg;
         }
 
         .crude-alert-container {
@@ -46,42 +58,83 @@ $vertical-margin: 10px;
                 padding-right: $horizontal-margin + 20px;
                 margin: 0;
                 border: 0;
-                border-bottom: 1px solid $second-bg;
+                border-bottom: 2px solid $second-bg;
                 border-radius: 0;
             }
         }
     }
 
     .crude-list {
-        table {
+        .crude-table {
             margin-bottom: 5px;
 
-            thead {
-                tr {
-                    vertical-align: middle;
-                    border-bottom: 0 !important;
-                }
-            }
-
-            tr {
-                td, th {
-                    &:first-child {
-                        padding-left: $horizontal-margin;
-                    }
-                    &:last-child {
-                        padding-right: $horizontal-margin;
+            .crude-table-head {
+                .crude-table-head-row {
+                    .crude-table-head-cell {
+                        vertical-align: middle;
+                        border-bottom: 2px solid $second-bg;
                     }
                 }
             }
 
-            tbody {
+            .crude-table-body-cell,
+            .crude-table-head-cell {
+                &:first-child {
+                    padding-left: $horizontal-margin;
+                }
+                &:last-child {
+                    padding-right: $horizontal-margin;
+                }
+            }
+
+            .crude-table-body {
                 .active {
                     @include second();
-                    td {
+                    .crude-table-body-cell {
                         @include second();
+                        a {
+                            color: $second-color !important;
+                        }
                     }
                 }
             }
+
+            .crude-table-foot {
+
+            }
+        }
+    }
+}
+
+.crude-modal {
+    border: 0;
+
+    .modal-content {
+        border-radius: 3px;
+        border: 2px solid $first-bg;
+        background: $first-bg;
+
+        .modal-header,
+        .modal-body,
+        .modal-footer {
+            padding: 0;
+            border: 0;
+        }
+
+        .modal-header {
+            @include likeHeader();
+        }
+
+        .modal-body {
+            padding: $vertical-margin $horizontal-margin;
+            .crude-module {
+                border: 0;
+                padding: 0;
+            }
+        }
+
+        .modal-footer {
+            padding: $vertical-margin $horizontal-margin;
         }
     }
 }

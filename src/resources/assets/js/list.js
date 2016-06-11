@@ -2,6 +2,7 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 {
     template: '#crude_listItemTemplate',
     tagName: 'tr',
+    className: 'crude-table-row',
 
     className: function ()
     {
@@ -57,6 +58,8 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     delete: function ()
     {
+        this.setup.triggerCancel();
+
         $modal = Crude.showModal(
             Crude.getTrans('crude.confirm_delete', 'title'),
             Crude.getTrans('crude.confirm_delete', 'content'),
@@ -98,6 +101,7 @@ Crude.Views.ListEmpty = Backbone.Marionette.ItemView.extend(
 {
     template: '#crude_listEmptyTemplate',
     tagName: 'tr',
+    className: 'crude-table-row',
 
     initialize: function (options)
     {
@@ -119,7 +123,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     emptyView: Crude.Views.ListEmpty,
     childViewContainer: '#childViewContainer',
     tagName: 'table',
-    className: 'table table-hover',
+    className: 'table table-hover crude-table',
 
     updateTime: '',
 

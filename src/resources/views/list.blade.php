@@ -1,14 +1,14 @@
 <script type="text/template" id="crude_listItemTemplate">
     <% _.each(setup.get('column'), function(attr) { %>
         <% if(! _.isArray(attr)) attr = [attr]; %>
-        <td>
+        <td class="crude-table-body-cell">
             <% _.each(attr, function(a) { %>
                 <%= Crude.renderCell(setup, a, model) %>
                 <br>
             <% }); %>
         </td>
     <% }) %>
-    <td class="text-right">
+    <td class="text-right crude-table-body-cell">
         <%
             if(setup.get('editOption') && model.get('canBeEdited')) {
                 var iconClassName = setup.config('iconClassName');
@@ -29,17 +29,17 @@
 </script>
 
 <script type="text/template" id="crude_listEmptyTemplate">
-    <td class="text-center" colspan="<%- setup.get('column').length + 1 %>">
+    <td class="text-center crude-table-body-cell" colspan="<%- setup.get('column').length + 1 %>">
         <h4>{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
     </td>
 </script>
 
 <script type="text/template" id="crude_listTemplate">
-    <thead>
-        <tr>
+    <thead class="crude-table-head">
+        <tr class="crude-table-head-row">
             <% _.each(setup.get('column'), function(attr) { %>
                 <% if(! _.isArray(attr)) attr = [attr]; %>
-                <th>
+                <th class="crude-table-head-cell">
                     <% _.each(attr, function(a) { %>
                         <div class="sort pointer" data-attr="<%- a %>">
                             <%- setup.getAttrName(a) %>
@@ -55,7 +55,7 @@
                 </th>
             <% }) %>
 
-            <th class="text-right">
+            <th class="crude-table-head-cell text-right">
                 <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
                     <span id="add" class="fa fa-plus fa-lg pointer"></span>
                 <% } %>
@@ -63,9 +63,9 @@
         </tr>
     </thead>
 
-    <tbody id="childViewContainer"></tbody>
+    <tbody id="childViewContainer" class="crude-table-body"></tbody>
 
-    <tfoot>
+    <tfoot class="crude-table-foot">
         <tr>
             <td colspan="<%- setup.get('column').length + 1 %>">
                 @include('CrudeCRUD::partials.list-foot')
