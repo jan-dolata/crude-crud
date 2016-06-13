@@ -101,7 +101,7 @@
                     <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({}) %>
                 </button>
                 <button class="crude-action-btn" data-dismiss="modal">
-                    <%= _.template($('#crude_cancelDeleteDeleteActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_cancelDeleteActionButtonTemplate').html())({}) %>
                 </button>
             </div>
         </div>

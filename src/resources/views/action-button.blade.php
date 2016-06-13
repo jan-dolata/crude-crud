@@ -33,7 +33,7 @@
     {{ trans('CrudeCRUD::crude.confirm_delete.confirm') }}
 </script>
 
-<script type="text/template" id="crude_cancelDeleteDeleteActionButtonTemplate">
+<script type="text/template" id="crude_cancelDeleteActionButtonTemplate">
     <i class="fa fa-lg fa-times"></i>
     {{ trans('CrudeCRUD::crude.confirm_delete.cancel') }}
 </script>
