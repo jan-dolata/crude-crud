@@ -8,9 +8,7 @@
 
 ## scss
 
-Default style .scss
-
-[resources/assets/sass/grid.scss](resources/assets/sass/grid.scss)
+Default style .scss [grid.scss](../src/resources/assets/sass/grid.scss)
 
 To change style prepare css with classes:
 - crude-container
@@ -42,6 +40,6 @@ To change style prepare css with classes:
 
 !!! Place new template before `@include('CrudeCRUD::start')`.
 
-To change content of any button, just overwrite one of templates
-[resources/views/action-button.blade.php](resources/views/action-button.blade.php)
+To change content of any button, just overwrite one of templates [action-button.blade.php](../src/resources/views/action-button.blade.php)
+
 
