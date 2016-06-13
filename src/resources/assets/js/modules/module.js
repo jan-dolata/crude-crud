@@ -37,6 +37,17 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         };
     },
 
+    onRender: function ()
+    {
+        this.parentOnRender();
+    },
+
+    parentOnRender: function ()
+    {
+        // initialize all tooltips on a page
+        $('[data-toggle="tooltip"]').tooltip();
+    },
+
     onActionEnd: function (setupName)
     {
         if (this.setup.getName() == setupName)
@@ -68,22 +79,37 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         this.render();
     },
 
-    alertContainer: function()
+    alertContainer: function ()
     {
         return this.$el.parents('#header').find('#alertContainer');
     },
 
+    clearAllAlerts: function ()
+    {
+        Crude.clearAllAlerts(this.alertContainer());
+    },
+
+    showError: function (msg)
+    {
+        Crude.showError(msg, this.alertContainer());
+    },
+
+    showMessage: function (msg)
+    {
+        Crude.showAlert('success', msg);
+    },
+
     slideUp: function ()
     {
+        this.clearAllAlerts();
+
         if (this.setup.get('moduleInPopup')) {
             this.$el.parent().hide();
             this.$el.parents('#moduleModal').modal('hide');
-            Crude.clearAllAlerts(this.alertContainer());
             return;
         }
 
         this.$el.parent().slideUp(100);
-        Crude.clearAllAlerts(this.alertContainer());
     },
 
     changeUp: function ()
@@ -98,27 +124,35 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     saveModel: function (response)
     {
-        this.model
-            .save()
-            .done(function(response) {
-                if ('message' in  response)
-                    Crude.showAlert('success', response.message);
+        this.clearAllAlerts();
+        $(':focus').blur();
 
-                this.setup.triggerNextAction(this.model);
-            }.bind(this))
-            .fail(function(response) {
-                var responseTextJSON = JSON.parse(response.responseText);
+        this.model.save()
+            .done(function (response) { this.onSaveSuccess(response); }.bind(this))
+            .fail(function (response) { this.onSaveFail(response); }.bind(this));
+    },
 
-                if (response.status == 422) {
-                    var msg = _.values(responseTextJSON).join('<br>');
-                    Crude.showError(msg, this.alertContainer());
-                }
+    onSaveSuccess: function (response)
+    {
+        if ('message' in  response)
+            this.showMessage(response.message);
 
-                if (response.status == 403) {
-                    var msg = responseTextJSON.error.message;
-                    Crude.showError(msg, this.alertContainer());
-                    this.setup.triggerCancel();
-                }
-            }.bind(this));
+        this.setup.triggerNextAction(this.model);
+    },
+
+    onSaveFail: function (response)
+    {
+        var responseTextJSON = JSON.parse(response.responseText);
+
+        if (response.status == 422) {
+            var msg = _.values(responseTextJSON).join('<br>');
+            this.showError(msg);
+        }
+
+        if (response.status == 403) {
+            var msg = responseTextJSON.error.message;
+            this.showError(msg);
+            this.setup.triggerCancel();
+        }
     }
 });

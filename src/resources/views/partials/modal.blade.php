@@ -10,7 +10,9 @@
                     <%- title %>
                 </div>
                 <div class="modal-body">
-                    <%- content %>
+                    <div class="content">
+                        <%- content %>
+                    </div>
                 </div>
                 <% if (_.keys(btnList).length > 0) { %>
                     <div class="modal-footer">

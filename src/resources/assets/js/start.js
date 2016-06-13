@@ -17,4 +17,11 @@ $(function()
         });
         view.render();
     });
+
+    // initialize all tooltips on a page
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $('#deleteItemConfirmModal').find('.modal-content').html(
+        _.template($('#crude_deleteItemConfirmModalTemplate').html())({})
+    );
 });

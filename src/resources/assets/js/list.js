@@ -2,11 +2,12 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 {
     template: '#crude_listItemTemplate',
     tagName: 'tr',
-    className: 'crude-table-row',
 
     className: function ()
     {
-        return Crude.data.selectedItem == this.model.get('id') ? 'active' : '';
+        var className = 'crude-table-body-row ';
+        className += Crude.data.selectedItem == this.model.get('id') ? 'active' : '';
+        return className;
     },
 
     ui: {
@@ -27,7 +28,8 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     onRender: function ()
     {
-        this.$('[data-toggle="tooltip"]').tooltip();
+        // initialize all tooltips on a page
+        $('[data-toggle="tooltip"]').tooltip();
     },
 
     serializeData: function ()
@@ -40,8 +42,15 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     action: function (event)
     {
+        $(':focus').blur();
+
         Crude.data.selectedItem = this.model.get('id');
-        var action = $(event.target).data('action');
+
+        var target = $(event.target);
+        if (! target.hasClass('action'))
+            target = target.parents('.action');
+
+        var action = target.data('action');
         this.setup.triggerAction(action, this.model);
     },
 
@@ -58,18 +67,14 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     delete: function ()
     {
+        $(':focus').blur();
+
         this.setup.triggerCancel();
 
-        $modal = Crude.showModal(
-            Crude.getTrans('crude.confirm_delete', 'title'),
-            Crude.getTrans('crude.confirm_delete', 'content'),
-            {
-                cancel: Crude.getTrans('crude.confirm_delete', 'cancel'),
-                delete: Crude.getTrans('crude.confirm_delete', 'confirm')
-            }
-        );
+        $modal = $('#deleteItemConfirmModal');
+        $modal.modal('show');
 
-        $modal.find('[data-key="delete"]').bind('click', function (event)
+        $modal.find('#confirm').click(function (event)
         {
             this.model.destroy({wait: true})
                 .done(function(response) {
@@ -186,6 +191,9 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
     onRender: function ()
     {
+        // initialize all tooltips on a page
+        $('[data-toggle="tooltip"]').tooltip();
+
         setInterval(function()
         {
             var delay = Date.now() - this.updateTime;
@@ -201,6 +209,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
     add: function ()
     {
+        $(':focus').blur();
+
         Crude.data.selectedItem = null;
         this.setup.triggerAction(_.clone(this.setup.get('actions')), this.setup.getNewModel());
     },

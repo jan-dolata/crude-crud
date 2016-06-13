@@ -1,6 +1,6 @@
 <script type="text/template" id="crude_layoutTemplate">
     <div id="header" class="crude-header">
-        <div class="crude-header-title">
+        <div class="crude-header-title" data-title="<%- setup.get('title') %>">
             <%- setup.get('title') %>
         </div>
 

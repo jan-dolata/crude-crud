@@ -5,10 +5,15 @@ return [
     'save' => 'Save',
     'cancel' => 'Cancel',
     'edit' => 'Edit',
+    'delete' => 'Delete',
     'add' => 'Add',
+    'close' => 'Close',
     'submit' => 'Submit',
     'empty_list' => 'Empty list',
     'tools' => 'Tools',
+
+    'add_mode' => 'Add',
+    'edit_mode' => 'Edit',
 
     'yes' => 'Yes',
     'no' => 'No',
@@ -17,6 +22,12 @@ return [
     'drop_file_here' => 'Drop file here or click',
 
     'update_delay' => 'Last update',
+
+    'action' => [
+        'form' => 'Edit',
+        'map' => 'Edit location',
+        'file' => 'Add / Remove files'
+    ],
 
     'confirm_delete' => [
         'title' => 'Delete',

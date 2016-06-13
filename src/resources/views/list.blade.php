@@ -11,11 +11,15 @@
     <td class="text-right crude-table-body-cell">
         <%
             if(setup.get('editOption') && model.get('canBeEdited')) {
-                var iconClassName = setup.config('iconClassName');
                 _.each(setup.get('actions'), function(action) {
                     if(setup.isActionAvailable(action)) {
                         %>
-                        <span data-action="<%- action %>" class="action btn-icon <%- iconClassName[action] %> pointer"></span>
+                            <button data-action="<%= action %>"
+                                class="action crude-action-btn"
+                                title="<%= Crude.getTrans('crude.action', action) %>"
+                                data-toggle="tooltip" data-placement="bottom">
+                                <%= $('#crude_' + action + 'ActionButtonTemplate').html() %>
+                            </button>
                         <%
                     }
                 })
@@ -23,7 +27,9 @@
         %>
 
         <% if(setup.get('deleteOption') && model.get('canBeRemoved')) { %>
-            <span id="delete" class="fa fa-trash fa-lg pointer"></span>
+            <button id="delete" title="{{ trans('CrudeCRUD::crude.delete') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                <%= $('#crude_deleteActionButtonTemplate').html() %>
+            </button>
         <% } %>
     </td>
 </script>
@@ -57,7 +63,9 @@
 
             <th class="crude-table-head-cell text-right">
                 <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
-                    <span id="add" class="fa fa-plus fa-lg pointer"></span>
+                    <button id="add" title="{{ trans('CrudeCRUD::crude.add') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                        <%= $('#crude_addActionButtonTemplate').html() %>
+                    </button>
                 <% } %>
             </th>
         </tr>
@@ -66,11 +74,36 @@
     <tbody id="childViewContainer" class="crude-table-body"></tbody>
 
     <tfoot class="crude-table-foot">
-        <tr>
-            <td colspan="<%- setup.get('column').length + 1 %>">
+        <tr class="crude-table-foot-row">
+            <td class="crude-table-foot-cell" colspan="<%- setup.get('column').length + 1 %>">
                 @include('CrudeCRUD::partials.list-foot')
             </td>
         </tr>
     </tfoot>
 
+</script>
+
+<div id="deleteItemConfirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog crude-modal">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<script type="text/template" id="crude_deleteItemConfirmModalTemplate">
+    <div class="modal-header">
+        {{ trans('CrudeCRUD::crude.confirm_delete.title') }}
+    </div>
+    <div class="modal-body">
+        <div class="content">
+            {{ trans('CrudeCRUD::crude.confirm_delete.content') }}
+            <div class="pull-right">
+            <button id="confirm" class="crude-action-btn m-lg-r">
+                    <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({}) %>
+                </button>
+                <button class="crude-action-btn" data-dismiss="modal">
+                    <%= _.template($('#crude_cancelDeleteDeleteActionButtonTemplate').html())({}) %>
+                </button>
+            </div>
+        </div>
+    </div>
 </script>

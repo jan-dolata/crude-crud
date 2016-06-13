@@ -17,6 +17,8 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
 
     onRender: function()
     {
+        this.parentOnRender();
+
         this.ui.save.hide(100);
 
         var that = this;

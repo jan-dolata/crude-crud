@@ -13,6 +13,7 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
 
     onRender: function ()
     {
+        this.parentOnRender();
         this.bindAutocomplete();
         this.bindDatepicker();
     },

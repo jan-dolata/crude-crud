@@ -19,6 +19,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
 
     onRender: function ()
     {
+        this.parentOnRender();
         this.initMap();
     },
 
