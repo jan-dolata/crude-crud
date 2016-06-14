@@ -81,7 +81,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     alertContainer: function ()
     {
-        return this.$el.parents('#header').find('#alertContainer');
+        return $('#' + this.setup.containerId()).find('#alertContainer');
     },
 
     clearAllAlerts: function ()
@@ -96,7 +96,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     showMessage: function (msg)
     {
-        Crude.showAlert('success', msg);
+        Crude.showAlert('success', msg, this.alertContainer());
     },
 
     slideUp: function ()
@@ -135,24 +135,13 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     onSaveSuccess: function (response)
     {
         if ('message' in  response)
-            this.showMessage(response.message);
+            this.showMessage(response.data.message);
 
         this.setup.triggerNextAction(this.model);
     },
 
     onSaveFail: function (response)
     {
-        var responseTextJSON = JSON.parse(response.responseText);
-
-        if (response.status == 422) {
-            var msg = _.values(responseTextJSON).join('<br>');
-            this.showError(msg);
-        }
-
-        if (response.status == 403) {
-            var msg = responseTextJSON.error.message;
-            this.showError(msg);
-            this.setup.triggerCancel();
-        }
+        this.setup.onAjaxFail(response, this.alertContainer());
     }
 });

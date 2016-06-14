@@ -189,10 +189,25 @@ trait FromModelTrait
     {
         $newCollection = collect([]);
 
-        $collection->each(function ($model) use ($newCollection) {
+        $customActions = $this->crudeSetup->getCustomActions();
+
+            //CustomActionAvailable
+
+        $collection->each(function ($model) use ($newCollection, $customActions) {
             if ($this->permissionView($model)) {
                 $model->canBeEdited = $this->permissionUpdate($model);
                 $model->canBeRemoved = $this->permissionDelete($model);
+
+                if (! empty($customActions)) {
+                    foreach ($customActions as $action => $value) {
+                        $permission = $action . 'CustomActionPermission';
+                        $param = $action . 'CustomActionAvailable';
+                        $model->$param = method_exists($this, $permission)
+                            ? $this->$permission($model)
+                            : true;
+                    }
+                }
+
                 $newCollection->push($model);
             }
         });

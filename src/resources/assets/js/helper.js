@@ -42,6 +42,14 @@ Crude.getTrans = function(key, secondKey)
  * @param {string} type - info / danger / warning / success
  * @param {string} msg
  */
+Crude.showAlert = function (type, msg, $container)
+{
+    if (_.isUndefined($container))
+        $container = $('#crude_alertContainer');
+
+    Crude.showAlertInContainer(type, msg, $container);
+};
+
 Crude.showAlertInContainer = function (type, msg, $container)
 {
     if (_.isUndefined($container))

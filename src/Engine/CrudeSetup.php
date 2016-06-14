@@ -18,6 +18,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModelDefaults;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Trans;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModuleInPopup;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CustomActions;
 
     /**
      * Construct
@@ -77,6 +78,7 @@ class CrudeSetup
             'filters'       => $this->filters,
             'trans'         => $this->trans,
             'moduleInPopup' => $this->moduleInPopup,
+            'customActions' => $this->customActions,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),

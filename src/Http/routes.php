@@ -27,4 +27,6 @@ Route::group($group, function () {
         Route::delete('delete', 'FileController@delete');
     });
 
+    // Custom actions
+    Route::get('custom-action/{crudeName}/{action}/{id}', 'CustomActionController@execute');
 });

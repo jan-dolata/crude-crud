@@ -13,7 +13,12 @@ Crude.Models.Base = Backbone.Model.extend(
             lat: parseFloat(this.get('lat')),
             lng: parseFloat(this.get('lng'))
         };
-    }
+    },
+
+    isCustomActionAvailable: function(action)
+    {
+        return this.get(action + 'CustomActionAvailable');
+    },
 });
 
 Crude.Collections.Base = Backbone.Collection.extend(
@@ -93,6 +98,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         addOption: true,
         modelDefaults: [],
         selectOptions: [],
+        customeActions: [],
         config: [],
         filters: [],
         trans: [],
@@ -125,6 +131,11 @@ Crude.Models.Setup = Backbone.Model.extend(
     filesRoute: function (url)
     {
         return '/' + this.config('routePrefix') + '/file/' + url;
+    },
+
+    customActionRoute: function (action, id)
+    {
+        return '/' + this.config('routePrefix') + '/custom-action/' + this.getName() + '/' + action + '/' + id;
     },
 
     containerId: function ()
@@ -227,5 +238,35 @@ Crude.Models.Setup = Backbone.Model.extend(
             return trans[attr];
 
         return Crude.getAttrName(attr);
+    },
+
+    onAjaxFail: function(response, alertContainer)
+    {
+        if (! this.IsJsonString(response.responseText)) {
+            Crude.showAlert('danger', response.responseText, alertContainer);
+            return;
+        }
+
+        var responseTextJSON = JSON.parse(response.responseText);
+
+        if (response.status == 422) {
+            var msg = _.values(responseTextJSON).join('<br>');
+            Crude.showError(msg, alertContainer);
+        }
+
+        if (response.status == 403) {
+            var msg = responseTextJSON.error.message;
+            Crude.showError(msg, alertContainer);
+            this.setup.triggerCancel();
+        }
+    },
+
+    IsJsonString: function (str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 });

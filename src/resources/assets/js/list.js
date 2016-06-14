@@ -12,12 +12,14 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     ui: {
         action: '.action',
+        customAction: '.customAction',
         delete: '#delete'
     },
 
     events: {
         'click @ui.action': 'action',
-        'click @ui.delete': 'delete'
+        'click @ui.delete': 'delete',
+        'click @ui.customAction': 'customAction',
     },
 
     initialize: function (options)
@@ -54,6 +56,35 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
         this.setup.triggerAction(action, this.model);
     },
 
+    customAction: function (event)
+    {
+        $(':focus').blur();
+
+        var target = $(event.target);
+        if (! target.hasClass('customAction'))
+            target = target.parents('.customAction');
+
+        var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
+        var action = target.data('action');
+        var id = this.model.get('id');
+
+        var that = this;
+        $.ajax(
+        {
+            url: that.setup.customActionRoute(action, id),
+            type: 'get',
+            success: function(response)
+            {
+                Crude.showAlert('success', response.data.message, alertContainer);
+                Crude.vent.trigger('action_update', that.setup.getName());
+            },
+            error: function(response)
+            {
+                that.setup.onAjaxFail(response, alertContainer);
+            }
+        });
+    },
+
     itemSelected: function (setupName)
     {
         if (this.setup.getName() != setupName)
@@ -73,13 +104,14 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
         $modal = $('#deleteItemConfirmModal');
         $modal.modal('show');
+        var alertContainer = $('#' + that.setup.containerId()).find('#alertContainer');
 
         $modal.find('#confirm').click(function (event)
         {
             this.model.destroy({wait: true})
                 .done(function(response) {
                     if ('message' in  response)
-                        Crude.showAlert('success', response.message);
+                        Crude.showAlert('success', response.data.message, alertContainer);
 
                     $modal.modal('hide');
                 }.bind(this))
@@ -88,17 +120,16 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
                     if (response.status == 422) {
                         errors = _.values(responseTextJSON).join('<br>');
-                        Crude.showAlert('danger', errors);
+                        Crude.showAlert('danger', errors, alertContainer);
                     }
 
                     if (response.status == 403)
-                        Crude.showAlert('danger', responseTextJSON.error.message);
+                        Crude.showAlert('danger', responseTextJSON.error.message, alertContainer);
 
                     $modal.modal('hide');
                     this.setup.triggerCancel();
                 }.bind(this));
         }.bind(this));
-
     },
 });
 

@@ -9,28 +9,7 @@
         </td>
     <% }) %>
     <td class="text-right crude-table-body-cell">
-        <%
-            if(setup.get('editOption') && model.get('canBeEdited')) {
-                _.each(setup.get('actions'), function(action) {
-                    if(setup.isActionAvailable(action)) {
-                        %>
-                            <button data-action="<%= action %>"
-                                class="action crude-action-btn"
-                                title="<%= Crude.getTrans('crude.action', action) %>"
-                                data-toggle="tooltip" data-placement="bottom">
-                                <%= $('#crude_' + action + 'ActionButtonTemplate').html() %>
-                            </button>
-                        <%
-                    }
-                })
-            }
-        %>
-
-        <% if(setup.get('deleteOption') && model.get('canBeRemoved')) { %>
-            <button id="delete" title="{{ trans('CrudeCRUD::crude.delete') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                <%= $('#crude_deleteActionButtonTemplate').html() %>
-            </button>
-        <% } %>
+        @include('CrudeCRUD::partials.list-item-action')
     </td>
 </script>
 
