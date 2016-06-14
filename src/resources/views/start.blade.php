@@ -1,7 +1,7 @@
 @include('CrudeCRUD::partials.alert')
 @include('CrudeCRUD::partials.modal')
 
-<div id="crudeContainer"></div>
+<div id="crudeContainer" class="crude-container"></div>
 
 @include('CrudeCRUD::action-button')
 @include('CrudeCRUD::column-format')
