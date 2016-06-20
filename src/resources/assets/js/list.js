@@ -197,6 +197,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         this.setup = options.setup;
 
+        this.updateTime = Date.now();
+
         this.collection = this.setup.getNewCollection();
 
         this.updateList();
