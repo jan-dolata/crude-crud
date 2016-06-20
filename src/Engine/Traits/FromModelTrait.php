@@ -111,6 +111,20 @@ trait FromModelTrait
     }
 
     /**
+     * Method call after store, to overwrite in child class
+     * @param  Model $model
+     * @return Model
+     */
+    public function afterStore($model) {}
+
+    /**
+     * Method call after update, to overwrite in child class
+     * @param  Model $model
+     * @return Model
+     */
+    public function afterUpdate($model) {}
+
+    /**
      * Get filtered collection
      * @param  integer $page
      * @param  integer $numRows
@@ -247,7 +261,9 @@ trait FromModelTrait
 
         $model = $this->model->create($attributes);
 
-        return $this->getById($model->id);
+        $apiModel = $this->getById($model->id);
+        $this->afterStore($apiModel);
+        return $apiModel;
     }
 
     /**
@@ -271,7 +287,9 @@ trait FromModelTrait
 
         $model->update($attributes);
 
-        return $this->getById($model->id);
+        $apiModel = $this->getById($model->id);
+        $this->afterUpdate($apiModel);
+        return $apiModel;
     }
 
     private function mapAttributesWithScope($attributes)
