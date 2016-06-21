@@ -6,7 +6,9 @@
                 <span class="crude-table-body-cell-label">
                     <%- setup.getAttrName(a) %>
                 </span>
-                <%= Crude.renderCell(setup, a, model) %>
+                <span class="crude-table-body-cell-content">
+                    <%= Crude.renderCell(setup, a, model) %>
+                </span>
                 <br>
             <% }); %>
         </td>
@@ -17,11 +19,10 @@
 </script>
 
 <script type="text/template" id="crude_listEmptyTemplate">
-    <td class="crude-table-body-cell hidden-xs hidden-sm" colspan="<%- setup.get('column').length + 1 %>">
+    <td class="hide"></td>
+    <td class="crude-table-body-cell" colspan="<%- setup.get('column').length + 1 %>">
         <h4>{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
     </td>
-    jdnc
-    <h4 class="visible-xs-block visible-sm-block">{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
 </script>
 
 <script type="text/template" id="crude_listTemplate">

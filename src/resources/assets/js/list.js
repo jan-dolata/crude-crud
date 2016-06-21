@@ -137,7 +137,7 @@ Crude.Views.ListEmpty = Backbone.Marionette.ItemView.extend(
 {
     template: '#crude_listEmptyTemplate',
     tagName: 'tr',
-    className: 'crude-table-row',
+    className: 'crude-table-body-row',
 
     initialize: function (options)
     {
