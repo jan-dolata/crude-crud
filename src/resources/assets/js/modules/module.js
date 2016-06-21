@@ -2,11 +2,13 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 {
     tagName: 'div',
     moduleName: '',
+    formIsLocked: false,
 
     ui: {
         save: '#save',
         cancel: '#cancel',
-        input: '.input'
+        input: '.input',
+        loader: '#loader'
     },
 
     events: {
@@ -124,8 +126,12 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     saveModel: function (response)
     {
+        if (this.formIsLocked)
+            return;
+
         this.clearAllAlerts();
         $(':focus').blur();
+        this.lockForm();
 
         this.model.save()
             .done(function (response) { this.onSaveSuccess(response); }.bind(this))
@@ -134,6 +140,8 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     onSaveSuccess: function (response)
     {
+        this.unlockForm();
+
         if ('message' in  response)
             this.showMessage(response.data.message);
 
@@ -142,6 +150,24 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     onSaveFail: function (response)
     {
+        this.unlockForm();
+
         this.setup.onAjaxFail(response, this.alertContainer());
-    }
+    },
+
+    lockForm: function()
+    {
+        this.formIsLocked = true;
+        this.ui.loader.show(200);
+        this.ui.save.attr('disabled', true);
+        this.ui.cancel.attr('disabled', true);
+    },
+
+    unlockForm: function()
+    {
+        this.formIsLocked = false;
+        this.ui.loader.hide(200);
+        this.ui.save.removeAttr('disabled');
+        this.ui.cancel.removeAttr('disabled');
+    },
 });

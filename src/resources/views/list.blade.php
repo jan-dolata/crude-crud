@@ -94,3 +94,7 @@
         </div>
     </div>
 </script>
+
+<script type="text/template" id="crude_moduleLoaderTemplate">
+    <i class="fa fa-cog fa-spin fa-lg fa-fw m-sm-r"></i>
+</script>

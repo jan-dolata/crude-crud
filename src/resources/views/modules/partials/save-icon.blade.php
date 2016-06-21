@@ -6,6 +6,10 @@
     <% } %>
 
     <div class="pull-right">
+        <span id="loader" style="display: none">
+            <%= $('#crude_moduleLoaderTemplate').html() %>
+        </span>
+
         <button id="save" title="{{ trans('CrudeCRUD::crude.save') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
             <%= $('#crude_saveActionButtonTemplate').html() %>
         </button>

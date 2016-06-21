@@ -7,6 +7,7 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
         save: '#save',
         cancel: '#cancel',
         input: '.input',
+        loader: '#loader',
         autocomplete: '.autocomplete',
         datetimepicker: '.datetimepicker',
     },

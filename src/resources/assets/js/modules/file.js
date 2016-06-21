@@ -10,6 +10,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
     ui: {
         save: '#save',
         cancel: '#cancel',
+        loader: '#loader',
         uploadFileDropzone: '#upload_file_dropzone'
     },
 

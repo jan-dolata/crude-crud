@@ -104,7 +104,7 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
         $modal = $('#deleteItemConfirmModal');
         $modal.modal('show');
-        var alertContainer = $('#' + that.setup.containerId()).find('#alertContainer');
+        var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
 
         $modal.find('#confirm').click(function (event)
         {
