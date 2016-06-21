@@ -199,6 +199,10 @@ Crude.Models.Setup = Backbone.Model.extend(
         if (! _.isArray(actionToTrigger))
             actionToTrigger = [actionToTrigger];
 
+        $('html, body').animate({
+            scrollTop: $('#' + this.containerId()).offset().top - 200
+        }, 500);
+
         this.set('actionToTrigger', actionToTrigger);
         Crude.vent.trigger('action_end', this.getName());
         this.triggerNextAction(model);

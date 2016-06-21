@@ -8,6 +8,8 @@ $vertical-margin: 10px;
 
 $alert-argin: 5px;
 
+$bootstrap-screen-sm-max: 991px;
+
 @mixin first() {
     background-color: $first-bg !important;
     color: $first-color !important;
@@ -87,12 +89,25 @@ $alert-argin: 5px;
                 &:last-child {
                     padding-right: $horizontal-margin;
                 }
+
+                &.crude-table-head-cell-action,
+                &.crude-table-body-cell-action {
+                    text-align: right;
+                }
+
+                h4 {
+                    text-align: center;
+                }
             }
 
             .crude-table-body {
                 .crude-table-body-row {
                     .crude-table-body-cell {
                         border-top: 1px solid lighten($second-bg, 30%);
+
+                        .crude-table-body-cell-label {
+                            display: none;
+                        }
                     }
 
                     &.active {
@@ -112,6 +127,63 @@ $alert-argin: 5px;
                     .crude-table-foot-cell {
                         border-top: 1px solid $second-bg !important;
                     }
+                }
+            }
+
+            @media (max-width: $bootstrap-screen-sm-max) {
+                .crude-table-head-cell {
+                    display: none !important;
+                }
+
+                .crude-table-head-cell-action {
+                    display: block !important;
+                }
+
+                .crude-table-body-row {
+                    position: relative;
+                }
+
+                .crude-table-body-cell-action {
+                    display: block !important;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                }
+
+                .crude-table,
+                .crude-table-body,
+                .crude-table-body-row,
+                .crude-table-body-cell,
+                .crude-table-foot,
+                .crude-table-foot-row,
+                .crude-table-foot-cell, {
+                    display: block;
+                }
+
+                .crude-table-head-cell,
+                .crude-table-body-cell,
+                .crude-table-foot-cell {
+                    padding-left: $horizontal-margin;
+                    padding-right: $horizontal-margin;
+                }
+
+                .crude-table-body-cell {
+                    border-top: 0 !important;
+
+                    &:first-child {
+                        border-top: 1px solid lighten($second-bg, 30%) !important;
+                        padding-top: 38px;
+                    }
+                }
+
+                .crude-table-body-cell-label {
+                    font-weight: bold;
+                    display: inline-block !important;
+                    width: 50%;
+                    padding-right: $horizontal-margin / 2;
+                    margin-right: $horizontal-margin / 2;
+                    text-align: right;
                 }
             }
         }

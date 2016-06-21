@@ -3,44 +3,51 @@
         <% if(! _.isArray(attr)) attr = [attr]; %>
         <td class="crude-table-body-cell">
             <% _.each(attr, function(a) { %>
+                <span class="crude-table-body-cell-label">
+                    <%- setup.getAttrName(a) %>
+                </span>
                 <%= Crude.renderCell(setup, a, model) %>
                 <br>
             <% }); %>
         </td>
     <% }) %>
-    <td class="text-right crude-table-body-cell">
+    <td class="crude-table-body-cell crude-table-body-cell-action">
         @include('CrudeCRUD::partials.list-item-action')
     </td>
 </script>
 
 <script type="text/template" id="crude_listEmptyTemplate">
-    <td class="text-center crude-table-body-cell" colspan="<%- setup.get('column').length + 1 %>">
+    <td class="crude-table-body-cell hidden-xs hidden-sm" colspan="<%- setup.get('column').length + 1 %>">
         <h4>{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
     </td>
+    jdnc
+    <h4 class="visible-xs-block visible-sm-block">{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
 </script>
 
 <script type="text/template" id="crude_listTemplate">
     <thead class="crude-table-head">
         <tr class="crude-table-head-row">
-            <% _.each(setup.get('column'), function(attr) { %>
-                <% if(! _.isArray(attr)) attr = [attr]; %>
-                <th class="crude-table-head-cell">
-                    <% _.each(attr, function(a) { %>
-                        <div class="sort pointer" data-attr="<%- a %>">
-                            <%- setup.getAttrName(a) %>
+            <% if(pagination.count) { %>
+                <% _.each(setup.get('column'), function(attr) { %>
+                    <% if(! _.isArray(attr)) attr = [attr]; %>
+                    <th class="crude-table-head-cell">
+                        <% _.each(attr, function(a) { %>
+                            <div class="sort pointer" data-attr="<%- a %>">
+                                <%- setup.getAttrName(a) %>
 
-                            <% if(sort.attr == a) { %>
-                                <span class="fa-stack">
-                                    <i class="fa fa-sort fa-stack-1x" style="color: #ddd"></i>
-                                    <i class="fa fa-sort-<%- sort.order %> fa-stack-1x"></i>
-                                </span>
-                            <% } %>
-                        </div>
-                    <% }); %>
-                </th>
-            <% }) %>
+                                <% if(sort.attr == a) { %>
+                                    <span class="fa-stack">
+                                        <i class="fa fa-sort fa-stack-1x" style="color: #ddd"></i>
+                                        <i class="fa fa-sort-<%- sort.order %> fa-stack-1x"></i>
+                                    </span>
+                                <% } %>
+                            </div>
+                        <% }); %>
+                    </th>
+                <% }) %>
+            <% } %>
 
-            <th class="crude-table-head-cell text-right">
+            <th class="crude-table-head-cell crude-table-head-cell-action">
                 <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
                     <button id="add" title="{{ trans('CrudeCRUD::crude.add') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
                         <%= $('#crude_addActionButtonTemplate').html() %>

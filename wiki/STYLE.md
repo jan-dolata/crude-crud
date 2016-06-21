@@ -22,10 +22,10 @@ To change style prepare css with classes:
             + crude-table
                 + crude-table-head
                     + crude-table-head-row
-                        + crude-table-head-cell
+                        + crude-table-head-cell (&& crude-table-head-cell-action)
                 + crude-table-body
-                    + crude-table-body-row (&active)
-                        + crude-table-body-cell
+                    + crude-table-body-row (&& active)
+                        + crude-table-body-cell (&& crude-table-body-cell-action)
                 + crude-table-foot
                     + crude-table-foot-row
                         + crude-table-foot-cell
