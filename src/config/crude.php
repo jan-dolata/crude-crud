@@ -52,4 +52,8 @@ return [
      */
     'numRowsOptions' => [5, 10, 20, 30, 40, 50],
 
+    /**
+     * Refresh all list on page after change
+     */
+    'refreshAll' => true,
 ];

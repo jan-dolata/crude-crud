@@ -311,7 +311,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
     updateThisList: function (setupName)
     {
-        if (this.setup.getName() == setupName)
+        if (this.setup.getName() == setupName || this.setup.config('refreshAll'))
             this.updateList();
     },
 });

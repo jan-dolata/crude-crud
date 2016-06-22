@@ -85,7 +85,8 @@ class CrudeSetup
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),
                 'numRowsOptions' => config('crude.numRowsOptions'),
-                'iconClassName'  => config('crude.iconClassName')
+                'iconClassName'  => config('crude.iconClassName'),
+                'refreshAll'     => config('crude.refreshAll')
             ],
         ];
     }
