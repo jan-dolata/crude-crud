@@ -103,6 +103,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         filters: [],
         trans: [],
         moduleInPopup: false,
+        panelView: false,
 
         actionToTrigger: []
     },

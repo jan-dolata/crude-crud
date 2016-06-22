@@ -129,77 +129,110 @@ $bootstrap-screen-sm-max: 991px;
                     }
                 }
             }
-
-            @media (max-width: $bootstrap-screen-sm-max) {
-                .crude-table,
-                .crude-table-body,
-                .crude-table-head,
-                .crude-table-head-row,
-                .crude-table-head-cell,
-                .crude-table-body-row,
-                .crude-table-body-cell,
-                .crude-table-foot,
-                .crude-table-foot-row,
-                .crude-table-foot-cell, {
-                    display: block;
-                }
-
-                .crude-table-head-cell {
-                    display: none !important;
-                }
-
-                .crude-table-head-cell-action {
-                    display: block !important;
-                }
-
-                .crude-table-body-row {
-                    position: relative;
-                }
-
-                .crude-table-body-cell-action {
-                    display: block !important;
-                    position: absolute;
-                    top: $vertical-margin;
-                    left: 0;
-                    right: 0;
-                }
-
-                .crude-table-head-cell,
-                .crude-table-body-cell,
-                .crude-table-foot-cell {
-                    padding-left: $horizontal-margin;
-                    padding-right: $horizontal-margin;
-                }
-
-                .crude-table-body-cell {
-                    padding-top: 0;
-                    padding-bottom: 0;
-                    border-top: 0 !important;
-                }
-
-                .crude-table-body-row {
-                    border-top: 1px solid lighten($second-bg, 30%) !important;
-                    padding-top: 38px;
-                    padding-bottom: $vertical-margin;
-                }
-
-                .crude-table-body-cell-label {
-                    font-weight: bold;
-                    display: inline-block !important;
-                    width: 30%;
-                    padding-right: $horizontal-margin / 2;
-                    text-align: right;
-                }
-
-                .crude-table-body-cell-content {
-                    display: block;
-                    margin-left: 30%;
-                    padding-left: $horizontal-margin / 2;
-                    margin-top: -20px;
-                    margin-bottom: -20px;
-                }
-            }
         }
+    }
+}
+
+@mixin responsiveTable() {
+    .crude-table,
+    .crude-table-body,
+    .crude-table-head,
+    .crude-table-head-row,
+    .crude-table-head-cell,
+    .crude-table-body-row,
+    .crude-table-body-cell,
+    .crude-table-foot,
+    .crude-table-foot-row,
+    .crude-table-foot-cell, {
+        display: block;
+    }
+
+    .crude-table-head-cell {
+        display: none !important;
+    }
+
+    .crude-table-head-cell-action {
+        display: block !important;
+    }
+
+    .crude-table-body-row {
+        position: relative;
+    }
+
+    .crude-table-body-cell-action {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .crude-table-head-cell,
+    .crude-table-body-cell,
+    .crude-table-foot-cell {
+        padding-left: $horizontal-margin;
+        padding-right: $horizontal-margin;
+    }
+
+    .crude-table-body-cell {
+        padding-top: 0;
+        padding-bottom: 0;
+        border-top: 0 !important;
+    }
+
+    .crude-table-body-row {
+        border-top: 1px solid lighten($second-bg, 30%) !important;
+        padding-top: 38px;
+        padding-bottom: $vertical-margin;
+    }
+
+    .crude-table-body-cell-label {
+        font-weight: bold;
+        display: inline-block !important;
+        width: 45%;
+        padding-right: $horizontal-margin / 2;
+        text-align: right;
+    }
+
+    .crude-table-body-cell-content {
+        display: block;
+        margin-left: 45%;
+        padding-left: $horizontal-margin / 2;
+        margin-top: -20px;
+        margin-bottom: -20px;
+    }
+}
+
+@mixin panel() {
+    .crude-table-head {
+        display: none;
+    }
+
+    .crude-table-body-row {
+        border: 0;
+    }
+
+    .crude-table-foot {
+        .crude-table-foot-search,
+        .crude-table-foot-pagination,
+        .crude-table-foot-num-rows {
+            display: none;
+        }
+    }
+}
+
+.crude-box {
+    @media (max-width: $bootstrap-screen-sm-max) {
+        @include responsiveTable();
+    }
+}
+
+.crude-box-panel {
+    @include responsiveTable();
+    @include panel();
+
+    @media (max-width: $bootstrap-screen-sm-max) {
+        @include panel();
     }
 }
 
