@@ -73,15 +73,21 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
                     var selected = _.findWhere(Crude.data.autocomplete, {label: $el.val()});
 
                     if (_.isUndefined(selected))
-                        return updateAutocompleteValues('', '');
+                        return updateAutocompleteValues($el.val(), '');
 
                     updateAutocompleteValues(selected.label, selected.id);
                 }
             });
         });
+
+        this.ui.autocomplete.blur(function (event)
+        {
+            var $el = $(this);
+            var val = $($el.siblings('.autocompleteValue')[0]).val();
+            if (_.isEmpty(val))
+                $el.val('');
+        });
     },
-
-
 
     bindDatepicker: function ()
     {
