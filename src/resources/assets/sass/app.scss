@@ -20,6 +20,7 @@ $arrowSize: 16px;
 
 @import "common";
 @import "grid";
+@import "inputs";
 
 body {
     overflow-y: scroll;
@@ -35,32 +36,6 @@ body {
     -webkit-box-shadow: $boxShadow;
     -moz-box-shadow: $boxShadow;
     box-shadow: $boxShadow;
-}
-
-.navbar {
-    .active {
-        a {
-            background-color: $activeBg !important;
-            color: $boxBg !important;
-            border-radius: $boxRadius;
-        }
-
-        &:after {
-            position: absolute;
-            transform: rotate(45deg);
-            content: '';
-            background-color: $activeBg;
-            width: $arrowSize;
-            height: $arrowSize;
-            margin-left: - $arrowSize / 2;
-            margin-top: - $arrowSize / 2;
-            left: 50%;
-
-            box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.3);
-        }
-
-        box-shadow: $boxShadow;
-    }
 }
 
 .pointer {

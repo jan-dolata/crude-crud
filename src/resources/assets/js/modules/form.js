@@ -10,6 +10,8 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
         loader: '#loader',
         autocomplete: '.autocomplete',
         datetimepicker: '.datetimepicker',
+        showMarkdownPrieview: '.showMarkdownPrieview',
+        markdownInput: '.markdownInput'
     },
 
     onRender: function ()
@@ -17,6 +19,7 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
         this.parentOnRender();
         this.bindAutocomplete();
         this.bindDatepicker();
+        this.bindMarkdownPreview();
     },
 
     save: function ()
@@ -102,6 +105,24 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             }
+        });
+    },
+
+    bindMarkdownPreview: function ()
+    {
+        var md = window.markdownit();
+
+        var updateMarkdownPreview = function (el) {
+            var val = $(el).val();
+            $(el).parents('.row').find('.markdownPreview').html(md.render(val));
+        };
+
+        this.ui.markdownInput.bind('keyup', function () {
+            updateMarkdownPreview(this);
+        });
+
+        this.ui.markdownInput.bind('click', function () {
+            updateMarkdownPreview(this);
         });
     }
 });

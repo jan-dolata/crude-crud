@@ -23,6 +23,8 @@ return [
 
     'update_delay' => 'Last update',
 
+    'markdown_preview' => 'Preview',
+
     'action' => [
         'form' => 'Edit',
         'map' => 'Edit location',
@@ -48,6 +50,7 @@ return [
         'autocomplete' => 'autocomplete',
         'datetime' => 'date and time',
         'select' => 'select',
-        'json' => 'JSON'
+        'json' => 'JSON',
+        'markdown' => 'markdown'
     ],
 ];

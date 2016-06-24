@@ -16,6 +16,8 @@
 * datetime - powered by bootstrap-datetimepicker
 * autocomplete - powered by jquery-ui
 * select
+* json
+* markdown
 
 ## Usage
 

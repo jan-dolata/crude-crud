@@ -23,6 +23,8 @@ return [
 
     'update_delay' => 'Dane z przed',
 
+    'markdown_preview' => 'Podgląd',
+
     'action' => [
         'form' => 'Edytuj',
         'map' => 'Edytuj lokalizację',
@@ -48,6 +50,7 @@ return [
         'autocomplete' => 'autouzupełnianie',
         'datetime' => 'data i godzina',
         'select' => 'lista',
-        'json' => 'JSON'
+        'json' => 'JSON',
+        'markdown' => 'markdown'
     ],
 ];

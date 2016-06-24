@@ -37,3 +37,8 @@
     <i class="fa fa-lg fa-times"></i>
     {{ trans('CrudeCRUD::crude.confirm_delete.cancel') }}
 </script>
+
+<script type="text/template" id="crude_closePreviewActionButtonTemplate">
+    <i class="fa fa-lg fa-times"></i>
+    {{ trans('CrudeCRUD::crude.close') }}
+</script>

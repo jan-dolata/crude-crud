@@ -210,6 +210,9 @@ $bootstrap-screen-sm-max: 991px;
 
     .crude-table-body-row {
         border: 0;
+        &:hover {
+            background-color: transparent;
+        }
     }
 
     .crude-table-foot {

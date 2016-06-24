@@ -11,7 +11,13 @@
 </script>
 
 <script type="text/template" id="crude_jsonInputTemplate">
-    <pre><textarea type="json" class="input form-control" data-attr="<%- attr %>" rows="4" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.json') }}"><%- JSON.stringify(model[attr], null, 4) %></textarea></pre>
+    <pre class="crude-pre-textarea-container"><textarea
+        type="json"
+        class="input form-control"
+        data-attr="<%- attr %>"
+        rows="4"
+        placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.json') }}"
+        ><%- JSON.stringify(model[attr], null, 4) %></textarea></pre>
 </script>
 
 <script type="text/template" id="crude_infoInputTemplate">
@@ -47,5 +53,38 @@
             </option>
         <% } %>
     </select>
+</script>
 
+<script type="text/template" id="crude_markdownInputTemplate">
+    <pre class="crude-pre-textarea-container"><textarea
+        type="markdown"
+        class="input form-control markdownInput"
+        data-attr="<%- attr %>"
+        rows="8"
+        placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.markdown') }}"
+        ><%- model[attr] %></textarea></pre>
+    <div class="well markdownPreview" style="background: #fff"></div>
+</script>
+
+<div id="markdownPreviewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog crude-modal" style="width: 80%">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<script type="text/template" id="crude_markdownPreviewModalTemplate">
+    <div class="modal-header">
+        {{ trans('CrudeCRUD::crude.markdown_preview') }}
+    </div>
+    <div class="modal-body">
+        <div class="content">
+            <%= content %>
+            <hr>
+            <div class="text-right">
+                <button class="crude-action-btn" data-dismiss="modal">
+                    <%= _.template($('#crude_closePreviewActionButtonTemplate').html())({}) %>
+                </button>
+            </div>
+        </div>
+    </div>
 </script>

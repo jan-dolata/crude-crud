@@ -1,6 +1,16 @@
 <%
 _.each(setup.get('customActions'), function(data, action) {
     if(model.isCustomActionAvailable(action)) {
+        if(data.type && data.type == 'link') {
+%>
+        <a href="<%= data.url ? data.url : '#' %><%= data.attr ? '/' + model.get(data.attr) : '' %>" <%= data.target ? 'target="' + data.target + '"' : '' %>>
+            <button class="crude-action-btn"
+                <%= data.title ? 'title="' + data.title + '" data-toggle="tooltip" data-placement="bottom"' : '' %>>
+                <%= $('#' + action + 'CustomActionButtonTemplate').html() %>
+            </button>
+        </a>
+<%
+        } else {
 %>
             <button data-action="<%= action %>"
                 class="customAction crude-action-btn"
@@ -8,6 +18,7 @@ _.each(setup.get('customActions'), function(data, action) {
                 <%= $('#' + action + 'CustomActionButtonTemplate').html() %>
             </button>
 <%
+        }
     }
 });
 

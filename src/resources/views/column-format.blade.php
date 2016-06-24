@@ -3,8 +3,7 @@
     <% if (_.isObject(value)) { %>
         <%- value.length %>
     <% } else { %>
-        <%- String(value).substring(0, 40) %>
-        <%= String(value).length > 40 ? '...' : '' %>
+        <%- s.truncate(String(value), 20) %>
     <% } %>
 </script>
 

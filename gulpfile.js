@@ -20,7 +20,8 @@ elixir(function(mix) {
         'moment/min/moment.min.js',
         'dropzone/dist/dropzone.js',
         'bootstrap-datetimepicker-sass/src/js/bootstrap-datetimepicker.js',
-        'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.pl.js'
+        'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.pl.js',
+        'markdown-it/dist/markdown-it.min.js'
     ], 'src/public/js/lib.js', node);
 
     mix.scripts([
