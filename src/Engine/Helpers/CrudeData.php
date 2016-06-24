@@ -19,7 +19,7 @@ class CrudeData
         if (empty($attr))
             return $data;
 
-        if (in_array($attr, $data))
+        if (isset($data[$attr]))
             return $data[$attr];
 
         return null;
