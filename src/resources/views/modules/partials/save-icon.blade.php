@@ -1,4 +1,4 @@
-<div class="m-md-b">
+<div class="m-md-t m-md-b">
     <% if (model.id) { %>
         {{ trans('CrudeCRUD::crude.edit_mode') }}: {{ trans('validation.attributes.id') }} <%- model.id %>
     <% } else { %>

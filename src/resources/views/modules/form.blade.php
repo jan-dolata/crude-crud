@@ -1,6 +1,4 @@
 <script type="text/template" id="crude_formTemplate">
-    @include('CrudeCRUD::modules.partials.save-icon')
-
     <%
     var list = model.id ? setup.get('editForm') : setup.get('addForm');
     _.each(list, function(attr) {
@@ -17,4 +15,6 @@
             </div>
         </div>
     <% }); %>
+
+    @include('CrudeCRUD::modules.partials.save-icon')
 </script>
