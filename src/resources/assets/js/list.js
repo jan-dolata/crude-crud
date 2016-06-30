@@ -5,17 +5,21 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     className: function ()
     {
-        return Crude.data.selectedItem == this.model.get('id') ? 'active' : '';
+        var className = 'crude-table-body-row ';
+        className += Crude.data.selectedItem == this.model.get('id') ? 'active' : '';
+        return className;
     },
 
     ui: {
         action: '.action',
+        customAction: '.customAction',
         delete: '#delete'
     },
 
     events: {
         'click @ui.action': 'action',
-        'click @ui.delete': 'delete'
+        'click @ui.delete': 'delete',
+        'click @ui.customAction': 'customAction',
     },
 
     initialize: function (options)
@@ -26,7 +30,8 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     onRender: function ()
     {
-        this.$('[data-toggle="tooltip"]').tooltip();
+        // initialize all tooltips on a page
+        $('[data-toggle="tooltip"]').tooltip();
     },
 
     serializeData: function ()
@@ -39,9 +44,45 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     action: function (event)
     {
+        $(':focus').blur();
+
         Crude.data.selectedItem = this.model.get('id');
-        var action = $(event.target).data('action');
+
+        var target = $(event.target);
+        if (! target.hasClass('action'))
+            target = target.parents('.action');
+
+        var action = target.data('action');
         this.setup.triggerAction(action, this.model);
+    },
+
+    customAction: function (event)
+    {
+        $(':focus').blur();
+
+        var target = $(event.target);
+        if (! target.hasClass('customAction'))
+            target = target.parents('.customAction');
+
+        var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
+        var action = target.data('action');
+        var id = this.model.get('id');
+
+        var that = this;
+        $.ajax(
+        {
+            url: that.setup.customActionRoute(action, id),
+            type: 'get',
+            success: function(response)
+            {
+                Crude.showAlert('success', response.data.message, alertContainer);
+                Crude.vent.trigger('action_update', that.setup.getName());
+            },
+            error: function(response)
+            {
+                that.setup.onAjaxFail(response, alertContainer);
+            }
+        });
     },
 
     itemSelected: function (setupName)
@@ -57,21 +98,20 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     delete: function ()
     {
-        $modal = Crude.showModal(
-            Crude.getTrans('crude.confirm_delete', 'title'),
-            Crude.getTrans('crude.confirm_delete', 'content'),
-            {
-                cancel: Crude.getTrans('crude.confirm_delete', 'cancel'),
-                delete: Crude.getTrans('crude.confirm_delete', 'confirm')
-            }
-        );
+        $(':focus').blur();
 
-        $modal.find('[data-key="delete"]').bind('click', function (event)
+        this.setup.triggerCancel();
+
+        $modal = $('#deleteItemConfirmModal');
+        $modal.modal('show');
+        var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
+
+        $modal.find('#confirm').click(function (event)
         {
             this.model.destroy({wait: true})
                 .done(function(response) {
                     if ('message' in  response)
-                        Crude.showAlert('success', response.message);
+                        Crude.showAlert('success', response.data.message, alertContainer);
 
                     $modal.modal('hide');
                 }.bind(this))
@@ -80,17 +120,16 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
                     if (response.status == 422) {
                         errors = _.values(responseTextJSON).join('<br>');
-                        Crude.showAlert('danger', errors);
+                        Crude.showAlert('danger', errors, alertContainer);
                     }
 
                     if (response.status == 403)
-                        Crude.showAlert('danger', responseTextJSON.error.message);
+                        Crude.showAlert('danger', responseTextJSON.error.message, alertContainer);
 
                     $modal.modal('hide');
                     this.setup.triggerCancel();
                 }.bind(this));
         }.bind(this));
-
     },
 });
 
@@ -98,6 +137,7 @@ Crude.Views.ListEmpty = Backbone.Marionette.ItemView.extend(
 {
     template: '#crude_listEmptyTemplate',
     tagName: 'tr',
+    className: 'crude-table-body-row',
 
     initialize: function (options)
     {
@@ -119,9 +159,14 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     emptyView: Crude.Views.ListEmpty,
     childViewContainer: '#childViewContainer',
     tagName: 'table',
-    className: 'table table-hover',
+    className: 'table table-hover crude-table',
+
+    updateTime: '',
 
     ui: {
+        updateDelay: '#updateDelay',
+        refresh: '#refresh',
+
         add: '#add',
         sort: '.sort',
 
@@ -144,12 +189,15 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.changeSearchAttr': 'changeSearchAttr',
         'click @ui.search': 'search',
         'keyup @ui.searchValue': 'searchOnEnter',
-        'click @ui.clearSearch': 'clearSearch'
+        'click @ui.clearSearch': 'clearSearch',
+        'click @ui.refresh': 'updateList'
     },
 
     initialize: function (options)
     {
         this.setup = options.setup;
+
+        this.updateTime = Date.now();
 
         this.collection = this.setup.getNewCollection();
 
@@ -174,8 +222,28 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         };
     },
 
+    onRender: function ()
+    {
+        // initialize all tooltips on a page
+        $('[data-toggle="tooltip"]').tooltip();
+
+        setInterval(function()
+        {
+            var delay = Date.now() - this.updateTime;
+            delay = parseInt(delay / 1000);
+            var s = delay % 60;
+            var m = parseInt(delay / 60);
+
+            s = String("00" + s).slice(-2);
+
+            this.ui.updateDelay.html( m + ':' + s );
+        }.bind(this), 1000);
+    },
+
     add: function ()
     {
+        $(':focus').blur();
+
         Crude.data.selectedItem = null;
         this.setup.triggerAction(_.clone(this.setup.get('actions')), this.setup.getNewModel());
     },
@@ -235,13 +303,15 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         this.collection.fetchWithOptions().done(function ()
         {
+            Crude.vent.trigger('fetched_completed');
+            this.updateTime = Date.now();
             this.render();
         }.bind(this));
     },
 
     updateThisList: function (setupName)
     {
-        if (this.setup.getName() == setupName)
+        if (this.setup.getName() == setupName || this.setup.config('refreshAll'))
             this.updateList();
     },
 });

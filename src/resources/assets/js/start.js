@@ -7,8 +7,10 @@ $(function()
     {
         var setup = new Crude.Models.Setup(setup);
 
+        var panelClass = setup.get('panelView') ? ' crude-box-panel' : '';
+
         $crudeContainer.append(
-            '<div id="' + setup.containerId() + '" class="container"></div>'
+            '<div id="' + setup.containerId() + '" class="container crude-box' + panelClass + '"></div>'
         );
 
         var view = new Crude.Views.Layout({
@@ -17,4 +19,11 @@ $(function()
         });
         view.render();
     });
+
+    // initialize all tooltips on a page
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $('#deleteItemConfirmModal').find('.modal-content').html(
+        _.template($('#crude_deleteItemConfirmModalTemplate').html())({})
+    );
 });

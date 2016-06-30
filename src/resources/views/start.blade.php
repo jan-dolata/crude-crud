@@ -1,8 +1,9 @@
 @include('CrudeCRUD::partials.alert')
 @include('CrudeCRUD::partials.modal')
 
-<div id="crudeContainer"></div>
+<div id="crudeContainer" class="crude-container"></div>
 
+@include('CrudeCRUD::action-button')
 @include('CrudeCRUD::column-format')
 @include('CrudeCRUD::list')
 @include('CrudeCRUD::input')
@@ -17,6 +18,6 @@
 
 <script type="text/javascript">
     Crude.data.crudeSetup = {!! empty($crudeSetup) ? '{}' : json_encode($crudeSetup, JSON_NUMERIC_CHECK) !!};
+    Crude.trans['crude.action'] = {!! json_encode(trans('CrudeCRUD::crude.action'), JSON_NUMERIC_CHECK) !!};
     Crude.trans['validation.attributes'] = {!! json_encode(trans('validation.attributes'), JSON_NUMERIC_CHECK) !!};
-    Crude.trans['crude.confirm_delete'] = {!! json_encode(trans('CrudeCRUD::crude.confirm_delete'), JSON_NUMERIC_CHECK) !!};
 </script>

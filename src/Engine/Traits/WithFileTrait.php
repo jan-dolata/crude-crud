@@ -32,7 +32,6 @@ trait WithFileTrait
      */
     public function deleteFileByFileLog(FileLog $log)
     {
-        Storage::delete($log->file_path);
         $id = $log->model_id;
 
         $model = $this->getById($id);

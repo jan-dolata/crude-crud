@@ -14,13 +14,14 @@ elixir(function(mix) {
         'jquery-ui-bundle/jquery-ui.min.js',
         'underscore/underscore-min.js',
         'underscore.string/dist/underscore.string.min.js',
-        'backbone.marionette/node_modules/backbone/backbone.js',
+        'backbone/backbone.js',
         'backbone.marionette/lib/backbone.marionette.min.js',
         'bootstrap-sass/assets/javascripts/bootstrap.min.js',
         'moment/min/moment.min.js',
         'dropzone/dist/dropzone.js',
         'bootstrap-datetimepicker-sass/src/js/bootstrap-datetimepicker.js',
-        'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.pl.js'
+        'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.pl.js',
+        'markdown-it/dist/markdown-it.min.js'
     ], 'src/public/js/lib.js', node);
 
     mix.scripts([

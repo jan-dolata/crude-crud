@@ -16,6 +16,8 @@
 * datetime - powered by bootstrap-datetimepicker
 * autocomplete - powered by jquery-ui
 * select
+* json
+* markdown
 
 ## Usage
 
@@ -86,7 +88,7 @@ public function autocompleteAttrName($term)
     return (new \App\ModelName)
         ->where('label_attr_name', 'like', '%' . $term . '%')
         ->select(
-            'attr_name' as 'id',
+            'attr_name_in_model' as 'id',
             'label_attr_name' as 'label'
         )
         ->take(10)
@@ -98,6 +100,30 @@ public function labelAttrName($id)
     $label = (new \App\ModelName)
         ->where('attr_name', $id)
         ->value('label_attr_name');
+
+    return empty($label) ? '' : $label;
+}
+```
+
+Example:
+```php
+public function autocompleteBookId($term)
+{
+    return (new \App\Book)
+        ->where('title', 'like', '%' . $term . '%')
+        ->select(
+            'id' as 'id',
+            'title' as 'label'
+        )
+        ->take(10)
+        ->get();
+}
+
+public function labelAttrName($id)
+{
+    $label = (new \App\Book)
+        ->where('id', $id)
+        ->value('title');
 
     return empty($label) ? '' : $label;
 }

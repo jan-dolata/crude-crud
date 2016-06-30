@@ -2,7 +2,7 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
 {
     template: '#crude_layoutTemplate',
     tagName:  'div',
-    className: 'container m-lg-t',
+    className: '',
 
     firstRender: true,
     title: '',
@@ -22,7 +22,7 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
     serializeData: function()
     {
         return {
-            title: this.setup.get('title')
+            setup: this.setup
         };
     },
 

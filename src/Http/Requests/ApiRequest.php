@@ -20,10 +20,7 @@ class ApiRequest extends Request
         if ($crude == null)
             return false;
 
-        if (! $crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\ListInterface)
-            return false;
-
-        return true;
+        return $crude->canView();
     }
 
     /**

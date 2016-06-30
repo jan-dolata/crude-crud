@@ -1,76 +1,100 @@
 <script type="text/template" id="crude_listItemTemplate">
     <% _.each(setup.get('column'), function(attr) { %>
         <% if(! _.isArray(attr)) attr = [attr]; %>
-        <td>
+        <td class="crude-table-body-cell">
             <% _.each(attr, function(a) { %>
-                <%= Crude.renderCell(setup, a, model) %>
+                <span class="crude-table-body-cell-label">
+                    <%- setup.getAttrName(a) %>
+                </span>
+                <span class="crude-table-body-cell-content">
+                    <%= Crude.renderCell(setup, a, model) %>
+                </span>
                 <br>
             <% }); %>
         </td>
     <% }) %>
-    <td class="text-right">
-        <%
-            if(setup.get('editOption') && model.get('canBeEdited')) {
-                var iconClassName = setup.config('iconClassName');
-                _.each(setup.get('actions'), function(action) {
-                    if(setup.isActionAvailable(action)) {
-                        %>
-                        <span data-action="<%- action %>" class="action btn-icon <%- iconClassName[action] %> pointer"></span>
-                        <%
-                    }
-                })
-            }
-        %>
-
-        <% if(setup.get('deleteOption') && model.get('canBeRemoved')) { %>
-            <span id="delete" class="fa fa-trash fa-lg pointer"></span>
-        <% } %>
+    <td class="crude-table-body-cell crude-table-body-cell-action">
+        @include('CrudeCRUD::partials.list-item-action')
     </td>
 </script>
 
 <script type="text/template" id="crude_listEmptyTemplate">
-    <td class="text-center" colspan="<%- setup.get('column').length + 1 %>">
+    <td class="hide"></td>
+    <td class="crude-table-body-cell" colspan="<%- setup.get('column').length + 1 %>">
         <h4>{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
     </td>
 </script>
 
 <script type="text/template" id="crude_listTemplate">
-    <thead>
-        <tr>
-            <% _.each(setup.get('column'), function(attr) { %>
-                <% if(! _.isArray(attr)) attr = [attr]; %>
-                <th>
-                    <% _.each(attr, function(a) { %>
-                        <div class="sort pointer" data-attr="<%- a %>">
-                            <%- setup.getAttrName(a) %>
+    <thead class="crude-table-head">
+        <tr class="crude-table-head-row">
+            <% if(pagination.count) { %>
+                <% _.each(setup.get('column'), function(attr) { %>
+                    <% if(! _.isArray(attr)) attr = [attr]; %>
+                    <th class="crude-table-head-cell">
+                        <% _.each(attr, function(a) { %>
+                            <div class="sort pointer" data-attr="<%- a %>">
+                                <%- setup.getAttrName(a) %>
 
-                            <% if(sort.attr == a) { %>
-                                <span class="fa-stack">
-                                    <i class="fa fa-sort fa-stack-1x" style="color: #ddd"></i>
-                                    <i class="fa fa-sort-<%- sort.order %> fa-stack-1x"></i>
-                                </span>
-                            <% } %>
-                        </div>
-                    <% }); %>
-                </th>
-            <% }) %>
+                                <% if(sort.attr == a) { %>
+                                    <span class="fa-stack">
+                                        <i class="fa fa-sort fa-stack-1x" style="color: #ddd"></i>
+                                        <i class="fa fa-sort-<%- sort.order %> fa-stack-1x"></i>
+                                    </span>
+                                <% } %>
+                            </div>
+                        <% }); %>
+                    </th>
+                <% }) %>
+            <% } %>
 
-            <th class="text-right">
+            <th class="crude-table-head-cell crude-table-head-cell-action">
                 <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
-                    <span id="add" class="fa fa-plus fa-lg pointer"></span>
+                    <button id="add" title="{{ trans('CrudeCRUD::crude.add') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                        <%= $('#crude_addActionButtonTemplate').html() %>
+                    </button>
                 <% } %>
             </th>
         </tr>
     </thead>
 
-    <tbody id="childViewContainer"></tbody>
+    <tbody id="childViewContainer" class="crude-table-body"></tbody>
 
-    <tfoot>
-        <tr>
-            <td colspan="<%- setup.get('column').length + 1 %>">
+    <tfoot class="crude-table-foot">
+        <tr class="crude-table-foot-row">
+            <td class="crude-table-foot-cell" colspan="<%- setup.get('column').length + 1 %>">
                 @include('CrudeCRUD::partials.list-foot')
             </td>
         </tr>
     </tfoot>
 
+</script>
+
+<div id="deleteItemConfirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog crude-modal">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<script type="text/template" id="crude_deleteItemConfirmModalTemplate">
+    <div class="modal-header">
+        {{ trans('CrudeCRUD::crude.confirm_delete.title') }}
+    </div>
+    <div class="modal-body">
+        <div class="content">
+            {{ trans('CrudeCRUD::crude.confirm_delete.content') }}
+            <div class="pull-right">
+            <button id="confirm" class="crude-action-btn m-lg-r">
+                    <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({}) %>
+                </button>
+                <button class="crude-action-btn" data-dismiss="modal">
+                    <%= _.template($('#crude_cancelDeleteActionButtonTemplate').html())({}) %>
+                </button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="crude_moduleLoaderTemplate">
+    <i class="fa fa-cog fa-spin fa-lg fa-fw m-sm-r"></i>
 </script>

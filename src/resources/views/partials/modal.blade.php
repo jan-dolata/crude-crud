@@ -2,15 +2,17 @@
 
 <script type="text/template" id="crude_modalTemplate">
     <div id="modalFade" class="modal fade" role="dialog">
-        <div class="modal-dialog tds-modal-dialog">
-            <div class="modal-content tds-box">
+        <div class="modal-dialog crude-modal">
+            <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal" aria-hidden="true" style="width: auto">&times;</button>
 
                     <%- title %>
                 </div>
                 <div class="modal-body">
-                    <%- content %>
+                    <div class="content">
+                        <%- content %>
+                    </div>
                 </div>
                 <% if (_.keys(btnList).length > 0) { %>
                     <div class="modal-footer">

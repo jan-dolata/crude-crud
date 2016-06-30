@@ -1,6 +1,4 @@
 <script type="text/template" id="crude_mapTemplate">
-    @include('CrudeCRUD::modules.partials.save-icon')
-
     <div class="row">
         <div class="col-xs-12">
             <input type="text" id="search" class="pac-input controls" />
@@ -15,5 +13,7 @@
             <div id="info"></div>
         </div>
     </div>
+
+    @include('CrudeCRUD::modules.partials.save-icon')
 </script>
 

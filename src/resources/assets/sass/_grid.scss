@@ -1,0 +1,305 @@
+$first-bg: #FFFFFF;
+$first-color: #333333;
+$second-bg: #66ABCC;
+$second-color: #FFFFFF;
+
+$horizontal-margin: 20px;
+$vertical-margin: 10px;
+
+$alert-argin: 5px;
+
+$bootstrap-screen-sm-max: 991px;
+
+@mixin first() {
+    background-color: $first-bg !important;
+    color: $first-color !important;
+}
+
+@mixin second() {
+    background-color: $second-bg !important;
+    color: $second-color !important;
+    text-shadow: 0px 1px 4px #666666;
+}
+
+@mixin likeHeader() {
+    font-size: 16px;
+    padding: $vertical-margin $horizontal-margin;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    @include second();
+    position: relative;
+}
+
+.crude-container {
+    font-family: 'Lato', sans-serif;
+    color: $txtColor;
+}
+
+.crude-box {
+    border-radius: 3px;
+    border: 2px solid $first-bg;
+    background: $first-bg;
+    box-shadow: 0 3px 4px 1px rgba(0,0,0,.1);
+    margin-bottom: 40px;
+    padding: 0px;
+
+    .crude-header {
+
+        .crude-header-title {
+            @include likeHeader();
+        }
+
+        .crude-module {
+            padding: $vertical-margin $horizontal-margin;
+            border-bottom: 2px solid $second-bg;
+        }
+
+        .crude-alert-container {
+            .crude-alert {
+                margin: $alert-argin;
+                padding-top: $vertical-margin;
+                padding-bottom: $vertical-margin;
+                padding-left: $horizontal-margin - $alert-argin;
+                padding-right: $horizontal-margin + 20px - $alert-argin;
+                border: 0;
+                border-radius: 2px;
+            }
+        }
+    }
+
+    .crude-list {
+        .crude-table {
+            margin-bottom: 5px;
+
+            .crude-table-head {
+                .crude-table-head-row {
+                    .crude-table-head-cell {
+                        vertical-align: middle;
+                        border-bottom: 1px solid $second-bg;
+                    }
+                }
+            }
+
+            .crude-table-body-cell,
+            .crude-table-head-cell,
+            .crude-table-foot-cell {
+                &:first-child {
+                    padding-left: $horizontal-margin;
+                }
+                &:last-child {
+                    padding-right: $horizontal-margin;
+                }
+
+                &.crude-table-head-cell-action,
+                &.crude-table-body-cell-action {
+                    text-align: right;
+                }
+
+                h4 {
+                    text-align: center;
+                }
+            }
+
+            .crude-table-body {
+                .crude-table-body-row {
+                    .crude-table-body-cell {
+                        border-top: 1px solid lighten($second-bg, 30%);
+
+                        .crude-table-body-cell-label {
+                            display: none;
+                        }
+                    }
+
+                    &.active {
+                        @include second();
+                        .crude-table-body-cell {
+                            @include second();
+                            a {
+                                color: $second-color !important;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .crude-table-foot {
+                .crude-table-foot-row {
+                    .crude-table-foot-cell {
+                        border-top: 1px solid $second-bg !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin responsiveTable() {
+    .crude-table,
+    .crude-table-body,
+    .crude-table-head,
+    .crude-table-head-row,
+    .crude-table-head-cell,
+    .crude-table-body-row,
+    .crude-table-body-cell,
+    .crude-table-foot,
+    .crude-table-foot-row,
+    .crude-table-foot-cell, {
+        display: block;
+    }
+
+    .crude-table-head-cell {
+        display: none !important;
+    }
+
+    .crude-table-head-cell-action {
+        display: block !important;
+    }
+
+    .crude-table-body-row {
+        position: relative;
+    }
+
+    .crude-table-body-cell-action {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .crude-table-head-cell,
+    .crude-table-body-cell,
+    .crude-table-foot-cell {
+        padding-left: $horizontal-margin;
+        padding-right: $horizontal-margin;
+    }
+
+    .crude-table-body-cell {
+        padding-top: 0;
+        padding-bottom: 0;
+        border-top: 0 !important;
+    }
+
+    .crude-table-body-row {
+        border-top: 1px solid lighten($second-bg, 30%) !important;
+        padding-top: 38px;
+        padding-bottom: $vertical-margin;
+    }
+
+    .crude-table-body-cell-label {
+        font-weight: bold;
+        display: inline-block !important;
+        width: 45%;
+        padding-right: $horizontal-margin / 2;
+        text-align: right;
+    }
+
+    .crude-table-body-cell-content {
+        display: block;
+        margin-left: 45%;
+        padding-left: $horizontal-margin / 2;
+        margin-top: -20px;
+        margin-bottom: -20px;
+    }
+}
+
+@mixin panel() {
+    .crude-table-head {
+        display: none;
+    }
+
+    .crude-table-body-row {
+        border: 0;
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    .crude-table-foot {
+        .crude-table-foot-search,
+        .crude-table-foot-pagination,
+        .crude-table-foot-num-rows {
+            display: none;
+        }
+    }
+}
+
+.crude-box {
+    @media (max-width: $bootstrap-screen-sm-max) {
+        @include responsiveTable();
+    }
+}
+
+.crude-box-panel {
+    @include responsiveTable();
+    @include panel();
+
+    @media (max-width: $bootstrap-screen-sm-max) {
+        @include panel();
+    }
+}
+
+.crude-modal {
+    border: 0;
+
+    .modal-content {
+        border-radius: 3px;
+        border: 2px solid $first-bg;
+        background: $first-bg;
+
+        .modal-header,
+        .modal-body,
+        .modal-footer {
+            padding: 0;
+            border: 0;
+        }
+
+        .modal-header {
+            @include likeHeader();
+        }
+
+        .modal-body {
+            .crude-module {
+                border: 0;
+            }
+
+            .content {
+                padding: $vertical-margin $horizontal-margin;
+            }
+        }
+
+        .modal-footer {
+            padding: $vertical-margin $horizontal-margin;
+        }
+    }
+}
+
+.crude-action-btn {
+    background: transparent;
+    border: 0;
+    border-radius: 3px;
+    margin: 0;
+    padding: 1px 2px;
+
+    &:focus, &:active {
+        outline: none;
+    }
+
+    &:hover {
+        color: $second-bg;
+    }
+}
+
+.active {
+    .crude-action-btn:hover {
+        color: $first-color;
+    }
+}
+
+.tooltip-arrow {
+    border-bottom-color: $first-color !important;
+}
+.tooltip-inner {
+    background-color: $first-color;
+    color: $first-bg;
+}

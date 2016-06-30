@@ -2,11 +2,13 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 {
     tagName: 'div',
     moduleName: '',
+    formIsLocked: false,
 
     ui: {
         save: '#save',
         cancel: '#cancel',
-        input: '.input'
+        input: '.input',
+        loader: '#loader'
     },
 
     events: {
@@ -26,6 +28,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
         this.listenTo(Crude.vent, 'action_' + this.moduleName, this.onAction);
         this.listenTo(Crude.vent, 'action_end', this.onActionEnd);
+        this.listenTo(Crude.vent, 'action_change', this.onActionChange);
     },
 
     serializeData: function ()
@@ -36,10 +39,27 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         };
     },
 
+    onRender: function ()
+    {
+        this.parentOnRender();
+    },
+
+    parentOnRender: function ()
+    {
+        // initialize all tooltips on a page
+        $('[data-toggle="tooltip"]').tooltip();
+    },
+
     onActionEnd: function (setupName)
     {
         if (this.setup.getName() == setupName)
             this.slideUp();
+    },
+
+    onActionChange: function (setupName)
+    {
+        if (this.setup.getName() == setupName)
+            this.changeUp();
     },
 
     onAction: function (setupName, model)
@@ -50,14 +70,53 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     setNewModel: function (model)
     {
-        this.$el.parent().slideDown(100);
+        if (! this.setup.get('moduleInPopup')) {
+            this.$el.parent().slideDown(100);
+        } else {
+            this.$el.parent().show();
+            this.$el.parents('#moduleModal').modal('show');
+        }
+
         this.model = model;
         this.render();
     },
 
+    alertContainer: function ()
+    {
+        return $('#' + this.setup.containerId()).find('#alertContainer');
+    },
+
+    clearAllAlerts: function ()
+    {
+        Crude.clearAllAlerts(this.alertContainer());
+    },
+
+    showError: function (msg)
+    {
+        Crude.showError(msg, this.alertContainer());
+    },
+
+    showMessage: function (msg)
+    {
+        Crude.showAlert('success', msg, this.alertContainer());
+    },
+
     slideUp: function ()
     {
+        this.clearAllAlerts();
+
+        if (this.setup.get('moduleInPopup')) {
+            this.$el.parent().hide();
+            this.$el.parents('#moduleModal').modal('hide');
+            return;
+        }
+
         this.$el.parent().slideUp(100);
+    },
+
+    changeUp: function ()
+    {
+        this.$el.parent().hide();
     },
 
     cancel: function ()
@@ -67,25 +126,48 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     saveModel: function (response)
     {
-        this.model
-            .save()
-            .done(function(response) {
-                if ('message' in  response)
-                    Crude.showAlert('success', response.message);
+        if (this.formIsLocked)
+            return;
 
-                this.setup.triggerNextAction(this.model);
-            }.bind(this))
-            .fail(function(response) {
-                var responseTextJSON = JSON.parse(response.responseText);
+        this.clearAllAlerts();
+        $(':focus').blur();
+        this.lockForm();
 
-                if (response.status == 422) {
-                    Crude.showError(_.values(responseTextJSON).join('<br>'));
-                }
+        this.model.save()
+            .done(function (response) { this.onSaveSuccess(response); }.bind(this))
+            .fail(function (response) { this.onSaveFail(response); }.bind(this));
+    },
 
-                if (response.status == 403) {
-                    Crude.showError(responseTextJSON.error.message);
-                    this.setup.triggerCancel();
-                }
-            }.bind(this));
-    }
+    onSaveSuccess: function (response)
+    {
+        this.unlockForm();
+
+        if ('message' in  response)
+            this.showMessage(response.data.message);
+
+        this.setup.triggerNextAction(this.model);
+    },
+
+    onSaveFail: function (response)
+    {
+        this.unlockForm();
+
+        this.setup.onAjaxFail(response, this.alertContainer());
+    },
+
+    lockForm: function()
+    {
+        this.formIsLocked = true;
+        this.ui.loader.show(200);
+        this.ui.save.attr('disabled', true);
+        this.ui.cancel.attr('disabled', true);
+    },
+
+    unlockForm: function()
+    {
+        this.formIsLocked = false;
+        this.ui.loader.hide(200);
+        this.ui.save.removeAttr('disabled');
+        this.ui.cancel.removeAttr('disabled');
+    },
 });

@@ -34,7 +34,7 @@ trait InputType
     public function setTypes($attr, $type = null)
     {
         if (is_array($attr))
-            $this->inputType = array_unique(array_merge($this->inputType, $attr));
+            $this->inputType = array_merge($this->inputType, $attr);
         else
             $this->inputType[$attr] = $type;
 

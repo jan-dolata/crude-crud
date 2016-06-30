@@ -1,20 +1,35 @@
-<div class="pull-right text-right form-inline">
-    <div class="input-group">
+<div class="pull-right text-right form-inline m-sm-b">
+    <div class="input-group input-group crude-table-foot-refresh">
+        <button id="refresh" type="button" class="btn btn-default btn-sm">
+            {{ trans('CrudeCRUD::crude.update_delay') }}
+            <span id="updateDelay"></span>s
+            <i class="fa fa-refresh m-sm-l"></i>
+        </button>
+    </div>
+
+    <div class="input-group crude-table-foot-num-rows">
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%- pagination.count > pagination.numRows ? pagination.numRows : pagination.count %> / <%- pagination.count %>
+            <%- pagination.count > pagination.numRows ? pagination.numRows : pagination.count %>
+            / <%- pagination.count %>
             <i class="fa fa-list m-sm-l"></i>
         </button>
-        <ul class="dropdown-menu dropdown-menu-right">
-            <% _.each(setup.config('numRowsOptions'), function(n) { %>
-                <li><a class="changeNumRows" href="javascript:;"><%- n %></a></li>
-            <% }) %>
-        </ul>
+        <% if (setup.config('numRowsOptions')[0] < pagination.count) { %>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <% _.each(setup.config('numRowsOptions'), function(n) { %>
+                    <% if (n < pagination.count) { %>
+                        <li><a class="changeNumRows" href="javascript:;"><%- n %></a></li>
+                    <% } %>
+                <% }) %>
+                <li><a class="changeNumRows" href="javascript:;"><%- pagination.count %></a></li>
+            </ul>
+        <% } %>
     </div>
 
     <% if(pagination.numPages > 1) { %>
-        <div class="input-group">
+        <div class="input-group crude-table-foot-pagination">
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%- pagination.page %> / <%- pagination.numPages %>
+                <%- pagination.page %>
+                / <%- pagination.numPages %>
                 <i class="fa fa-clone m-sm-l"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-right">
@@ -27,7 +42,7 @@
 </div>
 
 <div class="form-inline">
-    <div class="input-group">
+    <div class="input-group crude-table-foot-search">
         <div class="input-group-btn">
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span id="selectedSearchAttr"><%- setup.getAttrName(search.attr) %></span>

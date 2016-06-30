@@ -10,6 +10,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
     ui: {
         save: '#save',
         cancel: '#cancel',
+        loader: '#loader',
         uploadFileDropzone: '#upload_file_dropzone'
     },
 
@@ -17,6 +18,8 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
 
     onRender: function()
     {
+        this.parentOnRender();
+
         this.ui.save.hide(100);
 
         var that = this;

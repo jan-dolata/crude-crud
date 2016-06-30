@@ -5,16 +5,31 @@ return [
     'save' => 'Zapisz',
     'cancel' => 'Anuluj',
     'edit' => 'Edytuj',
+    'delete' => 'Usuń',
     'add' => 'Dodaj',
+    'close' => 'Zamknij',
     'submit' => 'Zatwierdź',
     'empty_list' => 'Lista jest pusta',
     'tools' => 'Narzędzia',
+
+    'add_mode' => 'Dodajesz',
+    'edit_mode' => 'Edytujesz',
 
     'yes' => 'Tak',
     'no' => 'Nie',
 
     'search_value' => 'Szukaj',
     'drop_file_here' => 'Upuść plik lub kliknij tutaj',
+
+    'update_delay' => 'Dane z przed',
+
+    'markdown_preview' => 'Podgląd',
+
+    'action' => [
+        'form' => 'Edytuj',
+        'map' => 'Edytuj lokalizację',
+        'file' => 'Dodaj / Usuń pliki'
+    ],
 
     'confirm_delete' => [
         'title' => 'Usuń',
@@ -35,6 +50,7 @@ return [
         'autocomplete' => 'autouzupełnianie',
         'datetime' => 'data i godzina',
         'select' => 'lista',
-        'json' => 'JSON'
+        'json' => 'JSON',
+        'markdown' => 'markdown'
     ],
 ];

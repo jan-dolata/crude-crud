@@ -37,4 +37,9 @@ trait Filters
 
         return $this;
     }
+
+    public function resetFilters($filters = [])
+    {
+        $this->filters = $filters;
+    }
 }

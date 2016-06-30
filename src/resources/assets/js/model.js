@@ -13,7 +13,12 @@ Crude.Models.Base = Backbone.Model.extend(
             lat: parseFloat(this.get('lat')),
             lng: parseFloat(this.get('lng'))
         };
-    }
+    },
+
+    isCustomActionAvailable: function(action)
+    {
+        return this.get(action + 'CustomActionAvailable');
+    },
 });
 
 Crude.Collections.Base = Backbone.Collection.extend(
@@ -93,9 +98,12 @@ Crude.Models.Setup = Backbone.Model.extend(
         addOption: true,
         modelDefaults: [],
         selectOptions: [],
+        customeActions: [],
         config: [],
         filters: [],
         trans: [],
+        moduleInPopup: false,
+        panelView: false,
 
         actionToTrigger: []
     },
@@ -124,6 +132,11 @@ Crude.Models.Setup = Backbone.Model.extend(
     filesRoute: function (url)
     {
         return '/' + this.config('routePrefix') + '/file/' + url;
+    },
+
+    customActionRoute: function (action, id)
+    {
+        return '/' + this.config('routePrefix') + '/custom-action/' + this.getName() + '/' + action + '/' + id;
     },
 
     containerId: function ()
@@ -187,6 +200,10 @@ Crude.Models.Setup = Backbone.Model.extend(
         if (! _.isArray(actionToTrigger))
             actionToTrigger = [actionToTrigger];
 
+        $('html, body').animate({
+            scrollTop: $('#' + this.containerId()).offset().top - 200
+        }, 500);
+
         this.set('actionToTrigger', actionToTrigger);
         Crude.vent.trigger('action_end', this.getName());
         this.triggerNextAction(model);
@@ -207,7 +224,7 @@ Crude.Models.Setup = Backbone.Model.extend(
 
         var action = actionToTrigger[0];
         actionToTrigger.shift();
-        Crude.vent.trigger('action_end', this.getName());
+        Crude.vent.trigger('action_change', this.getName());
         Crude.vent.trigger('action_' + action, this.getName(), model);
     },
 
@@ -226,5 +243,35 @@ Crude.Models.Setup = Backbone.Model.extend(
             return trans[attr];
 
         return Crude.getAttrName(attr);
+    },
+
+    onAjaxFail: function(response, alertContainer)
+    {
+        if (! this.IsJsonString(response.responseText)) {
+            Crude.showAlert('danger', response.responseText, alertContainer);
+            return;
+        }
+
+        var responseTextJSON = JSON.parse(response.responseText);
+
+        if (response.status == 422) {
+            var msg = _.values(responseTextJSON).join('<br>');
+            Crude.showError(msg, alertContainer);
+        }
+
+        if (response.status == 403) {
+            var msg = responseTextJSON.error.message;
+            Crude.showError(msg, alertContainer);
+            this.setup.triggerCancel();
+        }
+    },
+
+    IsJsonString: function (str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 });

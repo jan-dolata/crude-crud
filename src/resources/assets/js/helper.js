@@ -42,8 +42,19 @@ Crude.getTrans = function(key, secondKey)
  * @param {string} type - info / danger / warning / success
  * @param {string} msg
  */
-Crude.showAlert = function (type, msg)
+Crude.showAlert = function (type, msg, $container)
 {
+    if (_.isUndefined($container))
+        $container = $('#crude_alertContainer');
+
+    Crude.showAlertInContainer(type, msg, $container);
+};
+
+Crude.showAlertInContainer = function (type, msg, $container)
+{
+    if (_.isUndefined($container))
+        $container = $('#crude_alertContainer');
+
     if (String(msg) == '')
         return;
 
@@ -51,25 +62,30 @@ Crude.showAlert = function (type, msg)
         type = 'info';
 
     var template = _.template($('#crude_alertTemplate').html());
-    $('#crude_alertContainer').append(template({ type: type, msg: msg }));
+    $container.append(template({ type: type, msg: msg }));
 };
 
 /**
  * Clears all messages that were shown
  */
-Crude.clearAllAlerts = function()
+Crude.clearAllAlerts = function($container)
 {
-    $('#crude_alertContainer').find('#alertList').empty();
+    if (_.isUndefined($container))
+        $container = $('#crude_alertContainer');
+
+    $container.empty();
 },
 
 /**
  * Short for error alert
  */
-Crude.showError = function (msg)
+Crude.showError = function (msg, $container)
 {
-    Crude.showAlert('danger', msg);
-};
+    if (_.isUndefined($container))
+        $container = $('#crude_alertContainer');
 
+    Crude.showAlertInContainer('danger', msg, $container);
+};
 
 /**
  * Show modal
