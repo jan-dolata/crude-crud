@@ -17,9 +17,13 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Filters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModelDefaults;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Trans;
+<<<<<<< Updated upstream
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModuleInPopup;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CustomActions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
+=======
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderedList;
+>>>>>>> Stashed changes
 
     /**
      * Construct
@@ -74,6 +78,7 @@ class CrudeSetup
             'deleteOption'  => $this->deleteOption,
             'editOption'    => $this->editOption,
             'addOption'     => $this->addOption,
+            'orderOption'   => $this->orderOption,
             'modelDefaults' => $this->modelDefaults,
             'selectOptions' => $this->selectOptions,
             'filters'       => $this->filters,
@@ -81,6 +86,7 @@ class CrudeSetup
             'moduleInPopup' => $this->moduleInPopup,
             'customActions' => $this->customActions,
             'panelView'     => $this->panelView,
+            'orderedList'   => $this->orderedList,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),

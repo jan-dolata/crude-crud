@@ -25,6 +25,13 @@ trait Options
      */
     protected $editOption = true;
 
+    /**
+     * Show order option
+     *
+     * @var boolean
+     */
+    protected $orderOption = false;
+
     public function lockEditOption()
     {
         $this->editOption = false;
@@ -58,6 +65,9 @@ trait Options
 
         if ($optionName == 'delete')
             return $this->deleteOption;
+
+        if ($optionName == 'order')
+            return $this->orderOption;
 
         return false;
     }

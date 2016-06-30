@@ -96,6 +96,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         deleteOption: true,
         editOption: true,
         addOption: true,
+        orderOption: true,
         modelDefaults: [],
         selectOptions: [],
         customeActions: [],
@@ -104,6 +105,11 @@ Crude.Models.Setup = Backbone.Model.extend(
         trans: [],
         moduleInPopup: false,
         panelView: false,
+        orderedList: {
+            idAttr: 'id',
+            orderAttr: 'order',
+            labelAttr: 'name'
+        },
 
         actionToTrigger: []
     },

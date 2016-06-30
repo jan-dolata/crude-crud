@@ -102,7 +102,7 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
         this.setup.triggerCancel();
 
-        $modal = $('#deleteItemConfirmModal');
+        var $modal = $('#deleteItemConfirmModal');
         $modal.modal('show');
         var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
 
@@ -168,6 +168,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         refresh: '#refresh',
 
         add: '#add',
+        order: '#order',
         sort: '.sort',
 
         changeNumRows: '.changeNumRows',
@@ -183,6 +184,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
     events: {
         'click @ui.add': 'add',
+        'click @ui.order': 'order',
         'click @ui.sort': 'sort',
         'click @ui.changeNumRows': 'changeNumRows',
         'click @ui.changePage': 'changePage',
@@ -256,6 +258,20 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.collection.changeSortOptions($target.data('attr'));
         this.updateList();
+    },
+
+    order: function ()
+    {
+        $(':focus').blur();
+
+        var template = _.template($('#crude_orderedListModalTemplate'))({
+            collection: this.collection,
+            options: this.setup.get('orderedList')
+        });
+
+        $modal = $('#orderedListModal');
+        $modal.find('#content').html(template);
+        $modal.modal('show');
     },
 
     changeNumRows: function (event)
