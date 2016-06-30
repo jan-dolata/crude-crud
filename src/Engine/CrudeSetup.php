@@ -17,13 +17,10 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Filters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModelDefaults;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Trans;
-<<<<<<< Updated upstream
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModuleInPopup;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CustomActions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
-=======
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderedList;
->>>>>>> Stashed changes
 
     /**
      * Construct
