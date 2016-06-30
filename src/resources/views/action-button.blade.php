@@ -16,6 +16,10 @@
     <i class="fa fa-lg fa-plus"></i>
 </script>
 
+<script type="text/template" id="crude_orderActionButtonTemplate">
+    <i class="fa fa-lg fa-list-ol"></i>
+</script>
+
 <script type="text/template" id="crude_formActionButtonTemplate">
     <i class="fa fa-lg fa-pencil"></i>
 </script>

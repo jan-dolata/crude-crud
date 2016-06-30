@@ -49,6 +49,12 @@
             <% } %>
 
             <th class="crude-table-head-cell crude-table-head-cell-action">
+                <% if(setup.get('orderOption')) { %>
+                    <button id="order" title="{{ trans('CrudeCRUD::crude.order') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                        <%= $('#crude_orderActionButtonTemplate').html() %>
+                    </button>
+                <% } %>
+
                 <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
                     <button id="add" title="{{ trans('CrudeCRUD::crude.add') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
                         <%= $('#crude_addActionButtonTemplate').html() %>
@@ -84,7 +90,7 @@
         <div class="content">
             {{ trans('CrudeCRUD::crude.confirm_delete.content') }}
             <div class="pull-right">
-            <button id="confirm" class="crude-action-btn m-lg-r">
+                <button id="confirm" class="crude-action-btn m-lg-r">
                     <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({}) %>
                 </button>
                 <button class="crude-action-btn" data-dismiss="modal">
@@ -97,4 +103,33 @@
 
 <script type="text/template" id="crude_moduleLoaderTemplate">
     <i class="fa fa-cog fa-spin fa-lg fa-fw m-sm-r"></i>
+</script>
+
+<div id="orderedListModal" class="modal fade" role="dialog">
+    <div class="modal-dialog crude-modal">
+        <div class="modal-content" id="content"></div>
+    </div>
+</div>
+
+<script type="text/template" id="crude_orderedListModalTemplate">
+    <div class="modal-header">
+        {{ trans('CrudeCRUD::crude.confirm_delete.title') }}
+    </div>
+    <div class="modal-body">
+        <div class="content">
+            {{ trans('CrudeCRUD::crude.confirm_delete.content') }}
+            <div class="row">
+                <% console.log(collection, options) %>
+
+            </div>
+            <div class="pull-right">
+                <button id="confirm" class="crude-action-btn m-lg-r">
+                    <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({}) %>
+                </button>
+                <button class="crude-action-btn" data-dismiss="modal">
+                    <%= _.template($('#crude_cancelDeleteActionButtonTemplate').html())({}) %>
+                </button>
+            </div>
+        </div>
+    </div>
 </script>
