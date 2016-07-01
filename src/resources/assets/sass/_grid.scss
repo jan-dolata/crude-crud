@@ -65,10 +65,6 @@ $bootstrap-screen-sm-max: 991px;
                 border-radius: 2px;
             }
         }
-
-        .crude-sort {
-            white-space: nowrap;
-        }
     }
 
     .crude-list {
@@ -80,6 +76,10 @@ $bootstrap-screen-sm-max: 991px;
                     .crude-table-head-cell {
                         vertical-align: middle;
                         border-bottom: 1px solid $second-bg;
+
+                        .crude-sort {
+                            white-space: nowrap;
+                        }
                     }
                 }
             }
