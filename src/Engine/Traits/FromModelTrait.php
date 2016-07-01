@@ -2,8 +2,6 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Traits;
 
-use JanDolata\CrudeCRUD\Engine\CrudeSetup;
-
 trait FromModelTrait
 {
     use \JanDolata\CrudeCRUD\Engine\Traits\FromModelTraitPart\ModelTrait;

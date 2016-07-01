@@ -2,6 +2,8 @@
 
 namespace JanDolata\CrudeCRUD\Engine\Traits\FromModelTraitPart;
 
+use JanDolata\CrudeCRUD\Engine\CrudeSetup;
+
 trait ModelTrait
 {
     /**
