@@ -1,4 +1,4 @@
-# Interfaces
+# Ordered list
 
 [Readme](../README.md)
 
@@ -107,13 +107,18 @@ class BooksList extends \Crude implements
         // new item will store in first place
         $this->storeInFirstPlace();
 
+        // example of using blocking options method
         if (Auth:user()->cannotOrderListOfBooks())
             $this->crudeSetup->lockOrderOption();
     }
 
+    // you do not need to override this method in such a way,
+    // but if you do, make sure that the models of the collection has the required attributes
     public function prepareQuery()
     {
         return $this->model->select('id', 'title', 'order');
+        // default method returns $this->model,
+        // it will be the same result in this example
     }
 }
 
@@ -121,10 +126,20 @@ class BooksList extends \Crude implements
 
 Result:
 
-![ordered_list/1.png](/ordered_list/1.png "List")
+List
+![/wiki/ordered_list/1.png](/wiki/ordered_list/1.png "List")
 
-![ordered_list/2.png](/ordered_list/2.png "Order modal")
+Order modal
+![/wiki/ordered_list/2.png](/wiki/ordered_list/2.png "Order modal")
 
-![ordered_list/3.png](/ordered_list/3.png "Change order")
+Change order
+![/wiki/ordered_list/3.png](/wiki/ordered_list/3.png "Change order")
 
-![ordered_list/4.png](/ordered_list/4.png "After save")
+After save
+![/wiki/ordered_list/4.png](/wiki/ordered_list/4.png "After save")
+
+While adding a new item
+![/wiki/ordered_list/5.png](/wiki/ordered_list/5.png "While adding a new item")
+
+After store
+![/wiki/ordered_list/6.png](/wiki/ordered_list/6.png "After store")
