@@ -311,12 +311,13 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
                 },
                 success: function(response)
                 {
-                    Crude.vent.trigger('action_update', that.setup.getName());
                     $modal.modal('hide');
+                    Crude.vent.trigger('action_update', that.setup.getName());
                     Crude.showAlert('success', response.data.message, alertContainer);
                 },
                 error: function(response)
                 {
+                    $modal.modal('hide');
                     that.setup.onAjaxFail(response, alertContainer);
                 }
             });
