@@ -20,7 +20,7 @@ class OrderedListRequest extends Request
         if ($crude == null)
             return false;
 
-        if ($crude->cannotOrder())
+        if ($crude->cannotOrder('check with permission'))
             return false;
 
         $this->crude = $crude;
