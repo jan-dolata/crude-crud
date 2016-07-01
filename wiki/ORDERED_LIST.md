@@ -127,19 +127,25 @@ class BooksList extends \Crude implements
 Result:
 
 List
+
 ![/wiki/ordered_list/1.png](/wiki/ordered_list/1.png "List")
 
 Order modal
+
 ![/wiki/ordered_list/2.png](/wiki/ordered_list/2.png "Order modal")
 
 Change order
+
 ![/wiki/ordered_list/3.png](/wiki/ordered_list/3.png "Change order")
 
 After save
+
 ![/wiki/ordered_list/4.png](/wiki/ordered_list/4.png "After save")
 
 While adding a new item
+
 ![/wiki/ordered_list/5.png](/wiki/ordered_list/5.png "While adding a new item")
 
 After store
+
 ![/wiki/ordered_list/6.png](/wiki/ordered_list/6.png "After store")
