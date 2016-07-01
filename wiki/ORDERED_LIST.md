@@ -61,9 +61,7 @@ Book Model
 ```php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Book extends Model
+class Book extends \Illuminate\Database\Eloquent\Model
 {
     protected $fillable = [
         'title',
