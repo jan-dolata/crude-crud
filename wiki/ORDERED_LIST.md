@@ -75,7 +75,6 @@ class Book extends \Illuminate\Database\Eloquent\Model
 List of books crude class
 
 ```php
-
 use Auth;
 
 class BooksList extends \Crude implements \CRUDInterface, \CrudeOrderInterface
@@ -149,7 +148,6 @@ class Book extends \Illuminate\Database\Eloquent\Model
 ```
 
 ```php
-
 use Auth;
 
 class BooksList extends \Crude implements \CRUDInterface, \CrudeOrderInterface
