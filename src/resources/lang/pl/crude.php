@@ -11,6 +11,7 @@ return [
     'submit' => 'Zatwierdź',
     'empty_list' => 'Lista jest pusta',
     'tools' => 'Narzędzia',
+    'order' => 'Kolejność',
 
     'add_mode' => 'Dodajesz',
     'edit_mode' => 'Edytujesz',
@@ -38,10 +39,19 @@ return [
         'confirm' => 'Usuń'
     ],
 
+    'order_list' => [
+        'title' => 'Nowa kolejność',
+        'content' => 'Ustaw nową kolejność',
+        'cancel' => 'Anuluj',
+        'confirm' => 'Zapisz'
+    ],
+
     'item_has_been_saved' => 'Element został dodany.',
     'item_has_been_updated' => 'Element został zapisany.',
     'item_has_been_removed' => 'Element został usunięty.',
     'item_has_been_restored' => 'Element został przywrócony.',
+
+    'new_order_saved' => 'Nowa kolejność została zapisana.',
 
     'input_placeholder' => [
         'text' => 'tekst',

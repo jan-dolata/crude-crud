@@ -2,14 +2,14 @@
 
 namespace JanDolata\CrudeCRUD\Engine\CrudeSetupTrait;
 
-trait OrderedList
+trait OrderParameters
 {
     /**
      * Ordered list param
      *
      * @var array
      */
-    protected $orderedList = [
+    protected $orderParameters = [
         'idAttr' => 'id',
         'orderAttr' => 'order',
         'labelAttr' => 'name'
@@ -20,9 +20,9 @@ trait OrderedList
      *
      * @return array
      */
-    public function getOrderedList()
+    public function getOrderParameters()
     {
-        return $this->orderedList;
+        return $this->orderParameters;
     }
 
     /**
@@ -32,9 +32,9 @@ trait OrderedList
      *
      * @return self
      */
-    public function setOrderedList($idAttr, $orderAttr, $labelAttr)
+    public function setOrderParameters($idAttr, $orderAttr, $labelAttr)
     {
-        $this->orderedList = [
+        $this->orderParameters = [
             'idAttr' => $idAttr,
             'orderAttr' => $orderAttr,
             'labelAttr' => $labelAttr
@@ -43,21 +43,21 @@ trait OrderedList
         return $this;
     }
 
-    public function useOrderedList($labelAttr, $orderAttr = 'order', $idAttr = 'id')
+    public function useOrderedList($labelAttr = 'name', $orderAttr = 'order', $idAttr = 'id')
     {
         $this->orderOption = true;
-        $this->setOrderedList($idAttr, $orderAttr, $labelAttr);
+        $this->setOrderParameters($idAttr, $orderAttr, $labelAttr);
         $column = $this->getColumn();
-        $this->setColumn(array_merge(['order'], $column));
+        $this->setColumn(array_merge([$orderAttr], $column));
 
         return $this;
     }
 
     public function getOrderAttribute()
     {
-        if (empty($this->orderedList['orderAttr']))
+        if (empty($this->orderParameters['orderAttr']))
             return config('crude.defaults.sortAttr');
 
-        return $this->orderedList['orderAttr'];
+        return $this->orderParameters['orderAttr'];
     }
 }

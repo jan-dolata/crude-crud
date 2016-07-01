@@ -83,6 +83,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         $loader->alias('CrudeUpdateInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\UpdateInterface');
         $loader->alias('CrudeDeleteInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\DeleteInterface');
         $loader->alias('CrudeStoreInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface');
+        $loader->alias('CrudeOrderInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\OrderInterface');
         $loader->alias('CrudeWithValidationInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface');
         $loader->alias('CrudeWithFileInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithFileInterface');
         $loader->alias('CrudeCRUDInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\CRUDInterface');

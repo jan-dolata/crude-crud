@@ -23,7 +23,7 @@ Crude.Models.Base = Backbone.Model.extend(
 
 Crude.Collections.Base = Backbone.Collection.extend(
 {
-    sort: {
+    sortAttributes: {
         attr: 'id',
         order: 'asc'
     },
@@ -42,20 +42,20 @@ Crude.Collections.Base = Backbone.Collection.extend(
 
     changeSortOptions: function (attr)
     {
-        if (this.sort.attr == attr) {
-            this.sort.order = this.sort.order == 'asc' ? 'desc' : 'asc';
+        if (this.sortAttributes.attr == attr) {
+            this.sortAttributes.order = this.sortAttributes.order == 'asc' ? 'desc' : 'asc';
             return;
         }
 
-        this.sort.attr = attr;
-        this.sort.order = 'asc';
+        this.sortAttributes.attr = attr;
+        this.sortAttributes.order = 'asc';
     },
 
     fetchWithOptions: function ()
     {
         return this.fetch({data: {
-            sortAttr: this.sort.attr,
-            sortOrder: this.sort.order,
+            sortAttr: this.sortAttributes.attr,
+            sortOrder: this.sortAttributes.order,
             page: this.pagination.page,
             numRows: this.pagination.numRows,
             searchAttr: this.search.attr,
@@ -68,8 +68,8 @@ Crude.Collections.Base = Backbone.Collection.extend(
         if(! response.data)
             return response;
 
-        if(response.data.sort)
-            this.sort = response.data.sort;
+        if(response.data.sortAttributes)
+            this.sortAttributes = response.data.sort;
         if(response.data.pagination)
             this.pagination = response.data.pagination;
         if(response.data.search)
@@ -105,10 +105,11 @@ Crude.Models.Setup = Backbone.Model.extend(
         trans: [],
         moduleInPopup: false,
         panelView: false,
-        orderedList: {
+        orderParameters: {
             idAttr: 'id',
             orderAttr: 'order',
-            labelAttr: 'name'
+            labelAttr: 'name',
+            sortAttr: 'id'
         },
 
         actionToTrigger: []
@@ -125,24 +126,34 @@ Crude.Models.Setup = Backbone.Model.extend(
         return config[attr];
     },
 
+    baseRoute: function (name, uri)
+    {
+        return '/' + this.config('routePrefix') + '/' + name + '/' + uri;
+    },
+
     apiRoute: function ()
     {
-        return '/' + this.config('routePrefix') + '/api/' + this.getName();
+        return this.baseRoute('api', this.getName());
     },
 
     autocompleteRoute: function(url)
     {
-        return '/' + this.config('routePrefix') + '/autocomplete/' + url;
+        return this.baseRoute('autocomplete', url);
     },
 
     filesRoute: function (url)
     {
-        return '/' + this.config('routePrefix') + '/file/' + url;
+        return this.baseRoute('file', url);
     },
 
     customActionRoute: function (action, id)
     {
-        return '/' + this.config('routePrefix') + '/custom-action/' + this.getName() + '/' + action + '/' + id;
+        return this.baseRoute('custom-action', this.getName() + '/' + action + '/' + id);
+    },
+
+    orderedListRoute: function ()
+    {
+        return this.baseRoute('ordered-list', this.getName());
     },
 
     containerId: function ()
@@ -173,7 +184,10 @@ Crude.Models.Setup = Backbone.Model.extend(
             url: apiRoute
         });
 
-        return new collection;
+        var col = new collection;
+        col.changeSortOptions(this.config('sortAttr'));
+
+        return col;
     },
 
     getNewModel: function ()

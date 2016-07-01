@@ -46,3 +46,13 @@
     <i class="fa fa-lg fa-times"></i>
     {{ trans('CrudeCRUD::crude.close') }}
 </script>
+
+<script type="text/template" id="crude_confirmOrderActionButtonTemplate">
+    <i class="fa fa-lg fa-save"></i>
+    {{ trans('CrudeCRUD::crude.order_list.confirm') }}
+</script>
+
+<script type="text/template" id="crude_cancelOrderActionButtonTemplate">
+    <i class="fa fa-lg fa-times"></i>
+    {{ trans('CrudeCRUD::crude.order_list.cancel') }}
+</script>

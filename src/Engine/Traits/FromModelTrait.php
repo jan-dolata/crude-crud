@@ -6,6 +6,8 @@ use JanDolata\CrudeCRUD\Engine\CrudeSetup;
 
 trait FromModelTrait
 {
+    use \JanDolata\CrudeCRUD\Engine\Traits\FromModelTraitPart\OrderTrait;
+
     /**
      * Eloquent model
      * @var Eloquent model
@@ -47,14 +49,17 @@ trait FromModelTrait
 
         $this->crudeSetup = new CrudeSetup($crudeName, $modelAttr);
 
-        if (! $this->canUpdate())
+        if ($this->cannotUpdate())
             $this->crudeSetup->lockEditOption();
 
-        if (! $this->canStore('check with permission'))
+        if ($this->cannotStore('check with permission'))
             $this->crudeSetup->lockAddOption();
 
-        if (! $this->canDelete())
+        if ($this->cannotDelete())
             $this->crudeSetup->lockDeleteOption();
+
+        if ($this->cannotOrder())
+            $this->crudeSetup->lockOrderOption();
 
         $this->crudeSetup->setFilters(['id']);
 
@@ -180,8 +185,6 @@ trait FromModelTrait
         return collect(array_values($collection->toArray()));
     }
 
-
-
     /**
      * Count all rows with condition
      * @param  string $searchAttr
@@ -262,7 +265,18 @@ trait FromModelTrait
         $model = $this->model->create($attributes);
 
         $apiModel = $this->getById($model->id);
+
+        if ($this->canOrder()) {
+            if ($this->storeInLastPlace) {
+                $attr = $this->crudeSetup->getOrderAttribute();
+                $apiModel->$attr = $apiModel->id;
+                $apiModel->save();
+            }
+            $this->resetOrder();
+        }
+
         $this->afterStore($apiModel);
+
         return $apiModel;
     }
 
@@ -333,6 +347,9 @@ trait FromModelTrait
             return $this;
 
         $model->delete();
+
+        if ($this->canOrder())
+            $this->resetOrder();
 
         return $this;
     }

@@ -20,7 +20,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModuleInPopup;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CustomActions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
-    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderedList;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderParameters;
 
     /**
      * Construct
@@ -83,13 +83,14 @@ class CrudeSetup
             'moduleInPopup' => $this->moduleInPopup,
             'customActions' => $this->customActions,
             'panelView'     => $this->panelView,
-            'orderedList'   => $this->orderedList,
+            'orderParameters' => $this->orderParameters,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),
                 'numRowsOptions' => config('crude.numRowsOptions'),
                 'iconClassName'  => config('crude.iconClassName'),
-                'refreshAll'     => config('crude.refreshAll')
+                'refreshAll'     => config('crude.refreshAll'),
+                'sortAttr'       => $this->getOrderAttribute()
             ],
         ];
     }

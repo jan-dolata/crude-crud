@@ -11,6 +11,7 @@ return [
     'submit' => 'Submit',
     'empty_list' => 'Empty list',
     'tools' => 'Tools',
+    'order' => 'Order',
 
     'add_mode' => 'Add',
     'edit_mode' => 'Edit',
@@ -38,10 +39,19 @@ return [
         'confirm' => 'Confirm'
     ],
 
+    'order_list' => [
+        'title' => 'New order',
+        'content' => 'Create new order',
+        'cancel' => 'Cancel',
+        'confirm' => 'Save'
+    ],
+
     'item_has_been_saved' => 'Item has been saved.',
     'item_has_been_updated' => 'Item has been updated.',
     'item_has_been_removed' => 'Item has been removed.',
     'item_has_been_restored' => 'Item has been restored.',
+
+    'new_order_saved' => 'New order has been saved.',
 
     'input_placeholder' => [
         'text' => 'text',

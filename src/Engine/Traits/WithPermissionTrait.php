@@ -9,16 +9,19 @@ trait WithPermissionTrait
     public function permissionUpdate($model) { return true; }
     public function permissionDelete($model) { return true; }
     public function permissionView($model) { return true; }
+    public function permissionOrder($model) { return true; }
 
     public function canStore($options = null) { return $this->can('store', $options); }
     public function canUpdate($model = null) { return $this->can('update', $model); }
     public function canDelete($model = null) { return $this->can('delete', $model); }
     public function canView($model = null) { return $this->can('view', $model); }
+    public function canOrder($model = null) { return $this->can('order', $model); }
 
     public function cannotStore($options = null) { return $this->cannot('store', $options); }
     public function cannotUpdate($model = null) { return $this->cannot('update', $model); }
     public function cannotDelete($model = null) { return $this->cannot('delete', $model); }
     public function cannotView($model = null) { return $this->cannot('view', $model); }
+    public function cannotOrder($model = null) { return $this->cannot('order', $model); }
 
     public function can($name, $model = null)
     {
@@ -64,6 +67,10 @@ trait WithPermissionTrait
             return $this->permissionDelete($attribute);
         }
 
+        if ($name == 'order') {
+            return $this->permissionOrder($attribute);
+        }
+
         return $this->permissionView($attribute);
     }
 
@@ -80,7 +87,8 @@ trait WithPermissionTrait
         $names = [
             'store' => 'add',
             'update' => 'edit',
-            'delete' => 'delete'
+            'delete' => 'delete',
+            'order' => 'order'
         ];
 
         return $this->crudeSetup->haveOption($names[$name]);
@@ -117,6 +125,9 @@ trait WithPermissionTrait
 
         if (in_array($name, ['get', 'list', 'index', 'view']))
             return 'list';
+
+        if (in_array($name, ['order', 'reorder', 'sort']))
+            return 'order';
 
         return null;
     }

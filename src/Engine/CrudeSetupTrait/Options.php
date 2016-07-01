@@ -55,6 +55,13 @@ trait Options
         return $this;
     }
 
+    public function lockOrderOption()
+    {
+        $this->orderOption = false;
+
+        return $this;
+    }
+
     public function haveOption($optionName = '')
     {
         if ($optionName == 'add')

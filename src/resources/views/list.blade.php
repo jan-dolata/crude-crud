@@ -113,21 +113,31 @@
 
 <script type="text/template" id="crude_orderedListModalTemplate">
     <div class="modal-header">
-        {{ trans('CrudeCRUD::crude.confirm_delete.title') }}
+        {{ trans('CrudeCRUD::crude.order_list.title') }}
     </div>
     <div class="modal-body">
         <div class="content">
-            {{ trans('CrudeCRUD::crude.confirm_delete.content') }}
-            <div class="row">
-                <% console.log(collection, options) %>
+            {{ trans('CrudeCRUD::crude.order_list.content') }}
 
-            </div>
-            <div class="pull-right">
+            <ul id="collection" class="crude-order-list">
+                <%
+                _.each(list, function (model, index) {
+                %>
+                    <li data-id="<%- model[options.idAttr] %>" >
+                        <span class="pull-right text-muted m-sm-l">
+                            <%= (index + 1) %>
+                            <i class="fa fa-sort m-sm-l"></i>
+                        </span>
+                        <%- model[options.labelAttr] %>
+                    </li>
+                <% }) %>
+            </ul>
+            <div class="text-right">
                 <button id="confirm" class="crude-action-btn m-lg-r">
-                    <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_confirmOrderActionButtonTemplate').html())({}) %>
                 </button>
                 <button class="crude-action-btn" data-dismiss="modal">
-                    <%= _.template($('#crude_cancelDeleteActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_cancelOrderActionButtonTemplate').html())({}) %>
                 </button>
             </div>
         </div>

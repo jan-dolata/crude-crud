@@ -29,4 +29,7 @@ Route::group($group, function () {
 
     // Custom actions
     Route::get('custom-action/{crudeName}/{action}/{id}', 'CustomActionController@execute');
+
+    // List order
+    Route::post('ordered-list/{crudeName}', 'OrderedListController@execute');
 });

@@ -303,3 +303,21 @@ $bootstrap-screen-sm-max: 991px;
     background-color: $first-color;
     color: $first-bg;
 }
+
+.crude-order-list {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 0;
+    border-top: 1px solid lighten($second-bg, 30%);
+    border-bottom: 1px solid lighten($second-bg, 30%);
+
+    li {
+        cursor: pointer;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-top: 1px solid lighten($second-bg, 30%);
+        border-bottom: 1px solid lighten($second-bg, 30%);
+        background-color: rgba(255,255,255, 0.5);
+    }
+}
+

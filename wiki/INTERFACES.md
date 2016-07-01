@@ -24,6 +24,10 @@ Activates the possibility to update model.
 
 Activates the possibility to remove model.
 
+### CrudeOrderInterface
+
+Activates the possibility to reorder collection.
+
 ### CrudeWithValidationInterface
 
 Activates the possibility to validate request.
