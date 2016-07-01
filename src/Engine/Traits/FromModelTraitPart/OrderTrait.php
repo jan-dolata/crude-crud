@@ -62,6 +62,6 @@ trait OrderTrait
 
         $data = implode(',', $data);
 
-        \DB::statement("INSERT INTO {$table} ({$idAttr},{$orderAttr}) VALUES {$data} ON DUPLICATE KEY UPDATE {$orderAttr}=VALUES({$orderAttr});");
+        \DB::statement("INSERT INTO {$table} (`{$idAttr}`,`{$orderAttr}`) VALUES {$data} ON DUPLICATE KEY UPDATE `{$orderAttr}`=VALUES(`{$orderAttr}`);");
     }
 }

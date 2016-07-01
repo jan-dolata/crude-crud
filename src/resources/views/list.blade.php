@@ -33,7 +33,7 @@
                     <% if(! _.isArray(attr)) attr = [attr]; %>
                     <th class="crude-table-head-cell">
                         <% _.each(attr, function(a) { %>
-                            <div class="sort pointer" data-attr="<%- a %>">
+                            <div class="sort crude-sort pointer" data-attr="<%- a %>">
                                 <%- setup.getAttrName(a) %>
 
                                 <% if(sort.attr == a) { %>
