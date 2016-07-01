@@ -42,12 +42,28 @@ Change new item place by calling `$this->storeInFirstPlace();` in class `__const
 
 # Example
 
+Part of create books table migration
+
+```php
+    public function up()
+    {
+        Schema::create('books', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('tile');
+            $table->integer('order');
+            $table->timestamps();
+        });
+    }
+```
+
+Book Model
+
 ```php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class District extends Model
+class Book extends Model
 {
     protected $fillable = [
         'title',
@@ -57,6 +73,8 @@ class District extends Model
     ];
 }
 ```
+
+List of books crude class
 
 ```php
 
