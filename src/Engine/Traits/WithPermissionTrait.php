@@ -9,7 +9,7 @@ trait WithPermissionTrait
     public function permissionUpdate($model) { return true; }
     public function permissionDelete($model) { return true; }
     public function permissionView($model) { return true; }
-    public function permissionOrder($model) { return true; }
+    public function permissionOrder($options) { return true; }
 
     public function canStore($options = null) { return $this->can('store', $options); }
     public function canUpdate($model = null) { return $this->can('update', $model); }

@@ -36,7 +36,7 @@ Default values:
 
 Also `useOrderedList()` will add `order` column in table (on first place).
 
-You can disable the option by calling `$this->crudeSetup->lockOrderOption()` (after `useOrderedList()`).
+You can disable the option by calling `$this->crudeSetup->lockOrderOption()` (after `useOrderedList()`), or overwrite `permissionOrder($options)` method.
 
 Change new item place by calling `$this->storeInFirstPlace();` in class `__construct`.
 
