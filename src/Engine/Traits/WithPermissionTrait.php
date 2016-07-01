@@ -15,13 +15,13 @@ trait WithPermissionTrait
     public function canUpdate($model = null) { return $this->can('update', $model); }
     public function canDelete($model = null) { return $this->can('delete', $model); }
     public function canView($model = null) { return $this->can('view', $model); }
-    public function canOrder($model = null) { return $this->can('order', $model); }
+    public function canOrder($options = null) { return $this->can('order', $options); }
 
     public function cannotStore($options = null) { return $this->cannot('store', $options); }
     public function cannotUpdate($model = null) { return $this->cannot('update', $model); }
     public function cannotDelete($model = null) { return $this->cannot('delete', $model); }
     public function cannotView($model = null) { return $this->cannot('view', $model); }
-    public function cannotOrder($model = null) { return $this->cannot('order', $model); }
+    public function cannotOrder($options = null) { return $this->cannot('order', $options); }
 
     public function can($name, $model = null)
     {
