@@ -78,9 +78,7 @@ List of books crude class
 
 use Auth;
 
-class BooksList extends \Crude implements
-    \CRUDInterface,
-    \CrudeOrderInterface
+class BooksList extends \Crude implements \CRUDInterface, \CrudeOrderInterface
 {
     use \CrudeFromModelTrait;
 
@@ -113,11 +111,11 @@ class BooksList extends \Crude implements
             // but if you use this method,
             // make sure that value does not contain order attribute name
 
-            ->useOrderedList('title')
+            ->useOrderedList('title', 'order')
             // after that the table contains three columns
             // ['order', 'id', 'title']
-            // 'order' is default attribute name, to change use
-            // ->useOrderedList('title', 'order_attribute_name')
+            // 'order' is default attribute name,
+            // so use just useOrderedList('title')
             ;
 
         // new item will store in first place
@@ -137,7 +135,44 @@ class BooksList extends \Crude implements
         // it will be the same result in this example
     }
 }
+```
 
+so, after refactoring
+
+```php
+namespace App\Models;
+
+class Book extends \Illuminate\Database\Eloquent\Model
+{
+    protected $fillable = ['title'];
+}
+```
+
+```php
+
+use Auth;
+
+class BooksList extends \Crude implements \CRUDInterface, \CrudeOrderInterface
+{
+    use \CrudeFromModelTrait;
+
+    public function __construct()
+    {
+        $this->setModel(new \App\Models\Book);
+
+        $this->prepareCrudeSetup();
+
+        $this->crudeSetup
+            ->setTitle('List of books')
+            ->setTrans(['id' => 'Id', 'title' => 'Title', 'order' => '#'])
+            ->setColumnFormat('title', 'longtext');
+
+        $this->storeInFirstPlace();
+
+        if (! Auth:user()->cannotOrderListOfBooks())
+            $this->crudeSetup->useOrderedList('title');
+    }
+}
 ```
 
 Result:
