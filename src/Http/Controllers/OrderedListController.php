@@ -15,7 +15,9 @@ class OrderedListController extends Controller
     public function execute(OrderedListRequest $request, $crudeName)
     {
         $orderList = $request->input('orderList');
-        $request->crude->reorder($orderList);
+
+        if (! empty($orderList))
+            $request->crude->reorder($orderList);
 
         return $this->successResponse([
             'message' => trans('CrudeCRUD::crude.new_order_saved')
