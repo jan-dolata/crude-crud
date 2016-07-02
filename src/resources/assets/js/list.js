@@ -266,6 +266,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         $(':focus').blur();
 
+        this.setup.triggerCancel();
+
         var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
         var list = this.collection.toJSON();
         var options = this.setup.get('orderParameters');

@@ -49,7 +49,7 @@
             <% } %>
 
             <th class="crude-table-head-cell crude-table-head-cell-action">
-                <% if(setup.get('orderOption')) { %>
+                <% if(setup.get('orderOption') && pagination.count > 1) { %>
                     <button id="order" title="{{ trans('CrudeCRUD::crude.order') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
                         <%= $('#crude_orderActionButtonTemplate').html() %>
                     </button>
