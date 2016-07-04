@@ -19,14 +19,14 @@ abstract class CrudeOptions
         return $options;
     }
 
-    public static function getLabel($status)
+    public static function getLabel($name)
     {
         $childName = get_called_class();
         $child = new $childName;
         if (property_exists($child, 'optionsTrans'))
-            return  trans($child->optionsTrans . '.' . $status);
+            return  trans($child->optionsTrans . '.' . $name);
 
-        return $status;
+        return $name;
     }
 
     protected static function getConstants()
