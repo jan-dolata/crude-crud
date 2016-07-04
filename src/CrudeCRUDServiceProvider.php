@@ -93,9 +93,13 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         $loader->alias('CrudeWithValidationTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithValidationTrait');
         $loader->alias('CrudeWithFileTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithFileTrait');
         $loader->alias('CrudeCrudeSetup', 'JanDolata\CrudeCRUD\Engine\CrudeSetup');
+
+        $loader->alias('CrudeFileLog', 'JanDolata\CrudeCRUD\Engine\Models\FileLog');
+
         $loader->alias('CrudeFiles', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeFiles');
         $loader->alias('CrudeData', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeData');
-        $loader->alias('CrudeFileLog', 'JanDolata\CrudeCRUD\Engine\Models\FileLog');
+        $loader->alias('CrudeOptions', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeOptions');
+        $loader->alias('CrudeQueryHelper', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeQueryHelper');
     }
 
     private function registerCrudeCRUD()
