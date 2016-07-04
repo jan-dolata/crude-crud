@@ -55,7 +55,7 @@ Example:
 
 Status option class
 
-```
+```php
 <?php
 class BookType extends \CrudeOptions
 {
@@ -69,7 +69,7 @@ class BookType extends \CrudeOptions
 
 Trans file 'books'
 
-```
+```php
 return [
     'types' => [
         'drama' => 'Drama',
@@ -81,7 +81,7 @@ return [
 
 `BookType::getOptions()` result
 
-```
+```php
 [
     [
         'id' => 'drama',
@@ -109,7 +109,7 @@ Methods:
 
 Example:
 
-```
+```php
     $query = (new Book)
         ->select(
             'books.id',
@@ -139,7 +139,7 @@ Methods:
 
 Example:
 
-```
+```php
     public function uploadFile(Request $request)
     {
         $files = $request->file()['file'];
