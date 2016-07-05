@@ -83,7 +83,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                     }
                 });
 
-                _.each(that.model.get('files'), function(file, key) {
+                _.each(that.model.get(that.setup.get('fileAttrName')), function(file, key) {
                     var dzFile = {
                         name: file.file_original_name,
                         thumb: file.path,
