@@ -37,7 +37,10 @@ abstract class Crude
         $this->crudeSetup->setFilters($this->crudeSetup->getColumnAttr());
 
         $data = $this->crudeSetup->getJSData();
-        $data['fileAttrName'] = $this->getFileAttrName();
+
+        $data['fileAttrName'] = method_exists($this, 'getFileAttrName')
+            ? $this->getFileAttrName()
+            : 'files';
 
         return $data;
     }
