@@ -48,7 +48,7 @@ trait StoreUpdateDeleteTrait
     {
         $attributes = $this->formatStoreAttributes($attributes);
 
-        $model = $this->model->create($attributes);
+        $model = $this->model->create($this->mapAttributesWithScope($attributes));
 
         $apiModel = $this->getById($model->id);
 
@@ -81,7 +81,7 @@ trait StoreUpdateDeleteTrait
         if (empty($model))
             return $this;
 
-        $model->update($attributes);
+        $model->update($this->mapAttributesWithScope($attributes));
 
         $apiModel = $this->getById($model->id);
         $this->afterUpdate($apiModel, $attributes);
