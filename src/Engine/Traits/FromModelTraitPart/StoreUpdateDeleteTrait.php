@@ -30,14 +30,14 @@ trait StoreUpdateDeleteTrait
      * @param  Model $model
      * @return Model
      */
-    public function afterStore($model) {}
+    public function afterStore($model, $attributes) {}
 
     /**
      * Method call after update, to overwrite in child class
      * @param  Model $model
      * @return Model
      */
-    public function afterUpdate($model) {}
+    public function afterUpdate($model, $attributes) {}
 
     /**
      * Store new model
@@ -46,10 +46,6 @@ trait StoreUpdateDeleteTrait
      */
     public function store($attributes)
     {
-        // $attributes = $this->filterWithForm($attributes, $this->crudeSetup->getAddForm());
-
-        $attributes = $this->mapAttributesWithScope($attributes);
-
         $attributes = $this->formatStoreAttributes($attributes);
 
         $model = $this->model->create($attributes);
@@ -65,7 +61,7 @@ trait StoreUpdateDeleteTrait
             $this->resetOrder();
         }
 
-        $this->afterStore($apiModel);
+        $this->afterStore($apiModel, $attributes);
 
         return $apiModel;
     }
@@ -78,10 +74,6 @@ trait StoreUpdateDeleteTrait
      */
     public function updateById($id, $attributes)
     {
-        // $attributes = $this->filterWithForm($attributes, $this->crudeSetup->getEditForm());
-
-        $attributes = $this->mapAttributesWithScope($attributes);
-
         $attributes = $this->formatUpdateAttributes($attributes);
 
         $model = $this->model->find($id);
@@ -92,7 +84,7 @@ trait StoreUpdateDeleteTrait
         $model->update($attributes);
 
         $apiModel = $this->getById($model->id);
-        $this->afterUpdate($apiModel);
+        $this->afterUpdate($apiModel, $attributes);
         return $apiModel;
     }
 
