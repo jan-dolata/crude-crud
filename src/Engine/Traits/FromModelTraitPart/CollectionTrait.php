@@ -115,8 +115,6 @@ trait CollectionTrait
 
         $customActions = $this->crudeSetup->getCustomActions();
 
-            //CustomActionAvailable
-
         $collection->each(function ($model) use ($newCollection, $customActions) {
             if ($this->permissionView($model)) {
                 $model->canBeEdited = $this->permissionUpdate($model);

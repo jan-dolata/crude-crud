@@ -29,7 +29,7 @@ trait WithFileTrait
 
         $model = (new CrudeFiles)->upload($model, $crudeName, $files, $fileAttrName);
 
-        return $this->updateById($id, ['files' => $model->files]);
+        return $this->updateById($id, [$fileAttrName => $model->files]);
     }
 
     /**
@@ -47,7 +47,7 @@ trait WithFileTrait
         $model = $this->getById($id);
         $model = (new CrudeFiles)->delete($model, $log, $fileAttrName);
 
-        return $this->updateById($id, ['files' => $model->files]);
+        return $this->updateById($id, [$fileAttrName => $model->files]);
     }
 
     /**

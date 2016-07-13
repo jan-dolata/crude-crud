@@ -19,6 +19,7 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
 
+    'extort_csv' => 'CSV',
     'search_value' => 'Search',
     'drop_file_here' => 'Drop file here or click',
 

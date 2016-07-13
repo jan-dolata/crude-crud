@@ -1,4 +1,5 @@
 <div class="pull-right text-right form-inline m-sm-b">
+
     <div class="input-group input-group crude-table-foot-refresh">
         <button id="refresh" type="button" class="btn btn-default btn-sm">
             {{ trans('CrudeCRUD::crude.update_delay') }}
@@ -39,6 +40,13 @@
             </ul>
         </div>
     <% } %>
+
+    <div class="input-group input-group crude-table-foot-csv">
+        <a href="/<%= setup.config('routePrefix') %>/export-csv/<%= setup.getName() %>" target="_blank" type="button" class="btn btn-default btn-sm">
+            {{ trans('CrudeCRUD::crude.extort_csv') }}
+            <i class="fa fa-download m-sm-l"></i>
+        </a>
+    </div>
 </div>
 
 <div class="form-inline">

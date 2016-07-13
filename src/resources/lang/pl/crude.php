@@ -19,6 +19,7 @@ return [
     'yes' => 'Tak',
     'no' => 'Nie',
 
+    'extort_csv' => 'CSV',
     'search_value' => 'Szukaj',
     'drop_file_here' => 'Upuść plik lub kliknij tutaj',
 

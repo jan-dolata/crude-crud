@@ -32,4 +32,7 @@ Route::group($group, function () {
 
     // List order
     Route::post('ordered-list/{crudeName}', 'OrderedListController@execute');
+
+    // Export to CSV
+    Route::get('export-csv/{crudeName?}', 'ExportController@csv');
 });

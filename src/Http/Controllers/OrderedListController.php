@@ -3,7 +3,6 @@
 namespace JanDolata\CrudeCRUD\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 use JanDolata\CrudeCRUD\Http\Controllers\Traits\ApiResponseTrait;
 use JanDolata\CrudeCRUD\Http\Requests\OrderedListRequest;
 
