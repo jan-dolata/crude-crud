@@ -76,6 +76,7 @@ class CrudeSetup
             'editOption'    => $this->editOption,
             'addOption'     => $this->addOption,
             'orderOption'   => $this->orderOption,
+            'exportOption'  => $this->exportOption,
             'modelDefaults' => $this->modelDefaults,
             'selectOptions' => $this->selectOptions,
             'filters'       => $this->filters,

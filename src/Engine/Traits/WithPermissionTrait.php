@@ -10,18 +10,21 @@ trait WithPermissionTrait
     public function permissionDelete($model) { return true; }
     public function permissionView($model) { return true; }
     public function permissionOrder($options) { return true; }
+    public function permissionExport($options) { return true; }
 
     public function canStore($options = null) { return $this->can('store', $options); }
     public function canUpdate($model = null) { return $this->can('update', $model); }
     public function canDelete($model = null) { return $this->can('delete', $model); }
     public function canView($model = null) { return $this->can('view', $model); }
     public function canOrder($options = null) { return $this->can('order', $options); }
+    public function canExport($options = null) { return $this->can('export', $options); }
 
     public function cannotStore($options = null) { return $this->cannot('store', $options); }
     public function cannotUpdate($model = null) { return $this->cannot('update', $model); }
     public function cannotDelete($model = null) { return $this->cannot('delete', $model); }
     public function cannotView($model = null) { return $this->cannot('view', $model); }
     public function cannotOrder($options = null) { return $this->cannot('order', $options); }
+    public function cannotExport($options = null) { return $this->cannot('export', $options); }
 
     public function can($name, $model = null)
     {
@@ -71,6 +74,10 @@ trait WithPermissionTrait
             return $this->permissionOrder($attribute);
         }
 
+        if ($name == 'export') {
+            return $this->permissionExport($attribute);
+        }
+
         return $this->permissionView($attribute);
     }
 
@@ -88,7 +95,8 @@ trait WithPermissionTrait
             'store' => 'add',
             'update' => 'edit',
             'delete' => 'delete',
-            'order' => 'order'
+            'order' => 'order',
+            'export' => 'export'
         ];
 
         return $this->crudeSetup->haveOption($names[$name]);
@@ -101,7 +109,11 @@ trait WithPermissionTrait
      */
     private function _checkInterface($name)
     {
-        $interface = '\JanDolata\CrudeCRUD\Engine\Interfaces\\' . ucfirst($name) . 'Interface';
+        if ($name == 'export')
+            $interface = '\JanDolata\CrudeCRUD\Engine\Interfaces\ListInterface';
+        else
+            $interface = '\JanDolata\CrudeCRUD\Engine\Interfaces\\' . ucfirst($name) . 'Interface';
+
         return $this instanceof $interface;
     }
 
@@ -128,6 +140,9 @@ trait WithPermissionTrait
 
         if (in_array($name, ['order', 'reorder', 'sort']))
             return 'order';
+
+        if (in_array($name, ['export', 'csv']))
+            return 'export';
 
         return null;
     }

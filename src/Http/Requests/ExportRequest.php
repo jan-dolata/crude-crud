@@ -20,7 +20,7 @@ class ExportRequest extends Request
         if ($crude == null)
             return false;
 
-        if ($crude->cannotView())
+        if ($crude->cannotExport())
             return false;
 
         $this->crude = $crude;

@@ -55,7 +55,7 @@ trait OrderParameters
 
     public function getOrderAttribute()
     {
-        if (empty($this->orderParameters['orderAttr']))
+        if (empty($this->orderParameters['orderAttr']) || ! $this->haveOption('order'))
             return config('crude.defaults.sortAttr');
 
         return $this->orderParameters['orderAttr'];

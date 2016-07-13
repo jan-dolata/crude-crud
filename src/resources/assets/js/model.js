@@ -97,6 +97,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         editOption: true,
         addOption: true,
         orderOption: true,
+        exportOption: true,
         modelDefaults: [],
         selectOptions: [],
         customeActions: [],
@@ -185,7 +186,9 @@ Crude.Models.Setup = Backbone.Model.extend(
         });
 
         var col = new collection;
-        col.changeSortOptions(this.config('sortAttr'));
+
+        if (this.config('sortAttr') != 'id')
+            col.changeSortOptions(this.config('sortAttr'));
 
         return col;
     },

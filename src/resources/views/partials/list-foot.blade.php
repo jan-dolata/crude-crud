@@ -1,6 +1,6 @@
 <div class="pull-right text-right form-inline m-sm-b">
 
-    <div class="input-group input-group crude-table-foot-refresh">
+    <div class="input-group input-group crude-table-foot-refresh m-sm-b">
         <button id="refresh" type="button" class="btn btn-default btn-sm">
             {{ trans('CrudeCRUD::crude.update_delay') }}
             <span id="updateDelay"></span>s
@@ -8,7 +8,7 @@
         </button>
     </div>
 
-    <div class="input-group crude-table-foot-num-rows">
+    <div class="input-group crude-table-foot-num-rows m-sm-b">
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%- pagination.count > pagination.numRows ? pagination.numRows : pagination.count %>
             / <%- pagination.count %>
@@ -27,7 +27,7 @@
     </div>
 
     <% if(pagination.numPages > 1) { %>
-        <div class="input-group crude-table-foot-pagination">
+        <div class="input-group crude-table-foot-pagination m-sm-b">
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%- pagination.page %>
                 / <%- pagination.numPages %>
@@ -41,12 +41,14 @@
         </div>
     <% } %>
 
-    <div class="input-group input-group crude-table-foot-csv">
-        <a href="/<%= setup.config('routePrefix') %>/export-csv/<%= setup.getName() %>" target="_blank" type="button" class="btn btn-default btn-sm">
-            {{ trans('CrudeCRUD::crude.extort_csv') }}
-            <i class="fa fa-download m-sm-l"></i>
-        </a>
-    </div>
+    <% if (setup.get('exportOption')) { %>
+        <div class="input-group input-group crude-table-foot-csv m-sm-b">
+            <a href="/<%= setup.config('routePrefix') %>/export-csv/<%= setup.getName() %>" target="_blank" type="button" class="btn btn-default btn-sm">
+                {{ trans('CrudeCRUD::crude.extort_csv') }}
+                <i class="fa fa-download m-sm-l"></i>
+            </a>
+        </div>
+    <% } %>
 </div>
 
 <div class="form-inline">
