@@ -10,13 +10,11 @@ class ExportController extends Controller
 {
     protected $csvHeaders = [
         'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
-        'Content-type'        => 'text/csv',
-        'Content-Disposition' => 'attachment; filename=galleries.csv',
+        'Content-type'        => 'text/csv; charset=UTF-8',
         'Expires'             => '0',
-        'Pragma'              => 'public'
+        'Pragma'              => 'public',
+        'Content-Encoding'    => 'UTF-8'
     ];
-
-    protected $csvStorageDirectory = 'crude_csv';
 
     public function csv(ExportRequest $request, $crudeName)
     {
@@ -27,27 +25,22 @@ class ExportController extends Controller
         $column = $setup->getColumnAttr();
         $list = $this->formatData($list, $column);
 
-        $directory = $this->csvStorageDirectory;
-        Storage::makeDirectory($directory);
-
         $fileName = $this->fileName($setup, 'csv');
-        $fileUrl = storage_path('app/' . $directory . '/' . $fileName);
 
-        $this->createCsvFile($fileUrl, $list, $this->columnNames($setup, $column));
+        $headers = $this->csvHeaders;
+        $headers['Content-Disposition'] = 'attachment; filename=' . $fileName;
 
-        return response()->download($fileUrl, $fileName, $this->csvHeaders);
-    }
+        $callback = function() use ($list, $column)
+        {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $column);
+            foreach ($list as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
 
-    private function createCsvFile($url, $data, $head)
-    {
-        $file = fopen($url, 'w');
-
-        fputcsv($file, $head);
-
-        foreach ($data as $fields)
-            fputcsv($file, $fields);
-
-        fclose($file);
+        return \Response::stream($callback, 200, $headers);
     }
 
     public function formatData($list, $column)
