@@ -272,7 +272,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         var list = this.collection.toJSON();
         var options = this.setup.get('orderParameters');
         list = _.sortBy(list, function(model) {
-            return model[options.orderAttr];
+            return parseInt(model[options.orderAttr]);
         });
 
         var template = _.template($('#crude_orderedListModalTemplate').html())({
