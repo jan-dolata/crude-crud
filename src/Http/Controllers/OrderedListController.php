@@ -2,11 +2,11 @@
 
 namespace JanDolata\CrudeCRUD\Http\Controllers;
 
-use Illuminate\Routing\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use JanDolata\CrudeCRUD\Http\Controllers\Traits\ApiResponseTrait;
 use JanDolata\CrudeCRUD\Http\Requests\OrderedListRequest;
 
-class OrderedListController extends Controller
+class OrderedListController extends BaseController
 {
 
     use ApiResponseTrait;

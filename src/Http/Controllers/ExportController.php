@@ -2,11 +2,11 @@
 
 namespace JanDolata\CrudeCRUD\Http\Controllers;
 
-use Illuminate\Routing\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use JanDolata\CrudeCRUD\Http\Requests\ExportRequest;
 use Storage;
 
-class ExportController extends Controller
+class ExportController extends BaseController
 {
     protected $csvHeaders = [
         'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
