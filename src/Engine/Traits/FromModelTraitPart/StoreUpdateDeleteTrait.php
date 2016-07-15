@@ -50,16 +50,16 @@ trait StoreUpdateDeleteTrait
 
         $model = $this->model->create($this->mapAttributesWithScope($attributes));
 
-        $apiModel = $this->getById($model->id);
-
         if ($this->canOrder()) {
             if ($this->storeInLastPlace) {
                 $attr = $this->crudeSetup->getOrderAttribute();
-                $apiModel->$attr = $apiModel->id;
-                $apiModel->save();
+                $model->$attr = $model->id;
+                $model->save();
             }
             $this->resetOrder();
         }
+
+        $apiModel = $this->getById($model->id);
 
         $this->afterStore($apiModel, $attributes);
 
