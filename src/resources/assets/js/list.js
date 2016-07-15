@@ -288,7 +288,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         var orders = _.pluck(list, options.orderAttr);
         orders = _.sortBy(orders, function(num) {
-            return num;
+            return parseInt(num);
         });
 
         var url = this.setup.orderedListRoute();
