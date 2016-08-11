@@ -30,7 +30,8 @@ return [
     'action' => [
         'form' => 'Edytuj',
         'map' => 'Edytuj lokalizację',
-        'file' => 'Dodaj / Usuń pliki'
+        'file' => 'Dodaj / Usuń pliki',
+        'thumbnail' => 'Dodaj / Usuń miniaturę'
     ],
 
     'confirm_delete' => [
