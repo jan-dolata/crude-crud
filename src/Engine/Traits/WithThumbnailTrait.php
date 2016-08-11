@@ -69,7 +69,8 @@ trait WithThumbnailTrait
     {
         $model = $this->getById($id);
 
-        Storage::delete($model->{$column}['file_path']);
+        Storage::delete($model->{$column}['file_original_path']);
+        Storage::delete($model->{$column}['file_thumbnail_path']);
 
         $model->{$column} = '';
         $model->save();

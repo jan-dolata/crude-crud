@@ -1154,6 +1154,10 @@ Crude.Views.ThumbnailModule = Crude.Views.Module.extend(
 
                 this.on("success", function(file, response)
                 {
+                    if (response.success) {
+                        file.serverPath = response.model.thumbnail.original_path;
+                    }
+
                     if (! response.success) {
                         that.uploadSuccessfull = false;
                         that.errorMessages = response.errors.file;
