@@ -11,7 +11,8 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
         'list': '#listRegion',
         'form': '#formRegion',
         'map': '#mapRegion',
-        'file': '#fileRegion'
+        'file': '#fileRegion',
+        'thumbnail': '#thumbnailRegion'
     },
 
     initialize: function (options)
@@ -48,6 +49,11 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
             if (this.setup.isActionAvailable('map'))
                 this.map.show(
                     new Crude.Views.MapModule({ setup: setup })
+                );
+
+            if (this.setup.isActionAvailable('thumbnail'))
+                this.thumbnail.show(
+                    new Crude.Views.ThumbnailModule({ setup: setup })
                 );
 
             this.firstRender = false;

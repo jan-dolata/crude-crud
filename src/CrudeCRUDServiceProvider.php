@@ -76,6 +76,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
             'config/crude.php',
         ]);
 
+
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Crude', 'JanDolata\CrudeCRUD\Engine\Crude');
 
@@ -85,12 +86,14 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         $loader->alias('CrudeStoreInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\StoreInterface');
         $loader->alias('CrudeOrderInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\OrderInterface');
         $loader->alias('CrudeWithValidationInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface');
+        $loader->alias('CrudeWithThumbnailInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithThumbnailInterface');
         $loader->alias('CrudeWithFileInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\WithFileInterface');
         $loader->alias('CrudeCRUDInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\CRUDInterface');
         $loader->alias('CrudeCRUDWithValidationInterface', 'JanDolata\CrudeCRUD\Engine\Interfaces\CRUDWithValidationInterface');
 
         $loader->alias('CrudeFromModelTrait', 'JanDolata\CrudeCRUD\Engine\Traits\FromModelTrait');
         $loader->alias('CrudeWithValidationTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithValidationTrait');
+        $loader->alias('CrudeWithThumbnailTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithThumbnailTrait');
         $loader->alias('CrudeWithFileTrait', 'JanDolata\CrudeCRUD\Engine\Traits\WithFileTrait');
         $loader->alias('CrudeCrudeSetup', 'JanDolata\CrudeCRUD\Engine\CrudeSetup');
 

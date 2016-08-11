@@ -32,6 +32,10 @@
     <i class="fa fa-lg fa-file"></i>
 </script>
 
+<script type="text/template" id="crude_thumbnailActionButtonTemplate">
+    <i class="fa fa-lg fa-file-image-o"></i>
+</script>
+
 <script type="text/template" id="crude_confirmDeleteActionButtonTemplate">
     <i class="fa fa-lg fa-trash"></i>
     {{ trans('CrudeCRUD::crude.confirm_delete.confirm') }}

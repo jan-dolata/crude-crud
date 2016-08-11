@@ -27,6 +27,12 @@ Route::group($group, function () {
         Route::delete('delete', 'FileController@delete');
     });
 
+    // Thumbnail
+    Route::group(['prefix' => 'thumbnail'], function() {
+        Route::post('upload', 'ThumbnailController@upload');
+        Route::delete('delete', 'ThumbnailController@delete');
+    });
+
     // Custom actions
     Route::get('custom-action/{crudeName}/{action}/{id}', 'CustomActionController@execute');
 

@@ -147,6 +147,11 @@ Crude.Models.Setup = Backbone.Model.extend(
         return this.baseRoute('file', url);
     },
 
+    thumbnailRoute: function (url)
+    {
+        return this.baseRoute('thumbnail', url);
+    },
+
     customActionRoute: function (action, id)
     {
         return this.baseRoute('custom-action', this.getName() + '/' + action + '/' + id);

@@ -21,6 +21,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CustomActions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderParameters;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailParameters;
 
     /**
      * Construct
@@ -85,6 +86,7 @@ class CrudeSetup
             'customActions' => $this->customActions,
             'panelView'     => $this->panelView,
             'orderParameters' => $this->orderParameters,
+            'thumbnailColumns' => $this->thumbnailColumns,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),
