@@ -99,7 +99,8 @@ Crude.Views.ThumbnailModule = Crude.Views.Module.extend(
                     var dzFile = {
                         name: file.file_original_name,
                         thumb: file.original_path,
-                        serverPath: file.original_path
+                        serverPath: file.original_path,
+                        accepted: true
                     };
                     that.dropzone.emit("addedfile", dzFile);
                     that.dropzone.createThumbnailFromUrl(dzFile, dzFile.serverPath);
