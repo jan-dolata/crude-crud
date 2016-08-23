@@ -62,17 +62,21 @@ trait WithThumbnailTrait
             'current_thumbnail_heigth' => $this->height
         ];
 
-        return $this->updateById($id, [$column => $thumbnail]);
+        $model = $this->model->find($id);
+        $model->$column = $thumbnail;
+        $model->save();
+
+        return $this->getById($id);
     }
 
     public function deleteThumbnailByIdAndColumn($id, $column)
     {
-        $model = $this->getById($id);
+        $model = $this->model->find($id);
 
         Storage::delete($model->{$column}['file_original_path']);
         Storage::delete($model->{$column}['file_thumbnail_path']);
 
-        $model->{$column} = '';
+        $model->{$column} = null;
         $model->save();
 
         return $model;

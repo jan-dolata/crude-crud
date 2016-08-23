@@ -1155,7 +1155,7 @@ Crude.Views.ThumbnailModule = Crude.Views.Module.extend(
                 this.on("success", function(file, response)
                 {
                     if (response.success) {
-                        file.serverPath = response.model.thumbnail.original_path;
+                        file.serverPath = response.model[column].original_path;
                     }
 
                     if (! response.success) {
@@ -1213,8 +1213,10 @@ Crude.Views.ThumbnailModule = Crude.Views.Module.extend(
                     that.dropzone.emit("addedfile", dzFile);
                     that.dropzone.createThumbnailFromUrl(dzFile, dzFile.serverPath);
 
-                    var existingFileCount = 1; // The number of files already uploaded
-                    that.dropzone.options.maxFiles = that.dropzone.options.maxFiles - existingFileCount;
+                    that.dropzone.files.push(dzFile);
+
+                    // var existingFileCount = 1; // The number of files already uploaded
+                    // that.dropzone.options.maxFiles = that.dropzone.options.maxFiles - existingFileCount;
                 }
 
             },

@@ -19,5 +19,7 @@ trait ThumbnailParameters
     public function setThumbnailColumns(array $columns)
     {
         $this->thumbnailColumns = $columns;
+
+        return $this;
     }
 }

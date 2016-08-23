@@ -95,7 +95,7 @@ class ApiController extends Controller
         $model = $this->crude->updateById($id, $request->all());
 
         return $this->successResponse([
-            'message' => trans('admin.item_has_been_updated')
+            'message' => trans('crude.item_has_been_updated')
         ]);
     }
 
@@ -107,7 +107,7 @@ class ApiController extends Controller
         $model = $this->crude->deleteById($id);
 
         return $this->successResponse([
-            'message' => trans('admin.item_has_been_removed')
+            'message' => trans('crude.item_has_been_removed')
         ]);
     }
 
