@@ -147,7 +147,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     {
         this.unlockForm();
 
-        if ('message' in  response)
+        if (('data' in response) && ('message' in  response.data))
             this.showMessage(response.data.message);
 
         this.setup.triggerNextAction(this.model);
