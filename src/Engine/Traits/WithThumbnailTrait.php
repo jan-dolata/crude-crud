@@ -38,7 +38,7 @@ trait WithThumbnailTrait
         Storage::copy($fileOriginalPath, $fileThumbnailPath);
 
         //create thumb
-        $img = Image::make($fileThumbnailPath);
+        $img = Image::make(storage_path('app/'.$fileThumbnailPath));
         $img->heighten($this->height, function ($constraint) {
             $constraint->upsize();
         });
