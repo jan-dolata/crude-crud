@@ -63,7 +63,7 @@ Crude.Views.ThumbnailModule = Crude.Views.Module.extend(
                     if (! that.uploadSuccessfull) {
                         _.each(that.errorMessages, function(error){
                             that.dropzone.removeAllFiles();
-                            Crude.showError(error);
+                            Crude.showError(error, that.alertContainer());
                         });
 
                         that.errorMessages = [];
