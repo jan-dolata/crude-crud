@@ -39,6 +39,9 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
 
                 this.on("success", function(file, response)
                 {
+                    var fileIndex = _.findKey(response.model.files, {'file_original_name': file.name});
+                    file.fileLogId = response.model.files[fileIndex].file_log_id;
+
                     if (! response.success) {
                         that.uploadSuccessfull = false;
                         that.errorMessages = response.errors.file;
@@ -64,7 +67,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                 });
 
                 this.on("removedfile", function(file) {
-                    if (file.hasOwnProperty('serverPath')){
+                    if (file.hasOwnProperty('fileLogId')){
                         $.ajax({
                             dataType: "json",
                             type: 'delete',
