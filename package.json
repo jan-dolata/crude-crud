@@ -19,5 +19,21 @@
   "scripts": {
     "version": "git add package.json",
     "postversion": "git push origin && git push --tags"
-  }
+  },
+  "name": "crude-crud",
+  "description": "[![Latest Version on Packagist][ico-version]][link-packagist]\r [![Software License][ico-license]](LICENSE.md)\r [![Build Status][ico-travis]][link-travis]\r [![Coverage Status][ico-scrutinizer]][link-scrutinizer]\r [![Quality Score][ico-code-quality]][link-code-quality]\r [![Total Downloads][ico-downloads]][link-downloads]",
+  "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jan-dolata/crude-crud.git"
+  },
+  "keywords": [
+    "CRUD"
+  ],
+  "author": "Jan Dolata",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jan-dolata/crude-crud/issues"
+  },
+  "homepage": "https://github.com/jan-dolata/crude-crud#readme"
 }
