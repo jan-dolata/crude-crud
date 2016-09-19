@@ -16,9 +16,9 @@ class CrudeFiles
      * @param  Files $files
      * @return Model
      */
-    public function upload($model, $folderName, $files)
+    public function upload($model, $folderName, $files, $fileAttrName = 'files')
     {
-        $updatedFiles = $model->files;
+        $updatedFiles = $model->$fileAttrName;
 
         foreach ($files as $file) {
 
@@ -49,7 +49,7 @@ class CrudeFiles
             ];
         }
 
-        $model->files = $updatedFiles;
+        $model->$fileAttrName = $updatedFiles;
         return $model;
     }
 
@@ -59,7 +59,7 @@ class CrudeFiles
      * @param  FileLog $log
      * @return Model
      */
-    public function delete($model, FileLog $log)
+    public function delete($model, FileLog $log, $fileAttrName = 'files')
     {
         Storage::delete($log->file_path);
 
@@ -71,7 +71,7 @@ class CrudeFiles
 
         $log->delete();
 
-        $model->files = $updatedFiles;
+        $model->$fileAttrName = $updatedFiles;
         return $model;
     }
 

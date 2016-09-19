@@ -17,6 +17,8 @@
 - [wiki Interfaces](wiki/INTERFACES.md)
 - [wiki Work with model](wiki/WORKWITHMODEL.md)
 - [wiki Style](wiki/STYLE.md)
+- [wiki Ordered list](wiki/ORDERED_LIST.md)
+- [wiki Helpers](wiki/HELPERS.md)
 
 ## Install
 

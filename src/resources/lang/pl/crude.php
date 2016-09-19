@@ -11,6 +11,7 @@ return [
     'submit' => 'Zatwierdź',
     'empty_list' => 'Lista jest pusta',
     'tools' => 'Narzędzia',
+    'order' => 'Kolejność',
 
     'add_mode' => 'Dodajesz',
     'edit_mode' => 'Edytujesz',
@@ -18,6 +19,7 @@ return [
     'yes' => 'Tak',
     'no' => 'Nie',
 
+    'extort_csv' => 'CSV',
     'search_value' => 'Szukaj',
     'drop_file_here' => 'Upuść plik lub kliknij tutaj',
 
@@ -28,7 +30,8 @@ return [
     'action' => [
         'form' => 'Edytuj',
         'map' => 'Edytuj lokalizację',
-        'file' => 'Dodaj / Usuń pliki'
+        'file' => 'Dodaj / Usuń pliki',
+        'thumbnail' => 'Dodaj / Usuń miniaturę'
     ],
 
     'confirm_delete' => [
@@ -38,10 +41,19 @@ return [
         'confirm' => 'Usuń'
     ],
 
+    'order_list' => [
+        'title' => 'Nowa kolejność',
+        'content' => 'Ustaw nową kolejność',
+        'cancel' => 'Anuluj',
+        'confirm' => 'Zapisz'
+    ],
+
     'item_has_been_saved' => 'Element został dodany.',
     'item_has_been_updated' => 'Element został zapisany.',
     'item_has_been_removed' => 'Element został usunięty.',
     'item_has_been_restored' => 'Element został przywrócony.',
+
+    'new_order_saved' => 'Nowa kolejność została zapisana.',
 
     'input_placeholder' => [
         'text' => 'tekst',

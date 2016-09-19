@@ -102,7 +102,7 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
         this.setup.triggerCancel();
 
-        $modal = $('#deleteItemConfirmModal');
+        var $modal = $('#deleteItemConfirmModal');
         $modal.modal('show');
         var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
 
@@ -110,6 +110,8 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
         {
             this.model.destroy({wait: true})
                 .done(function(response) {
+                    Crude.vent.trigger('action_update', this.setup.getName());
+
                     if ('message' in  response)
                         Crude.showAlert('success', response.data.message, alertContainer);
 
@@ -168,6 +170,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         refresh: '#refresh',
 
         add: '#add',
+        order: '#order',
         sort: '.sort',
 
         changeNumRows: '.changeNumRows',
@@ -183,6 +186,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
     events: {
         'click @ui.add': 'add',
+        'click @ui.order': 'order',
         'click @ui.sort': 'sort',
         'click @ui.changeNumRows': 'changeNumRows',
         'click @ui.changePage': 'changePage',
@@ -216,7 +220,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         return {
             setup: this.setup,
-            sort: this.collection.sort,
+            sort: this.collection.sortAttributes,
             pagination: this.collection.pagination,
             search: this.collection.search
         };
@@ -256,6 +260,70 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.collection.changeSortOptions($target.data('attr'));
         this.updateList();
+    },
+
+    order: function ()
+    {
+        $(':focus').blur();
+
+        this.setup.triggerCancel();
+
+        var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
+        var list = this.collection.toJSON();
+        var options = this.setup.get('orderParameters');
+        list = _.sortBy(list, function(model) {
+            return parseInt(model[options.orderAttr]);
+        });
+
+        var template = _.template($('#crude_orderedListModalTemplate').html())({
+            list: list,
+            options: options
+        });
+
+        $modal = $('#orderedListModal');
+        $modal.find('#content').html(template);
+
+        $modal.modal('show');
+        $modal.find('#collection').sortable();
+
+        var orders = _.pluck(list, options.orderAttr);
+        orders = _.sortBy(orders, function(num) {
+            return parseInt(num);
+        });
+
+        var url = this.setup.orderedListRoute();
+        var that = this;
+
+        $modal.find('#confirm').click(function() {
+            var orderList = [];
+            var i = 0;
+            $modal.find('#collection').find('li').each(function () {
+                orderList.push({
+                    id: $(this).data('id'),
+                    order: orders[i]
+                });
+                i++;
+            });
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: {
+                    orderList: orderList
+                },
+                success: function(response)
+                {
+                    $modal.modal('hide');
+                    Crude.vent.trigger('action_update', that.setup.getName());
+                    Crude.showAlert('success', response.data.message, alertContainer);
+                },
+                error: function(response)
+                {
+                    $modal.modal('hide');
+                    that.setup.onAjaxFail(response, alertContainer);
+                }
+            });
+        });
     },
 
     changeNumRows: function (event)

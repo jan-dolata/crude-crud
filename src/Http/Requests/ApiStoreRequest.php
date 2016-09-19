@@ -5,7 +5,7 @@ namespace JanDolata\CrudeCRUD\Http\Requests;
 use App\Http\Requests\Request;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class ApiStoreRequest extends Request
+class ApiStoreRequest extends AbstractRequest
 {
 
     /**

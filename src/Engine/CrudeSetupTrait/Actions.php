@@ -5,7 +5,7 @@ namespace JanDolata\CrudeCRUD\Engine\CrudeSetupTrait;
 trait Actions
 {
     /**
-     * Action, one of { form, map, file }
+     * Action, one of { form, map, file, thumbnail }
      *
      * @var array
      */
@@ -72,5 +72,13 @@ trait Actions
 
         $this->setModelDefaults('files', []);
         $this->setColumnFormat('files', 'files');
+    }
+
+    /**
+     * Set 'thumbnail' action
+     */
+    public function setThumbnailAction()
+    {
+        array_push($this->actions, 'thumbnail');
     }
 }

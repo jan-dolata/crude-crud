@@ -2,12 +2,12 @@
 
 namespace JanDolata\CrudeCRUD\Http\Controllers;
 
-use Illuminate\Routing\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 use JanDolata\CrudeCRUD\Http\Controllers\Traits\ApiResponseTrait;
 use JanDolata\CrudeCRUD\Http\Requests\CustomActionRequest;
 
-class CustomActionController extends Controller
+class CustomActionController extends BaseController
 {
 
     use ApiResponseTrait;

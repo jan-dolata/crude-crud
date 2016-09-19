@@ -25,6 +25,20 @@ trait Options
      */
     protected $editOption = true;
 
+    /**
+     * Show order option
+     *
+     * @var boolean
+     */
+    protected $orderOption = false;
+
+    /**
+     * Show export option
+     *
+     * @var boolean
+     */
+    protected $exportOption = true;
+
     public function lockEditOption()
     {
         $this->editOption = false;
@@ -48,6 +62,20 @@ trait Options
         return $this;
     }
 
+    public function lockOrderOption()
+    {
+        $this->orderOption = false;
+
+        return $this;
+    }
+
+    public function lockExportOption()
+    {
+        $this->exportOption = false;
+
+        return $this;
+    }
+
     public function haveOption($optionName = '')
     {
         if ($optionName == 'add')
@@ -58,6 +86,12 @@ trait Options
 
         if ($optionName == 'delete')
             return $this->deleteOption;
+
+        if ($optionName == 'order')
+            return $this->orderOption;
+
+        if ($optionName == 'export')
+            return $this->exportOption;
 
         return false;
     }

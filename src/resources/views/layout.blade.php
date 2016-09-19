@@ -16,6 +16,7 @@
                             <div id="formRegion" class="crude-module" style="display: none"></div>
                             <div id="mapRegion" class="crude-module" style="display: none"></div>
                             <div id="fileRegion" class="crude-module" style="display: none"></div>
+                            <div id="thumbnailRegion" class="crude-module" style="display: none"></div>
                         </div>
                     </div>
                 </div>
@@ -25,6 +26,7 @@
             <div id="formRegion" class="crude-module" style="display: none"></div>
             <div id="mapRegion" class="crude-module" style="display: none"></div>
             <div id="fileRegion" class="crude-module" style="display: none"></div>
+            <div id="thumbnailRegion" class="crude-module" style="display: none"></div>
         <% } %>
     </div>
 

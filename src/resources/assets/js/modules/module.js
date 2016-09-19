@@ -3,6 +3,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     tagName: 'div',
     moduleName: '',
     formIsLocked: false,
+    slideUpAllow: true,
 
     ui: {
         save: '#save',
@@ -25,6 +26,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     {
         this.setup = options.setup;
         this.model = this.setup.getNewModel();
+        this.slideUpAllow = 'slideUpAllow' in options ? options.slideUpAllow : this.slideUpAllow;
 
         this.listenTo(Crude.vent, 'action_' + this.moduleName, this.onAction);
         this.listenTo(Crude.vent, 'action_end', this.onActionEnd);
@@ -103,6 +105,9 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     slideUp: function ()
     {
+        if (! this.slideUpAllow)
+            return;
+
         this.clearAllAlerts();
 
         if (this.setup.get('moduleInPopup')) {
@@ -142,7 +147,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     {
         this.unlockForm();
 
-        if ('message' in  response)
+        if (('data' in response) && ('message' in  response.data))
             this.showMessage(response.data.message);
 
         this.setup.triggerNextAction(this.model);

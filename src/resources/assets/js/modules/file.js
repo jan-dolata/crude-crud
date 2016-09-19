@@ -39,6 +39,9 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
 
                 this.on("success", function(file, response)
                 {
+                    var fileIndex = _.findKey(response.model.files, {'file_original_name': file.name});
+                    file.fileLogId = response.model.files[fileIndex].file_log_id;
+
                     if (! response.success) {
                         that.uploadSuccessfull = false;
                         that.errorMessages = response.errors.file;
@@ -53,7 +56,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                     if (! that.uploadSuccessfull) {
                         _.each(that.errorMessages, function(error){
                             that.dropzone.removeAllFiles();
-                            Crude.showError(error);
+                            Crude.showError(error, that.alertContainer());
                         });
 
                         that.errorMessages = [];
@@ -64,7 +67,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                 });
 
                 this.on("removedfile", function(file) {
-                    if (file.hasOwnProperty('serverPath')){
+                    if (file.hasOwnProperty('fileLogId')){
                         $.ajax({
                             dataType: "json",
                             type: 'delete',
@@ -83,7 +86,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                     }
                 });
 
-                _.each(that.model.get('files'), function(file, key) {
+                _.each(that.model.get(that.setup.get('fileAttrName')), function(file, key) {
                     var dzFile = {
                         name: file.file_original_name,
                         thumb: file.path,

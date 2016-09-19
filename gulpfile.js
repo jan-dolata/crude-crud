@@ -32,6 +32,7 @@ elixir(function(mix) {
         'js/modules/form.js',
         'js/modules/file.js',
         'js/modules/map.js',
+        'js/modules/thumbnail.js',
         'js/list.js',
         'js/layout.js',
         'js/start.js',

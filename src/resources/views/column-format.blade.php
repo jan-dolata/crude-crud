@@ -30,10 +30,18 @@
 <script type="text/template" id="crude_filesColumnFormatTemplate">
     <% files = model.get(attr) %>
     <% for (var i in files) { %>
+    <%
+        max_length = 10;
+        file_display_name = files[i]['file_original_name'].length > max_length
+            ? files[i]['file_original_name'].substring(0,max_length-1)+"..."
+            : files[i]['file_original_name'];
+    %>
         <div>
-            <a href="<%- files[i]['path'] %>" target="_blank">
+            <a href="<%- files[i]['path'] %>" target="_blank"
+            data-toggle="tooltip" data-placement="top" title="<%- files[i]['file_original_name'] %>"
+            >
                 <sub><i class="fa fa-external-link"></i></sub>
-                <%- files[i]['file_original_name'] %>
+                <%- file_display_name %>
             </a>
         </div>
     <% } %>

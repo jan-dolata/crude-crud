@@ -20,6 +20,8 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ModuleInPopup;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CustomActions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderParameters;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailParameters;
 
     /**
      * Construct
@@ -74,6 +76,8 @@ class CrudeSetup
             'deleteOption'  => $this->deleteOption,
             'editOption'    => $this->editOption,
             'addOption'     => $this->addOption,
+            'orderOption'   => $this->orderOption,
+            'exportOption'  => $this->exportOption,
             'modelDefaults' => $this->modelDefaults,
             'selectOptions' => $this->selectOptions,
             'filters'       => $this->filters,
@@ -81,12 +85,15 @@ class CrudeSetup
             'moduleInPopup' => $this->moduleInPopup,
             'customActions' => $this->customActions,
             'panelView'     => $this->panelView,
+            'orderParameters' => $this->orderParameters,
+            'thumbnailColumns' => $this->thumbnailColumns,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),
                 'numRowsOptions' => config('crude.numRowsOptions'),
                 'iconClassName'  => config('crude.iconClassName'),
-                'refreshAll'     => config('crude.refreshAll')
+                'refreshAll'     => config('crude.refreshAll'),
+                'sortAttr'       => $this->getOrderAttribute()
             ],
         ];
     }

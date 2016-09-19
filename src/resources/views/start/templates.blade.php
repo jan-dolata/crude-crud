@@ -8,4 +8,5 @@
 @include('CrudeCRUD::modules.form')
 @include('CrudeCRUD::modules.map')
 @include('CrudeCRUD::modules.file')
+@include('CrudeCRUD::modules.thumbnail')
 @include('CrudeCRUD::layout')
