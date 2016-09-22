@@ -30,6 +30,10 @@ class FileController extends Controller
             $rules = $crude->getValidationRules(['file']);
 
             foreach($files as $file) {
+                // $rulesForExeption = $crude->getValidationRules(['file_' . $file->getExtension() ]);
+                // if ($rulesForExeption)
+                //     $rules = $rulesForExeption;
+
                 $validator = Validator::make(['file' => $file], $rules);
 
                 if ($validator->fails()){

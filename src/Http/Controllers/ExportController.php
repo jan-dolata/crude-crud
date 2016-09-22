@@ -33,9 +33,9 @@ class ExportController extends BaseController
         $callback = function() use ($list, $column)
         {
             $file = fopen('php://output', 'w');
-            fputcsv($file, $column);
+            fputcsv($file, $column, "\t");
             foreach ($list as $row) {
-                fputcsv($file, $row);
+                fputcsv($file, $row, "\t");
             }
             fclose($file);
         };
