@@ -98,6 +98,8 @@ in view
 
 it works.
 
+=============
+
 ## Example
 
 Part of create books table migration
@@ -149,74 +151,6 @@ class BooksList extends \Crude implements \CRUDInterface, \CrudeOrderInterface
 ```
 
 ![/wiki/ordered_list/1.png](/example.png "List")
-
-=============
-
-You can change attribute names in `resources/lang/en/validation.php` files
-
-```php
-'attributes' => [
-    'id' => 'id attribute name'
-],
-```
-
-to add ability to store implement interface
-
-`CrudeStoreInterface`
-
-setting title, types and columns
-
-```php
-$this->crudeSetup
-    ->setTitle(trans('titles.admin_district'))
-    ->setTypes(['province' => 'autocomplete'])
-    ->setColumn(['id', 'name', 'province', 'points', 'created_at'])
-    ;
-```
-
-to turn on validation implement interface
-
-`CrudeWithValidationInterface`
-
-and use trait
-
-```php
-use CrudeWithValidationTrait;
-```
-
-define validation rules
-
-```php
-$this->setValidationRules([
-    'name' => 'required',
-    'province' => 'required'
-]);
-```
-
-to update implement interface
-
-`CrudeUpdateInterface`
-
-to delete interface
-
-`CrudeDeleteInterface`
-
-to join data to list or add aliases to attribute names
-
-```php
-public function prepareQuery()
-{
-    return $this->model
-        ->select(
-            'districts.id',
-            'districts.name',
-            'districts.province',
-            'districts.points',
-            'districts.created_at',
-            'districts.updated_at'
-        );
-}
-```
 
 ## Change log
 
