@@ -7,18 +7,11 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
+[Full documentation](https://jan-dolata.github.io/)
+
 # Table of content
 - [Install](#install)
 - [Usage](#usage)
-- [wiki Inputs](wiki/INPUTS.md)
-- [wiki Api](wiki/API.md)
-- [wiki Tutorials](wiki/TUTORIALS.md)
-- [wiki Crude setup](wiki/CRUDE_SETUP.md)
-- [wiki Interfaces](wiki/INTERFACES.md)
-- [wiki Work with model](wiki/WORKWITHMODEL.md)
-- [wiki Style](wiki/STYLE.md)
-- [wiki Ordered list](wiki/ORDERED_LIST.md)
-- [wiki Helpers](wiki/HELPERS.md)
 
 ## Install
 
@@ -104,6 +97,58 @@ in view
 ```
 
 it works.
+
+## Example
+
+Part of create books table migration
+
+```php
+    public function up()
+    {
+        Schema::create('books', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('tile');
+            $table->integer('order');
+            $table->timestamps();
+        });
+    }
+```
+```php
+namespace App\Models;
+
+class Book extends \Illuminate\Database\Eloquent\Model
+{
+    protected $fillable = ['title'];
+}
+```
+
+```php
+use Auth;
+
+class BooksList extends \Crude implements \CRUDInterface, \CrudeOrderInterface
+{
+    use \CrudeFromModelTrait;
+
+    public function __construct()
+    {
+        $this->setModel(new \App\Models\Book);
+
+        $this->prepareCrudeSetup();
+
+        $this->crudeSetup
+            ->setTitle('List of books')
+            ->setTrans(['id' => 'Id', 'title' => 'Title', 'order' => '#'])
+            ->setColumnFormat('title', 'longtext');
+
+        $this->storeInFirstPlace();
+
+        if (! Auth:user()->cannotOrderListOfBooks())
+            $this->crudeSetup->useOrderedList('title');
+    }
+}
+```
+
+![/wiki/ordered_list/1.png](/example.png "List")
 
 =============
 
