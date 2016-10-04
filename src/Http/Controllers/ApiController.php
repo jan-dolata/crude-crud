@@ -24,9 +24,12 @@ class ApiController extends Controller
 
     function __construct(Request $request)
     {
-        $this->crude = CrudeInstance::get($request->crudeName);
-    }
+        $this->middleware(function ($request, $next) {
+            $this->crude = CrudeInstance::get($request->crudeName);
 
+            return $next($request);
+        });
+    }
     /**
      * Fetch collection
      */
