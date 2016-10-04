@@ -9,6 +9,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Name;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Column;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ColumnFormat;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CsvColumn;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Form;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Actions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Options;

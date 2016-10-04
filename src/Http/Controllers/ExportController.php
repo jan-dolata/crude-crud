@@ -22,7 +22,10 @@ class ExportController extends BaseController
             ->getFiltered(null, null, null, null, null, null);
 
         $setup = $request->crude->getCrudeSetup();
-        $column = $setup->getColumnAttr();
+        $column = $setup->getCsvColumn();
+        if (empty($column))
+            $column = $setup->getColumnAttr();
+        
         $list = $this->formatData($list, $column);
 
         $fileName = $this->fileName($setup, 'csv');
