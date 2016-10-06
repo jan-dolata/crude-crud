@@ -29,7 +29,7 @@ abstract class CrudeOptions
         return $name;
     }
 
-    protected static function getConstants()
+    public static function getConstants()
     {
         return (new \ReflectionClass(get_called_class()))->getConstants();
     }
