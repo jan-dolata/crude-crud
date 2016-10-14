@@ -7,6 +7,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
     uploadSuccessfull: true,
     errorMesssages: [],
     maxFiles: 10,
+    parallelUploads: 10,
 
     ui: {
         save: '#save',
@@ -16,6 +17,14 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
     },
 
     save: function() { },
+
+    initialize: function(options)
+    {
+        this.moduleInitialize(options);
+
+        this.maxFiles = options.hasOwnProperty("maxFiles") ? options.maxFiles : this.maxFiles;
+        this.parallelUploads = options.hasOwnProperty("parallelUploads") ? options.parallelUploads : this.parallelUploads;
+    },
 
     onRender: function()
     {
@@ -31,7 +40,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
             url: that.setup.filesRoute('upload'),
             previewTemplate: $('#crude_dropzoneTemplate').html(),
             maxFiles: that.maxFiles,
-            parallelUploads: 10,
+            parallelUploads: that.parallelUploads,
             uploadMultiple: true,
             autoProcessQueue: true,
             init: function()
@@ -98,6 +107,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                     that.dropzone.createThumbnailFromUrl(dzFile, dzFile.serverPath);
 
                     var existingFileCount = 1; // The number of files already uploaded
+
                     that.dropzone.options.maxFiles = that.dropzone.options.maxFiles - existingFileCount;
                 });
             },
