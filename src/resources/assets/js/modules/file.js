@@ -6,6 +6,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
     dropzone: '',
     uploadSuccessfull: true,
     errorMesssages: [],
+    maxFiles: 10,
 
     ui: {
         save: '#save',
@@ -29,7 +30,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
             },
             url: that.setup.filesRoute('upload'),
             previewTemplate: $('#crude_dropzoneTemplate').html(),
-            maxFiles: 10,
+            maxFiles: that.maxFiles,
             parallelUploads: 10,
             uploadMultiple: true,
             autoProcessQueue: true,
