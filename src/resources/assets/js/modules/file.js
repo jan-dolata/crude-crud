@@ -49,8 +49,10 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
 
                 this.on("success", function(file, response)
                 {
-                    var fileIndex = _.findKey(response.model.files, {'file_original_name': file.name});
-                    file.fileLogId = response.model.files[fileIndex].file_log_id;
+                    if ("model" in response && "files" in response.model) {
+                        var fileIndex = _.findKey(response.model.files, {'file_original_name': file.name});
+                        file.fileLogId = response.model.files[fileIndex].file_log_id;
+                    }
 
                     if (! response.success) {
                         that.uploadSuccessfull = false;
@@ -58,20 +60,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                         return;
                     }
 
-                    Crude.vent.trigger('action_update', that.setup.getName());
-                });
-
-                this.on("queuecomplete", function()
-                {
-                    if (! that.uploadSuccessfull) {
-                        _.each(that.errorMessages, function(error){
-                            that.dropzone.removeAllFiles();
-                            Crude.showError(error, that.alertContainer());
-                        });
-
-                        that.errorMessages = [];
-                        return;
-                    }
+                    updateModelFiles(response.model.files);
 
                     Crude.vent.trigger('action_update', that.setup.getName());
                 });
@@ -88,7 +77,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                                 crudeName   : that.setup.getName()
                             },
                             success: function(response){
-                                that.model = response.model;
+                                updateModelFiles(response.model.files);
 
                                 Crude.vent.trigger('action_update', that.setup.getName());
                             }
@@ -96,29 +85,37 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                     }
                 });
 
-                _.each(that.model.get(that.setup.get('fileAttrName')), function(file, key) {
-                    var dzFile = {
-                        name: file.file_original_name,
-                        thumb: file.path,
-                        serverPath: file.path,
-                        fileLogId: file.file_log_id
-                    };
-                    that.dropzone.emit("addedfile", dzFile);
-                    that.dropzone.createThumbnailFromUrl(dzFile, dzFile.serverPath);
+                var updateModelFiles = function (files) {
+                    that.model.set(
+                        that.setup.get('fileAttrName'),
+                        files
+                    );
+                };
 
-                    var existingFileCount = 1; // The number of files already uploaded
+                var upadateFiles = function() {
+                    _.each(that.model.get(that.setup.get('fileAttrName')), function(file, key) {
+                        var dzFile = {
+                            name: file.file_original_name,
+                            thumb: file.path,
+                            serverPath: file.path,
+                            fileLogId: file.file_log_id
+                        };
+                        that.dropzone.emit("addedfile", dzFile);
+                        that.dropzone.createThumbnailFromUrl(dzFile, dzFile.serverPath);
 
-                    that.dropzone.options.maxFiles = that.dropzone.options.maxFiles - existingFileCount;
-                });
+                        var existingFileCount = 1; // The number of files already uploaded
+
+                        that.dropzone.options.maxFiles = that.dropzone.options.maxFiles - existingFileCount;
+                    });
+                };
+                upadateFiles();
             },
             sending: function(file, xhr, formData) {
                 formData.append("crudeName", that.setup.getName());
                 formData.append("modelId", that.model.id);
             },
-            maxfilesexceeded: function(file) {
-                this.removeAllFiles();
-                this.addFile(file);
-            }
+
+            dictMaxFilesExceeded: that.setup.get("dropzoneTrans")["dictMaxFilesExceeded"]
         });
     },
 });

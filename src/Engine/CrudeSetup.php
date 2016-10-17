@@ -23,6 +23,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderParameters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailParameters;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DropzoneTrans;
 
     /**
      * Construct
@@ -56,6 +57,10 @@ class CrudeSetup
         foreach ($formAttr as $attr)
             $this->inputType[$attr] = 'text';
 
+        $this->dropzoneTrans = [
+            'dictMaxFilesExceeded' => trans('CrudeCRUD::crude.dictMaxFilesExceeded')
+        ];
+
         return $this;
     }
 
@@ -83,6 +88,7 @@ class CrudeSetup
             'selectOptions' => $this->selectOptions,
             'filters'       => $this->filters,
             'trans'         => $this->trans,
+            'dropzoneTrans' => $this->dropzoneTrans,
             'moduleInPopup' => $this->moduleInPopup,
             'customActions' => $this->customActions,
             'panelView'     => $this->panelView,
