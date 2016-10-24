@@ -369,10 +369,11 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
     updateList: function ()
     {
-        this.collection.fetchWithOptions().done(function ()
+        this.collection.fetchWithOptions().done(function (response)
         {
             Crude.vent.trigger('fetched_completed');
             this.updateTime = Date.now();
+            this.setup = new Crude.Models.Setup(response.data.setup);
             this.render();
         }.bind(this));
     },

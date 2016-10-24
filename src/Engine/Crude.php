@@ -42,6 +42,8 @@ abstract class Crude
             ? $this->getFileAttrName()
             : 'files';
 
+        $data['addOption'] = $this->canStore('check with permission');
+
         return $data;
     }
 

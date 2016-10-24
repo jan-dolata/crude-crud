@@ -68,6 +68,8 @@ class ApiController extends Controller
                 'attr' => $searchAttr,
                 'value' => $searchValue
             ],
+
+            'setup' => $this->crude->getCrudeSetupData()
         ]);
     }
 
