@@ -8,6 +8,7 @@ elixir(function(mix) {
     mix.sass(assets + 'sass/app.scss', 'src/public/css/');
 
     mix.copy(node + 'font-awesome/fonts/**', 'src/public/fonts');
+    mix.copy(node + 'bootstrap-sass/assets/fonts/**', 'src/public/fonts');
 
     mix.scripts([
         'jquery/dist/jquery.min.js',
