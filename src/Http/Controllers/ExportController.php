@@ -22,7 +22,10 @@ class ExportController extends BaseController
             ->getFiltered(null, null, null, null, null, null);
 
         $setup = $request->crude->getCrudeSetup();
-        $column = $setup->getColumnAttr();
+        $column = $setup->getCsvColumn();
+        if (empty($column))
+            $column = $setup->getColumnAttr();
+        
         $list = $this->formatData($list, $column);
 
         $fileName = $this->fileName($setup, 'csv');
@@ -33,9 +36,9 @@ class ExportController extends BaseController
         $callback = function() use ($list, $column)
         {
             $file = fopen('php://output', 'w');
-            fputcsv($file, $column);
+            fputcsv($file, $column, "\t");
             foreach ($list as $row) {
-                fputcsv($file, $row);
+                fputcsv($file, $row, "\t");
             }
             fclose($file);
         };

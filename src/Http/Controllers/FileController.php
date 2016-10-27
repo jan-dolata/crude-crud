@@ -27,9 +27,16 @@ class FileController extends Controller
         $files = $request->file()['file'];
 
         if ($crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface) {
-            $rules = $crude->getValidationRules(['file']);
-
             foreach($files as $file) {
+                $rules = $crude->getValidationRules(['file']);
+
+                $mime = $file->getMimeType();
+                $fileTypeRules = 'file_'.collect(explode('/', $mime))->first();
+
+                empty($crude->getValidationRules([$fileTypeRules])[$fileTypeRules])
+                    ? $rules = $rules
+                    : $rules['file'] = $rules['file'] . '|' . $crude->getValidationRules([$fileTypeRules])[$fileTypeRules];
+
                 $validator = Validator::make(['file' => $file], $rules);
 
                 if ($validator->fails()){

@@ -22,16 +22,13 @@ class ApiController extends Controller
      */
     protected $crude;
 
-    function __construct(Request $request)
-    {
-        $this->crude = CrudeInstance::get($request->crudeName);
-    }
-
     /**
      * Fetch collection
      */
     public function index(ApiRequest $request)
     {
+        $this->crude = CrudeInstance::get($request->crudeName);
+
         $page = $request->input('page', 1);
         $numRows = $request->input('numRows', config('crude.defaults.numRows'));
         $sortAttr = $request->input('sortAttr', config('crude.defaults.sortAttr'));
@@ -71,6 +68,8 @@ class ApiController extends Controller
                 'attr' => $searchAttr,
                 'value' => $searchValue
             ],
+
+            'setup' => $this->crude->getCrudeSetupData()
         ]);
     }
 
@@ -79,6 +78,8 @@ class ApiController extends Controller
      */
     public function store(ApiStoreRequest $request, $crudeName)
     {
+        $this->crude = CrudeInstance::get($request->crudeName);
+
         $model = $this->crude->store($request->all());
 
         return $this->successResponse([
@@ -92,6 +93,8 @@ class ApiController extends Controller
      */
     public function update(ApiUpdateRequest $request, $crudeName, $id)
     {
+        $this->crude = CrudeInstance::get($request->crudeName);
+
         $model = $this->crude->updateById($id, $request->all());
 
         return $this->successResponse([
@@ -104,6 +107,8 @@ class ApiController extends Controller
      */
     public function destroy(ApiDeleteRequest $request, $crudeName, $id)
     {
+        $this->crude = CrudeInstance::get($request->crudeName);
+
         $model = $this->crude->deleteById($id);
 
         return $this->successResponse([

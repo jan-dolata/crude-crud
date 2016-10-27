@@ -64,4 +64,6 @@ return [
         'json' => 'JSON',
         'markdown' => 'markdown'
     ],
+
+    'dictMaxFilesExceeded' => 'File limit exceeded'
 ];

@@ -7,18 +7,11 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
+[Full documentation](https://jan-dolata.github.io/)
+
 # Table of content
 - [Install](#install)
 - [Usage](#usage)
-- [wiki Inputs](wiki/INPUTS.md)
-- [wiki Api](wiki/API.md)
-- [wiki Tutorials](wiki/TUTORIALS.md)
-- [wiki Crude setup](wiki/CRUDE_SETUP.md)
-- [wiki Interfaces](wiki/INTERFACES.md)
-- [wiki Work with model](wiki/WORKWITHMODEL.md)
-- [wiki Style](wiki/STYLE.md)
-- [wiki Ordered list](wiki/ORDERED_LIST.md)
-- [wiki Helpers](wiki/HELPERS.md)
 
 ## Install
 
@@ -107,71 +100,57 @@ it works.
 
 =============
 
-You can change attribute names in `resources/lang/en/validation.php` files
+## Example
+
+Part of create books table migration
 
 ```php
-'attributes' => [
-    'id' => 'id attribute name'
-],
+    public function up()
+    {
+        Schema::create('books', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('tile');
+            $table->integer('order');
+            $table->timestamps();
+        });
+    }
 ```
-
-to add ability to store implement interface
-
-`CrudeStoreInterface`
-
-setting title, types and columns
-
 ```php
-$this->crudeSetup
-    ->setTitle(trans('titles.admin_district'))
-    ->setTypes(['province' => 'autocomplete'])
-    ->setColumn(['id', 'name', 'province', 'points', 'created_at'])
-    ;
-```
+namespace App\Models;
 
-to turn on validation implement interface
-
-`CrudeWithValidationInterface`
-
-and use trait
-
-```php
-use CrudeWithValidationTrait;
-```
-
-define validation rules
-
-```php
-$this->setValidationRules([
-    'name' => 'required',
-    'province' => 'required'
-]);
-```
-
-to update implement interface
-
-`CrudeUpdateInterface`
-
-to delete interface
-
-`CrudeDeleteInterface`
-
-to join data to list or add aliases to attribute names
-
-```php
-public function prepareQuery()
+class Book extends \Illuminate\Database\Eloquent\Model
 {
-    return $this->model
-        ->select(
-            'districts.id',
-            'districts.name',
-            'districts.province',
-            'districts.points',
-            'districts.created_at',
-            'districts.updated_at'
-        );
+    protected $fillable = ['title'];
 }
 ```
+
+```php
+use Auth;
+
+class BooksList extends \Crude implements \CRUDInterface, \CrudeOrderInterface
+{
+    use \CrudeFromModelTrait;
+
+    public function __construct()
+    {
+        $this->setModel(new \App\Models\Book);
+
+        $this->prepareCrudeSetup();
+
+        $this->crudeSetup
+            ->setTitle('List of books')
+            ->setTrans(['id' => 'Id', 'title' => 'Title', 'order' => '#'])
+            ->setColumnFormat('title', 'longtext');
+
+        $this->storeInFirstPlace();
+
+        if (! Auth:user()->cannotOrderListOfBooks())
+            $this->crudeSetup->useOrderedList('title');
+    }
+}
+```
+
+![/wiki/ordered_list/1.png](/example.png "List")
 
 ## Change log
 
