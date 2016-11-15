@@ -373,7 +373,12 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         {
             Crude.vent.trigger('fetched_completed');
             this.updateTime = Date.now();
-            this.setup = new Crude.Models.Setup(response.data.setup);
+
+            // todo
+            // this broke actionToTrigger, refactor needed in order to
+            // update crude setup model with list
+            // this.setup = new Crude.Models.Setup(response.data.setup);
+
             this.render();
         }.bind(this));
     },

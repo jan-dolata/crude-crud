@@ -8,6 +8,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
     errorMesssages: [],
     maxFiles: 10,
     parallelUploads: 10,
+    cleaningUp: false,
 
     ui: {
         save: '#save',
@@ -49,24 +50,26 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
 
                 this.on("success", function(file, response)
                 {
-                    if ("model" in response && "files" in response.model) {
+                    if (response.success && "model" in response && "files" in response.model) {
                         var fileIndex = _.findKey(response.model.files, {'file_original_name': file.name});
                         file.fileLogId = response.model.files[fileIndex].file_log_id;
                     }
+                });
 
-                    if (! response.success) {
+                this.on("successmultiple", function(file, response) {
+                    if (response.hasOwnProperty("errors")) {
                         that.uploadSuccessfull = false;
-                        that.errorMessages = response.errors.file;
-                        return;
+                        Crude.showError(response.errors, that.alertContainer());
                     }
 
                     updateModelFiles(response.model.files);
+                    updateFiles();
 
                     Crude.vent.trigger('action_update', that.setup.getName());
                 });
 
                 this.on("removedfile", function(file) {
-                    if (file.hasOwnProperty('fileLogId')){
+                    if (file.hasOwnProperty('fileLogId') && !that.cleaningUp){
                         $.ajax({
                             dataType: "json",
                             type: 'delete',
@@ -92,8 +95,13 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                     );
                 };
 
-                var upadateFiles = function() {
-                    _.each(that.model.get(that.setup.get('fileAttrName')), function(file, key) {
+                var updateFiles = function() {
+                    that.cleaningUp = true;
+                    that.dropzone.removeAllFiles();
+                    that.cleaningUp = false;
+
+                    var files = that.model.get(that.setup.get('fileAttrName'));
+                    _.each(files, function(file, key) {
                         var dzFile = {
                             name: file.file_original_name,
                             thumb: file.path,
@@ -102,13 +110,12 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                         };
                         that.dropzone.emit("addedfile", dzFile);
                         that.dropzone.createThumbnailFromUrl(dzFile, dzFile.serverPath);
+                        that.dropzone.files.push(dzFile);
 
-                        var existingFileCount = 1; // The number of files already uploaded
-
-                        that.dropzone.options.maxFiles = that.dropzone.options.maxFiles - existingFileCount;
+                        that.dropzone.options.maxFiles = that.maxFiles - files.length;
                     });
                 };
-                upadateFiles();
+                updateFiles();
             },
             sending: function(file, xhr, formData) {
                 formData.append("crudeName", that.setup.getName());

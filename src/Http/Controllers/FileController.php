@@ -25,9 +25,11 @@ class FileController extends Controller
         $crudeName = $request->input('crudeName');
         $crude = CrudeInstance::get($crudeName);
         $files = $request->file()['file'];
+        $id = $request->input('modelId');
+        $errors = [];
 
         if ($crude instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\WithValidationInterface) {
-            foreach($files as $file) {
+            foreach($files as $key => $file) {
                 $rules = $crude->getValidationRules(['file']);
 
                 $mime = $file->getMimeType();
@@ -39,16 +41,25 @@ class FileController extends Controller
 
                 $validator = Validator::make(['file' => $file], $rules);
 
-                if ($validator->fails()){
-                    return ['success' => false, 'errors' => $validator->errors()];
+                if ($validator->fails()) {
+                    unset($files[$key]);
+                    $errors[] = $file->getClientOriginalName() . ': '. $validator->messages()->first();
                 }
             }
         }
 
-        $id = $request->input('modelId');
-        $model = $crude->uploadFilesById($id, $files);
+        $model = empty($files)
+            ? $crude->getById($id)
+            : $crude->uploadFilesById($id, $files);
 
-        return ['success' => true, 'model' => $model];
+        $response = ['success' => true, 'model' => $model];
+
+        if (!empty($errors)) {
+            $response = array_merge($response, ['errors' => join('<br/>', $errors)]);
+            $response['success'] = false;
+        }
+
+        return $response;
     }
 
     /**
