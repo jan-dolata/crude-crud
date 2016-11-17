@@ -55,17 +55,14 @@ trait CollectionTrait
             $query = $query->orderBy($scope, $sortOrder);
         }
 
-        if ($page && $numRows) {
-            $toSkip = ($page - 1) * $numRows;
-            $query = $query->skip($toSkip)->take($numRows);
-        }
-
         if ($searchAttr && $searchValue && $this->inScope($searchAttr)) {
             $scope = $this->getScope($searchAttr);
             $query = $query->where($scope, 'like', '%' . $searchValue . '%');
         }
 
-        $collection = $this->addPermissions($query->get());
+        $collection = $query->get();
+
+        $collection = $this->addPermissions($collection);
 
         $collection = $this->formatCollection($collection);
 
@@ -74,10 +71,9 @@ trait CollectionTrait
         });
 
         if ($sortAttr && $sortOrder && ! $this->inScope($sortAttr)) {
-            if ($sortOrder == 'asc')
-                $collection = $collection->sortBy($sortAttr);
-            if ($sortOrder == 'desc')
-                $collection = $collection->sortByDesc($sortAttr);
+            $collection = $sortOrder == 'asc'
+                ? $collection->sortBy($sortAttr)
+                : $collection->sortByDesc($sortAttr);
         }
 
         if ($searchAttr && $searchValue && ! $this->inScope($searchAttr)) {
@@ -88,6 +84,13 @@ trait CollectionTrait
                 return strpos($value, $search) !== false;
             });
         }
+
+        if ($page && $numRows) {
+            $toSkip = ($page - 1) * $numRows;
+            $count = $collection->count();
+            $collection = $collection->take(- ($count - $toSkip))->take($numRows);
+        } else if ($numRows)
+            $collection = $collection->take($numRows);
 
         return collect(array_values($collection->toArray()));
     }
@@ -106,7 +109,7 @@ trait CollectionTrait
 
     /**
      * Filter collection by permissions and add attributes canBeEdited and canBeRemoved
-     * @param Collection $collection
+     * @param  Collection $collection
      * @return Collection
      */
     public function addPermissions($collection)
@@ -140,7 +143,7 @@ trait CollectionTrait
     /**
      * Get by id
      * @param  integer $id
-     * @return [type]     [description]
+     * @return Model
      */
     public function getById($id)
     {
