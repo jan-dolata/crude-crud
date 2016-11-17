@@ -25,6 +25,8 @@ Route::group($group, function () {
     Route::group(['prefix' => 'file'], function() {
         Route::post('upload', 'FileController@upload');
         Route::delete('delete', 'FileController@delete');
+        Route::post('download', 'FileController@download')->name('download');
+        Route::get('download-all/{crudeName?}/{modelId?}', 'FileController@downloadAll')->name('download_all');
     });
 
     // Thumbnail

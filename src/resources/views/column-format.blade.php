@@ -31,18 +31,32 @@
     <% files = model.get(attr) %>
     <% for (var i in files) { %>
     <%
-        max_length = 10;
-        file_display_name = files[i]['file_original_name'].length > max_length
-            ? files[i]['file_original_name'].substring(0,max_length-1)+"..."
-            : files[i]['file_original_name'];
+        var max_length = 20;
+        var file = files[i];
+        var fileOriginalName = file.file_original_name;
+        var fileDisplayName = fileOriginalName.length > max_length
+            ? fileOriginalName.substring(0,max_length-1) + "..."
+            : fileOriginalName;
     %>
         <div>
-            <a href="<%- files[i]['path'] %>" target="_blank"
-            data-toggle="tooltip" data-placement="top" title="<%- files[i]['file_original_name'] %>"
-            >
-                <sub><i class="fa fa-external-link"></i></sub>
-                <%- file_display_name %>
+            <form method="post" action="{{ route('download') }}" style="display: inline">
+                {{ csrf_field() }}
+
+                <input type="hidden" name="path" value="<%= file.path %>">
+                <input type="hidden" name="name" value="<%= fileOriginalName %>">
+
+                <button type="submit" class="crude-action-btn">
+                    <i class="fa fa-download m-r m-l" aria-hidden="true"></i>
+                </button>
+            </form>
+
+            <a href="<%- files[i]['path'] %>" target="_blank" data-toggle="tooltip" data-placement="top" title="<%- fileOriginalName %>">
+                <%- fileDisplayName %>
             </a>
         </div>
     <% } %>
+
+    <a href="{{ route('download_all') }}/<%- setup.getName() %>/<%- model.get('id') %>">
+        <i class="fa fa-archive m-r m-l" aria-hidden="true"></i>
+    </a>
 </script>

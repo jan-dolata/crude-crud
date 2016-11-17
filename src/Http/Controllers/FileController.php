@@ -10,8 +10,7 @@ use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 use JanDolata\CrudeCRUD\Http\Requests\FileRequest;
 use Storage;
 use Validator;
-
-use JanDolata\CrudeCRUD\Engine\Helpers\Interfaces;
+use JanDolata\CrudeCRUD\Engine\Helpers\CrudeZip;
 
 class FileController extends Controller
 {
@@ -73,5 +72,41 @@ class FileController extends Controller
         $model = $crude->deleteFileByFileLog($log);
 
         return ['model' => $model];
+    }
+
+    /**
+     * Download file
+     */
+    public function download(Request $request)
+    {
+        $path = $request->input('path');
+        $name = $request->input('name');
+
+        $path = parse_url($path)['path'];
+        $file = storage_path('app' . $path);
+        return response()->download($file, $name);
+    }
+
+    /**
+     * Download all files for model
+     */
+    public function downloadAll($crudeName = null, $id = null)
+    {
+        if (! $crudeName || ! $id)
+            return redirect()->back();
+
+        $crude = CrudeInstance::get($crudeName);
+        if (! $crude)
+            return redirect()->back();
+
+        $model = $crude->getModel()->find($id);
+        if (! $model)
+            return redirect()->back();
+
+        $filesZip = CrudeZip::run($model);
+        if (! $filesZip)
+            return redirect()->back();
+
+        return response()->download($filesZip, $crudeName . '-' . $id . '.zip')->deleteFileAfterSend(true);
     }
 }
