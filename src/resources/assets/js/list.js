@@ -333,7 +333,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         this.updateList();
     },
 
-    changePage: function ()
+    changePage: function (event)
     {
         var $target = $(event.target);
         this.collection.pagination.page = $target.html();
