@@ -207,6 +207,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.updateList();
         this.listenTo(Crude.vent, 'action_update', this.updateThisList);
+        
+        this.listenTo(Crude.vent, 'open_add_form', this.add);
     },
 
     childViewOptions: function ()
