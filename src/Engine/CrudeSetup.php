@@ -24,6 +24,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderParameters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailParameters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DropzoneTrans;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions;
 
     /**
      * Construct
@@ -94,6 +95,7 @@ class CrudeSetup
             'panelView'     => $this->panelView,
             'orderParameters' => $this->orderParameters,
             'thumbnailColumns' => $this->thumbnailColumns,
+            'dateTimePickerOptions' => $this->dateTimePickerOptions,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),
