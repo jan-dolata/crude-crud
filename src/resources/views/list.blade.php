@@ -82,7 +82,7 @@
 
     <tfoot class="crude-table-foot">
         <tr class="crude-table-foot-row">
-            <td class="crude-table-foot-cell" colspan="<%- setup.get('column').length + 1 %>">
+            <td class="crude-table-foot-cell" colspan="<%- setup.get('column').length + 1 + (setup.get('checkboxColumn') ? 1 : 0) %>">
                 @include('CrudeCRUD::partials.list-foot')
             </td>
         </tr>
