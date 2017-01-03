@@ -60,3 +60,7 @@
     <i class="fa fa-lg fa-times"></i>
     {{ trans('CrudeCRUD::crude.order_list.cancel') }}
 </script>
+
+<script type="text/template" id="crude_checkActionButtonTemplate">
+    <i class="fa fa-lg fa-check-square-o"></i>
+</script>

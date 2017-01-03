@@ -1,4 +1,10 @@
 <script type="text/template" id="crude_listItemTemplate">
+    <% if(setup.get('checkboxColumn')) { %>
+        <td class="crude-table-body-cell">
+            <input type="checkbox" class="checkboxColumn<%- setup.getName() %> checkboxColumn" data-id="<%- model.id %>" data-crude="<%- setup.getName() %>" />
+        </td>
+    <% } %>
+
     <% _.each(setup.get('column'), function(attr) { %>
         <% if(! _.isArray(attr)) attr = [attr]; %>
         <td class="crude-table-body-cell">
@@ -29,6 +35,14 @@
     <thead class="crude-table-head">
         <tr class="crude-table-head-row">
             <% if(pagination.count) { %>
+                <% if(setup.get('checkboxColumn')) { %>
+                    <th class="crude-table-head-cell">
+                        <button id="check" title="{{ trans('CrudeCRUD::crude.check') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                            <%= $('#crude_checkActionButtonTemplate').html() %>
+                        </button>
+                    </th>
+                <% } %>
+
                 <% _.each(setup.get('column'), function(attr) { %>
                     <% if(! _.isArray(attr)) attr = [attr]; %>
                     <th class="crude-table-head-cell">

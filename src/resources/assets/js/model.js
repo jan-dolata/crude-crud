@@ -106,6 +106,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         trans: [],
         moduleInPopup: false,
         panelView: false,
+        checkboxColumn: false,
         orderParameters: {
             idAttr: 'id',
             orderAttr: 'order',

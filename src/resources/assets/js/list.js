@@ -172,6 +172,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         add: '#add',
         order: '#order',
         sort: '.sort',
+        check: '#check',
 
         changeNumRows: '.changeNumRows',
 
@@ -188,6 +189,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.add': 'add',
         'click @ui.order': 'order',
         'click @ui.sort': 'sort',
+        'click @ui.check': 'check',
         'click @ui.changeNumRows': 'changeNumRows',
         'click @ui.changePage': 'changePage',
         'click @ui.changeSearchAttr': 'changeSearchAttr',
@@ -262,6 +264,18 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.collection.changeSortOptions($target.data('attr'));
         this.updateList();
+    },
+
+    check: function ()
+    {
+        var list = $('.checkboxColumn' + this.setup.getName());
+        var checkedList = $('.checkboxColumn' + this.setup.getName() + ':checked');
+
+        var shoudCheck = list.length > checkedList.length;
+
+        list.each(function () {
+            $(this).prop('checked', shoudCheck);
+        });
     },
 
     order: function ()

@@ -25,6 +25,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailParameters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DropzoneTrans;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CheckboxColumn;
 
     /**
      * Construct
@@ -96,6 +97,7 @@ class CrudeSetup
             'orderParameters' => $this->orderParameters,
             'thumbnailColumns' => $this->thumbnailColumns,
             'dateTimePickerOptions' => $this->dateTimePickerOptions,
+            'checkboxColumn' => $this->checkboxColumn,
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),
