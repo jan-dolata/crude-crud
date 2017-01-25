@@ -188,13 +188,17 @@ Crude.Models.Setup = Backbone.Model.extend(
         });
         var collection = Crude.Collections.Base.extend({
             model: model,
-            url: apiRoute
+            url: apiRoute,
+            sortAttributes: {
+                attr: this.get('defaultSortAttr'),
+                order: this.get('defaultSortOrder')
+            },
         });
 
         var col = new collection;
 
-        if (this.config('sortAttr') != 'id')
-            col.changeSortOptions(this.config('sortAttr'));
+        // if (this.config('sortAttr') != 'id')
+        //     col.changeSortOptions(this.config('sortAttr'));
 
         return col;
     },
