@@ -35,8 +35,9 @@ class ApiController extends Controller
         $sortOrder = $request->input('sortOrder', config('crude.defaults.sortOrder'));
         $searchAttr = $request->input('searchAttr', config('crude.defaults.searchAttr'));
         $searchValue = $request->input('searchValue', '');
+        $richFilters = $request->input('richFilters', []);
 
-        $count = $this->crude->countFiltered($searchAttr, $searchValue);
+        $count = $this->crude->countFiltered($searchAttr, $searchValue, $richFilters);
         $numPages = $numRows > 0
             ? ceil($count / $numRows)
             : 1;
@@ -49,8 +50,7 @@ class ApiController extends Controller
         // if ($numRows > $count)
             // $numRows = $count;
 
-
-        $collection = $this->crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue);
+        $collection = $this->crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue, $richFilters);
 
         return $this->successResponse([
             'collection' => $collection,

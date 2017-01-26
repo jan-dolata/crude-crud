@@ -11,6 +11,8 @@ trait Filters
      */
     protected $filters = [];
 
+    protected $showFilters = true;
+
     /**
      * Gets the Filters.
      *
@@ -41,5 +43,26 @@ trait Filters
     public function resetFilters($filters = [])
     {
         $this->filters = $filters;
+
+        return $this;
+    }
+
+    public function hideFilters()
+    {
+        $this->showFilters = false;
+
+        return $this;
+    }
+
+    public function showFilters()
+    {
+        $this->showFilters = true;
+
+        return $this;
+    }
+
+    public function getShowFilters()
+    {
+        return $this->showFilters;
     }
 }

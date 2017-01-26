@@ -7,6 +7,7 @@ class CrudeSetup
 
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Title;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Name;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Description;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Column;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ColumnFormat;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CsvColumn;
@@ -27,6 +28,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CheckboxColumn;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DefaultSortAttr;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\RichFilters;
 
     /**
      * Construct
@@ -76,6 +78,7 @@ class CrudeSetup
         return [
             'name'          => $this->name,
             'title'         => $this->title,
+            'description'   => $this->description,
             'column'        => $this->column,
             'columnFormat'  => $this->columnFormat,
             'addForm'       => $this->addForm,
@@ -90,6 +93,8 @@ class CrudeSetup
             'modelDefaults' => $this->modelDefaults,
             'selectOptions' => $this->selectOptions,
             'filters'       => $this->filters,
+            'richFilters'   => $this->richFilters,
+            'showFilters'   => $this->showFilters,
             'trans'         => $this->trans,
             'dropzoneTrans' => $this->dropzoneTrans,
             'moduleInPopup' => $this->moduleInPopup,

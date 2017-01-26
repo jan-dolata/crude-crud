@@ -49,6 +49,16 @@ $bootstrap-screen-sm-max: 991px;
             @include likeHeader();
         }
 
+        .crude-header-description {
+            padding: $vertical-margin $horizontal-margin;
+            border-bottom: 1px solid $second-bg;
+        }
+
+        .crude-header-rich-filters {
+            padding: $vertical-margin $horizontal-margin;
+            border-bottom: 1px solid $second-bg;
+        }
+
         .crude-module {
             padding: $vertical-margin $horizontal-margin;
             border-bottom: 2px solid $second-bg;
@@ -80,6 +90,15 @@ $bootstrap-screen-sm-max: 991px;
                         .crude-sort {
                             white-space: nowrap;
                         }
+                    }
+                }
+
+                .crude-table-head-filters-row {
+                    td:first-child {
+                        padding-left: $horizontal-margin;
+                    }
+                    td:last-child {
+                        padding-right: $horizontal-margin;
                     }
                 }
             }
@@ -324,4 +343,3 @@ $bootstrap-screen-sm-max: 991px;
         background-color: rgba(255,255,255, 0.5);
     }
 }
-

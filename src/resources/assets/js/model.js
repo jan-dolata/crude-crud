@@ -40,6 +40,8 @@ Crude.Collections.Base = Backbone.Collection.extend(
         value: ''
     },
 
+    richFilters: {},
+
     changeSortOptions: function (attr)
     {
         if (this.sortAttributes.attr == attr) {
@@ -59,7 +61,8 @@ Crude.Collections.Base = Backbone.Collection.extend(
             page: this.pagination.page,
             numRows: this.pagination.numRows,
             searchAttr: this.search.attr,
-            searchValue: this.search.value
+            searchValue: this.search.value,
+            richFilters: this.richFilters
         }});
     },
 
@@ -75,6 +78,9 @@ Crude.Collections.Base = Backbone.Collection.extend(
         if(response.data.search)
             this.search = response.data.search;
 
+        if(response.data.richFilters)
+            this.richFilters = response.data.richFilters;
+
         if(response.data.collection)
             return response.data.collection;
     }
@@ -87,6 +93,7 @@ Crude.Models.Setup = Backbone.Model.extend(
     {
         name: null,
         title: '',
+        description: '',
         column: [],
         columnFormat: [],
         addForm: [],
@@ -103,6 +110,8 @@ Crude.Models.Setup = Backbone.Model.extend(
         customeActions: [],
         config: [],
         filters: [],
+        richFilters: [],
+        showFilters: true,
         trans: [],
         moduleInPopup: false,
         panelView: false,

@@ -182,7 +182,11 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         searchValue: '#searchValue',
         search: '#search',
         selectedSearchAttr: '#selectedSearchAttr',
-        clearSearch: '#clearSearch'
+        clearSearch: '#clearSearch',
+
+        clearRichFilter: '.clearRichFilter',
+        useRichFilter: '.useRichFilter',
+        richFilterValue: '.richFilterValue'
     },
 
     events: {
@@ -196,7 +200,10 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.search': 'search',
         'keyup @ui.searchValue': 'searchOnEnter',
         'click @ui.clearSearch': 'clearSearch',
-        'click @ui.refresh': 'updateList'
+        'click @ui.refresh': 'updateList',
+        'click @ui.clearRichFilter': 'clearRichFilter',
+        'click @ui.useRichFilter': 'updateList',
+        'keyup @ui.richFilterValue': 'richFilterValue'
     },
 
     initialize: function (options)
@@ -209,7 +216,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.updateList();
         this.listenTo(Crude.vent, 'action_update', this.updateThisList);
-        
+
         this.listenTo(Crude.vent, 'open_add_form', this.add);
     },
 
@@ -226,7 +233,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             setup: this.setup,
             sort: this.collection.sortAttributes,
             pagination: this.collection.pagination,
-            search: this.collection.search
+            search: this.collection.search,
+            richFilters: this.collection.richFilters
         };
     },
 
@@ -404,4 +412,33 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         if (this.setup.getName() == setupName || this.setup.config('refreshAll'))
             this.updateList();
     },
+
+    clearRichFilter: function (event)
+    {
+        var $target = $(event.target);
+        if (! $target.hasClass('clearRichFilter'))
+            $target = $target.parent();
+
+        var name = $target.data('name');
+        var $input = $('#richFilterValue' + name);
+
+        if (_.isEmpty($input.val()))
+            return;
+
+        $input.val('');
+        delete this.collection.richFilters[name];
+        this.updateList();
+    },
+
+    richFilterValue: function (event)
+    {
+        if (event.keyCode == 13)
+            return this.updateList();
+
+        var $target = $(event.target);
+
+        if (! _.isEmpty($target.val()))
+            this.collection.richFilters[$target.data('name')] = $target.val();
+    },
+
 });
