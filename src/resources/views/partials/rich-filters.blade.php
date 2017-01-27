@@ -23,11 +23,12 @@
                 <button type="button" class="clearRichFilter btn btn-default btn-sm" data-name="<%- setupRichFilter.name %>">
                     <i class="fa fa-times"></i>
                 </button>
-                <button type="button" class="useRichFilter btn btn-default btn-sm">
-                    <i class="fa fa-search"></i>
-                </button>
             </div>
         </div>
     <% } %>
+
+    <button type="button" id="useRichFilters" class="btn btn-default btn-sm">
+        <i class="fa fa-search"></i>
+    </button>
 
 </div>

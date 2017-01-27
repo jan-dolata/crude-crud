@@ -185,8 +185,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         clearSearch: '#clearSearch',
 
         clearRichFilter: '.clearRichFilter',
-        useRichFilter: '.useRichFilter',
-        richFilterValue: '.richFilterValue'
+        richFilterValue: '.richFilterValue',
+        useRichFilters: '#useRichFilters',
     },
 
     events: {
@@ -202,7 +202,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.clearSearch': 'clearSearch',
         'click @ui.refresh': 'updateList',
         'click @ui.clearRichFilter': 'clearRichFilter',
-        'click @ui.useRichFilter': 'updateList',
+        'click @ui.useRichFilters': 'updateList',
         'keyup @ui.richFilterValue': 'richFilterValue'
     },
 
@@ -436,9 +436,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             return this.updateList();
 
         var $target = $(event.target);
-
-        if (! _.isEmpty($target.val()))
-            this.collection.richFilters[$target.data('name')] = $target.val();
+        this.collection.richFilters[$target.data('name')] = $target.val();
     },
 
 });

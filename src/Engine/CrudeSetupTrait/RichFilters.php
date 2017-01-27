@@ -12,25 +12,21 @@ trait RichFilters
      */
     protected $richFilters = [];
 
-    public function addRichFilter($name, $label, $type = 'text')
+    public function setRichFilters($name, $label = '', $type = 'text')
     {
         $this->hideFilters();
 
-        $this->richFilters[$name] = [
-            'name' => $name,
-            'type' => $type,
-            'label' => $label
-        ];
+        $filters = is_array($name)
+            ? $name
+            : [$name, $label, $type];
 
-        return $this;
-    }
-
-    public function addRichFilters($filters)
-    {
-        foreach ($filters as $filter)
-            isset($filter[2])
-                ? $this->addRichFilter($filter[0], $filter[1], $filter[2])
-                : $this->addRichFilter($filter[0], $filter[1]);
+        foreach ($filters as $filter) {
+            $this->richFilters[$filter[0]] = [
+                'name' => $filter[0],
+                'label' => isset($filter[1]) ? $filter[1] : '',
+                'type' => isset($filter[2]) ? $filter[2] : 'text'
+            ];
+        }
 
         return $this;
     }
