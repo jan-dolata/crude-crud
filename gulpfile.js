@@ -5,10 +5,10 @@ var node = './node_modules/';
 
 elixir(function(mix) {
 
-    mix.sass(assets + 'sass/app.scss', 'src/public/css/');
+    mix.sass(assets + 'sass/app.scss', 'public/css/');
 
-    mix.copy(node + 'font-awesome/fonts/**', 'src/public/fonts');
-    mix.copy(node + 'bootstrap-sass/assets/fonts/**', 'src/public/fonts');
+    mix.copy(node + 'font-awesome/fonts/**', 'public/fonts');
+    mix.copy(node + 'bootstrap-sass/assets/fonts/**', 'public/fonts');
 
     mix.scripts([
         'jquery/dist/jquery.min.js',
@@ -23,7 +23,7 @@ elixir(function(mix) {
         'bootstrap-datetimepicker-sass/src/js/bootstrap-datetimepicker.js',
         'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.pl.js',
         'markdown-it/dist/markdown-it.min.js'
-    ], 'src/public/js/lib.js', node);
+    ], 'public/js/lib.js', node);
 
     mix.scripts([
         'js/app.js',
@@ -37,6 +37,11 @@ elixir(function(mix) {
         'js/list.js',
         'js/layout.js',
         'js/start.js',
-    ], 'src/public/js/app.js', assets);
+    ], 'public/js/app.js', assets);
+
+    mix.version([
+        'js/app.js',
+        'js/lib.js'
+    ]);
 
 });

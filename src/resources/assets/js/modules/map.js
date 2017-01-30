@@ -6,6 +6,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     map: null,
     geocoder: null,
     selectedLocation: null,
+    marker: null,
 
     ui: {
         save: '#save',
@@ -21,7 +22,21 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     onRender: function ()
     {
         this.parentOnRender();
-        this.initMap();
+
+        this.whenAvailable("google", function() {
+            this.initMap();
+        }.bind(this));
+    },
+
+    whenAvailable: function (name, callback) {
+        var interval = 10; // ms
+        var that = this;
+        window.setTimeout(function() {
+            if (window[name])
+                callback();
+            else
+                window.setTimeout(that.whenAvailable(name, callback), interval);
+        }, interval);
     },
 
     save: function ()
@@ -34,9 +49,10 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
             center: this.model.getLatLngObject(),
             zoom: 6
         });
-        var marker = new google.maps.Marker({
+
+        this.marker = new google.maps.Marker({
             map: this.map,
-            position: this.model.getLatLngObject(),
+            position: this.model.getLatLngObject()
         });
 
         this.showSelectedLocation();
