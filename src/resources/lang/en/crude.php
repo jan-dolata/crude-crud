@@ -12,6 +12,7 @@ return [
     'empty_list' => 'Empty list',
     'tools' => 'Tools',
     'order' => 'Order',
+    'check' => 'Check / Uncheck',
 
     'add_mode' => 'Add',
     'edit_mode' => 'Edit',

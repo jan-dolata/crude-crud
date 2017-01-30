@@ -37,6 +37,28 @@ trait CollectionTrait
     }
 
     /**
+     * Filter query with richFilters values
+     * @param  $query
+     * @param  $richFilters
+     * @return query
+     */
+    public function richFiltersOnQuery($query, $richFilters)
+    {
+        return $query;
+    }
+
+    /**
+     * Filter collection with richFilters values
+     * @param  $collection
+     * @param  $richFilters
+     * @return Collection
+     */
+    public function richFiltersOnCollection($collection, $richFilters)
+    {
+        return $collection;
+    }
+
+    /**
      * Get filtered collection
      * @param  integer $page
      * @param  integer $numRows
@@ -46,9 +68,11 @@ trait CollectionTrait
      * @param  string  $searchValue
      * @return Collection
      */
-    public function getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue)
+    public function getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue, $richFilters = [])
     {
         $query = $this->prepareQuery();
+
+        $query = $this->richFiltersOnQuery($query, $richFilters);
 
         if ($sortAttr && $sortOrder && $this->inScope($sortAttr)) {
             $scope = $this->getScope($sortAttr);
@@ -76,6 +100,8 @@ trait CollectionTrait
                 : $collection->sortByDesc($sortAttr);
         }
 
+        $collection = $this->richFiltersOnCollection($collection, $richFilters);
+
         if ($searchAttr && $searchValue && ! $this->inScope($searchAttr)) {
             $collection = $collection->filter(function ($model) use ($searchAttr, $searchValue) {
                 $value = (string) $model->$searchAttr;
@@ -101,9 +127,9 @@ trait CollectionTrait
      * @param  string $searchValue
      * @return integer
      */
-    public function countFiltered($searchAttr, $searchValue)
+    public function countFiltered($searchAttr, $searchValue, $richFilters)
     {
-        $collection = $this->getFiltered(null, null, null, null, $searchAttr, $searchValue);
+        $collection = $this->getFiltered(null, null, null, null, $searchAttr, $searchValue, $richFilters);
         return count($collection);
     }
 

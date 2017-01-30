@@ -4,6 +4,12 @@
             <%- setup.get('title') %>
         </div>
 
+        <% if (setup.get('description')) { %>
+            <div class="crude-header-description">
+                <%= setup.get('description') %>
+            </div>
+        <% } %>
+
         <% if (setup.get('moduleInPopup')) { %>
             <div id="moduleModal" class="modal fade" role="dialog">
                 <div class="modal-dialog crude-modal">

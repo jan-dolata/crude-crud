@@ -1,4 +1,10 @@
 <script type="text/template" id="crude_listItemTemplate">
+    <% if(setup.get('checkboxColumn')) { %>
+        <td class="crude-table-body-cell">
+            <input type="checkbox" class="checkboxColumn<%- setup.getName() %> checkboxColumn" data-id="<%- model.id %>" data-crude="<%- setup.getName() %>" />
+        </td>
+    <% } %>
+
     <% _.each(setup.get('column'), function(attr) { %>
         <% if(! _.isArray(attr)) attr = [attr]; %>
         <td class="crude-table-body-cell">
@@ -27,8 +33,24 @@
 
 <script type="text/template" id="crude_listTemplate">
     <thead class="crude-table-head">
+        <% if (! _.isEmpty(setup.get('richFilters'))) { %>
+            <tr class="crude-table-head-filters-row">
+                <td colspan="<%- setup.get('column').length + 1 + (setup.get('checkboxColumn') ? 1 : 0) %>">
+                    @include('CrudeCRUD::partials.rich-filters')
+                </td>
+            </tr>
+        <% } %>
+
         <tr class="crude-table-head-row">
             <% if(pagination.count) { %>
+                <% if(setup.get('checkboxColumn')) { %>
+                    <th class="crude-table-head-cell">
+                        <button id="check" title="{{ trans('CrudeCRUD::crude.check') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                            <%= $('#crude_checkActionButtonTemplate').html() %>
+                        </button>
+                    </th>
+                <% } %>
+
                 <% _.each(setup.get('column'), function(attr) { %>
                     <% if(! _.isArray(attr)) attr = [attr]; %>
                     <th class="crude-table-head-cell">
@@ -68,7 +90,7 @@
 
     <tfoot class="crude-table-foot">
         <tr class="crude-table-foot-row">
-            <td class="crude-table-foot-cell" colspan="<%- setup.get('column').length + 1 %>">
+            <td class="crude-table-foot-cell" colspan="<%- setup.get('column').length + 1 + (setup.get('checkboxColumn') ? 1 : 0) %>">
                 @include('CrudeCRUD::partials.list-foot')
             </td>
         </tr>

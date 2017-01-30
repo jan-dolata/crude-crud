@@ -94,18 +94,10 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
 
     bindDatepicker: function ()
     {
-        this.ui.datetimepicker.datetimepicker({
-            language: 'pl',
-            format: 'YYYY-MM-DD hh:mm:00',
-            pickerPosition: "bottom-left",
-            pickSeconds: true,
-            icons: {
-                time: "fa fa-clock-o",
-                date: "fa fa-calendar",
-                up: "fa fa-arrow-up",
-                down: "fa fa-arrow-down"
-            }
-        });
+        // check default in JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions
+        this.ui.datetimepicker.datetimepicker(
+            this.setup.get('dateTimePickerOptions')
+        );
     },
 
     bindMarkdownPreview: function ()

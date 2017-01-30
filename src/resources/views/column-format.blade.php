@@ -56,7 +56,10 @@
         </div>
     <% } %>
 
-    <a href="{{ route('download_all') }}/<%- setup.getName() %>/<%- model.get('id') %>">
-        <i class="fa fa-archive m-r m-l" aria-hidden="true"></i>
-    </a>
+    <% if (files.length > 1) { %>
+        <a href="{{ route('download_all') }}/<%- setup.getName() %>/<%- model.get('id') %>">
+            <i class="fa fa-archive m-r m-l" aria-hidden="true"></i>
+            <small>.zip</small>
+        </a>
+    <% } %>
 </script>

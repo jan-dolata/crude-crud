@@ -51,30 +51,32 @@
     <% } %>
 </div>
 
-<div class="form-inline">
-    <div class="input-group crude-table-foot-search">
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span id="selectedSearchAttr"><%- setup.getAttrName(search.attr) %></span>
-            </button>
-            <ul class="dropdown-menu">
-                <% _.each(setup.get('filters'), function(attr) { %>
-                    <li>
-                        <a class="changeSearchAttr" href="javascript:;" data-attr="<%- attr %>">
-                            <%- setup.getAttrName(attr) %>
-                        </a>
-                    </li>
-                <% }) %>
-            </ul>
-        </div>
-        <input id="searchValue" size="20" type="text" class="form-control input-sm" value="<%- search.value %>" placeholder="{{ trans('CrudeCRUD::crude.search_value') }}" />
-        <div class="input-group-btn">
-            <button type="button" id="clearSearch" class="btn btn-default btn-sm">
-                <i class="fa fa-times"></i>
-            </button>
-            <button type="button" id="search" class="btn btn-default btn-sm">
-                <i class="fa fa-search"></i>
-            </button>
+<% if (setup.get('showFilters')) { %>
+    <div class="form-inline">
+        <div class="input-group crude-table-foot-search">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span id="selectedSearchAttr"><%- setup.getAttrName(search.attr) %></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <% _.each(setup.get('filters'), function(attr) { %>
+                        <li>
+                            <a class="changeSearchAttr" href="javascript:;" data-attr="<%- attr %>">
+                                <%- setup.getAttrName(attr) %>
+                            </a>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+            <input id="searchValue" size="20" type="text" class="form-control input-sm" value="<%- search.value %>" placeholder="{{ trans('CrudeCRUD::crude.search_value') }}" />
+            <div class="input-group-btn">
+                <button type="button" id="clearSearch" class="btn btn-default btn-sm">
+                    <i class="fa fa-times"></i>
+                </button>
+                <button type="button" id="search" class="btn btn-default btn-sm">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
         </div>
     </div>
-</div>
+<% } %>
