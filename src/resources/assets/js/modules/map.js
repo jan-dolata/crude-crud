@@ -6,7 +6,6 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     map: null,
     geocoder: null,
     selectedLocation: null,
-    marker: null,
 
     ui: {
         save: '#save',
@@ -17,6 +16,13 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
         'info': '#info',
         'position': '#position',
         'search': '#search',
+    },
+
+    initialize: function (options)
+    {
+        this.moduleInitialize(options);
+
+        this.listenTo(Crude.vent, 'slide_down_finished', this.refreshMap);
     },
 
     onRender: function ()
@@ -31,12 +37,16 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     whenAvailable: function (name, callback) {
         var interval = 10; // ms
         var that = this;
-        window.setTimeout(function() {
-            if (window[name])
-                callback();
-            else
-                window.setTimeout(that.whenAvailable(name, callback), interval);
-        }, interval);
+
+        if (window[name])
+            callback();
+        else
+            window.setTimeout(function() {
+                if (window[name])
+                    callback();
+                else
+                    window.setTimeout(that.whenAvailable(name, callback), interval);
+            }, interval);
     },
 
     save: function ()
@@ -50,7 +60,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
             zoom: 6
         });
 
-        this.marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             map: this.map,
             position: this.model.getLatLngObject()
         });
@@ -66,6 +76,14 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
         }.bind(this));
 
         this.bindSearch();
+    },
+
+    refreshMap: function (name) {
+        if (name != this.setup.getName())
+            return;
+
+        google.maps.event.trigger(this.map, 'resize');
+        this.map.setCenter(this.model.getLatLngObject());
     },
 
     showSelectedLocation: function()

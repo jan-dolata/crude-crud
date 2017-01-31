@@ -73,7 +73,9 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     setNewModel: function (model)
     {
         if (! this.setup.get('moduleInPopup')) {
-            this.$el.parent().slideDown(100);
+            this.$el.parent().slideDown(100, function () {
+                Crude.vent.trigger('slide_down_finished', this.setup.getName());
+            }.bind(this));
         } else {
             this.$el.parent().show();
             this.$el.parents('#moduleModal').modal('show');
@@ -116,7 +118,9 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
             return;
         }
 
-        this.$el.parent().slideUp(100);
+        this.$el.parent().slideUp(100, function () {
+            Crude.vent.trigger('slide_up_finished', this.setup.getName());
+        }.bind(this));
     },
 
     changeUp: function ()
