@@ -37,7 +37,7 @@
     <div class="datetimepicker input-group date">
         <input readonly type="text" class="input form-control" data-attr="<%- attr %>" value="<%- model[attr] %>" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.datetime') }}" />
         <div class="input-group-btn">
-            <button type="button" id="clearSearch" class="btn btn-default">
+            <button type="button" class="btn btn-default">
                 <i class="fa fa-calendar"></i>
             </button>
         </div>

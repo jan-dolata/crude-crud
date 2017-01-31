@@ -185,8 +185,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         clearSearch: '#clearSearch',
 
         clearRichFilter: '.clearRichFilter',
-        richFilterValue: '.richFilterValue',
         useRichFilters: '#useRichFilters',
+        richFilterValue: '.richFilterValue'
     },
 
     events: {
@@ -203,7 +203,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.refresh': 'updateList',
         'click @ui.clearRichFilter': 'clearRichFilter',
         'click @ui.useRichFilters': 'updateList',
-        'keyup @ui.richFilterValue': 'richFilterValue'
+        'change @ui.richFilterValue': 'richFilterValue'
     },
 
     initialize: function (options)
@@ -242,6 +242,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         // initialize all tooltips on a page
         $('[data-toggle="tooltip"]').tooltip();
+
+        this.bindDatepickerInRichFilters();
 
         setInterval(function()
         {
@@ -420,7 +422,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             $target = $target.parent();
 
         var name = $target.data('name');
-        var $input = $('#richFilterValue' + name);
+        var $input = $('.richFilterValue[data-name="' + name + '"]');
 
         if (_.isEmpty($input.val()))
             return;
@@ -432,11 +434,33 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
     richFilterValue: function (event)
     {
-        if (event.keyCode == 13)
-            return this.updateList();
-
         var $target = $(event.target);
-        this.collection.richFilters[$target.data('name')] = $target.val();
+        var name = $target.data('name');
+        var filter = this.setup.get('richFilters');
+
+        if (filter.type == 'select')
+            this.collection.richFilters[$target.data('name')] = $target.find(':selected').val();
+        else
+            this.collection.richFilters[$target.data('name')] = $target.val();
+
+        this.updateList();
+    },
+
+    bindDatepickerInRichFilters: function ()
+    {
+        // check default in JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions
+        var defaultOptions = this.setup.get('dateTimePickerOptions');
+
+        var richFilters = this.setup.get('richFilters');
+        for (var name in richFilters) {
+            if (richFilters[name].type == 'datetime') {
+                var options = _.isEmpty(richFilters[name].options)
+                    ? defaultOptions
+                    : richFilters[i].options;
+
+                $('.richFilterValue[data-name="' + name + '"').parent().datetimepicker(options);
+            }
+        }
     },
 
 });

@@ -191,6 +191,34 @@ Crude.renderInput = function (setup, attr, model)
     });
 };
 
+/**
+ * Render filter input
+ * @param  {model} setup
+ * @param  {object} richFilter - rich filter data
+ * @param  {mixed} value - filter input value
+ * @return {HTML}
+ */
+Crude.renderRichFilter = function (setup, richFilter, value)
+{
+    var defaultName = '#crude_textRichFilterTemplate';
+    var type = richFilter.type;
+    var templateName = _.isUndefined(type)
+        ? defaultName
+        : '#crude_' + type + 'RichFilterTemplate';
+
+    var templateScript = $(templateName);
+    if (templateScript.lenght == 0)
+        templateScript = $(defaultName);
+
+    var template = _.template($(templateName).html());
+
+    return template({
+        setup: setup,
+        richFilter: richFilter,
+        value: value
+    });
+};
+
 Crude.renderCell = function (setup, attr, model)
 {
     var defaultName = '#crude_textColumFormatTemplate';
