@@ -469,7 +469,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
                 var $input = $('.richFilterValue[data-name="' + name + '"').parent();
                 $input.datetimepicker(options);
 
-                $input.on('dp.change', function(e) {
+                $input.on('dp.hide', function(e) {
                     this.richFilterValue(e);
                 }.bind(this));
             }
