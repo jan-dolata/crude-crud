@@ -98,6 +98,7 @@ class ApiController extends Controller
         $model = $this->crude->updateById($id, $request->all());
 
         return $this->successResponse([
+            'model' => $model,
             'message' => trans('CrudeCRUD::crude.item_has_been_updated')
         ]);
     }

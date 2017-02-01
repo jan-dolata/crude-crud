@@ -154,6 +154,9 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         if (('data' in response) && ('message' in  response.data))
             this.showMessage(response.data.message);
 
+        if (('data' in response) && ('model' in  response.data))
+            this.model.set(response.data.model);
+
         this.setup.triggerNextAction(this.model);
     },
 
