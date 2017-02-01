@@ -443,6 +443,9 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         else
             this.collection.richFilters[$target.data('name')] = $target.val();
 
+        if (_.isEmpty(this.collection.richFilters[name]))
+            delete this.collection.richFilters[name];
+
         this.updateList();
     },
 
