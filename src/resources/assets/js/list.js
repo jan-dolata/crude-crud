@@ -418,6 +418,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     clearRichFilter: function (event)
     {
         var $target = $(event.target);
+
         if (! $target.hasClass('clearRichFilter'))
             $target = $target.parent();
 
@@ -435,6 +436,10 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     richFilterValue: function (event)
     {
         var $target = $(event.target);
+
+        if (! $target.hasClass('richFilterValue'))
+            $target = $target.parent().parent().find('.richFilterValue');
+
         var name = $target.data('name');
         var filter = this.setup.get('richFilters')[name];
 
@@ -461,7 +466,12 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
                     ? defaultOptions
                     : richFilters[i].options;
 
-                $('.richFilterValue[data-name="' + name + '"').parent().datetimepicker(options);
+                var $input = $('.richFilterValue[data-name="' + name + '"').parent();
+                $input.datetimepicker(options);
+
+                $input.on('dp.change', function(e) {
+                    this.richFilterValue(e);
+                }.bind(this));
             }
         }
     },

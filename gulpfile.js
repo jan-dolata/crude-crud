@@ -22,6 +22,8 @@ elixir(function(mix) {
         'dropzone/dist/dropzone.js',
         'bootstrap-datetimepicker-sass/src/js/bootstrap-datetimepicker.js',
         'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.pl.js',
+        'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.de.js',
+        'bootstrap-datetimepicker-sass/src/js/locales/bootstrap-datetimepicker.sv.js',
         'markdown-it/dist/markdown-it.min.js'
     ], 'public/js/lib.js', node);
 

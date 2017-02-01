@@ -82,7 +82,6 @@
 
         <span>
             <input
-                readonly
                 type="text"
                 class="form-control input-sm richFilterValue"
                 value="<%- value %>"
