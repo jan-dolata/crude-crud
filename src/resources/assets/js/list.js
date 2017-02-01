@@ -438,15 +438,15 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         var $target = $(event.target);
 
         if (! $target.hasClass('richFilterValue'))
-            $target = $target.parent().parent().find('.richFilterValue');
+            $target = $target.parents('.input-group').find('.richFilterValue');
 
         var name = $target.data('name');
         var filter = this.setup.get('richFilters')[name];
 
         if (filter.type == 'select')
-            this.collection.richFilters[$target.data('name')] = $target.find(':selected').val();
+            this.collection.richFilters[name] = $target.find(':selected').val();
         else
-            this.collection.richFilters[$target.data('name')] = $target.val();
+            this.collection.richFilters[name] = $target.val();
 
         if (_.isEmpty(this.collection.richFilters[name]))
             delete this.collection.richFilters[name];
