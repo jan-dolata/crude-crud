@@ -10,7 +10,6 @@ trait DateTimePickerOptions
      * @var array
      */
     protected $dateTimePickerOptions = [
-        'language' => 'pl',
         'format' => 'YYYY-MM-DD hh:mm:00',
         'pickerPosition' => "bottom-left",
         'pickSeconds' => true,
@@ -29,14 +28,22 @@ trait DateTimePickerOptions
      */
     public function getDateTimePickerOptions()
     {
+        if (! isset($this->dateTimePickerOptions['language']))
+            $this->dateTimePickerOptions['language'] = config('app.locale');
+
+        $available = ['en', 'pl', 'sv', 'de'];
+        $this->dateTimePickerOptions['language'] =
+            in_array($this->dateTimePickerOptions['language'], $available)
+                ? $this->dateTimePickerOptions['language'] : 'en';
+
         return $this->dateTimePickerOptions;
     }
 
     /**
-     * Sets the Model dropzoneTrans.
+     * Sets the Model datetimepickerOptions.
      *
      * @param  string|array $attr
-     * @param  array $dropzoneTrans = null
+     * @param  array $option = null
      *
      * @return self
      */

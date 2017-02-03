@@ -27,7 +27,7 @@
 <script type="text/template" id="crude_listEmptyTemplate">
     <td class="hide"></td>
     <td class="crude-table-body-cell" colspan="<%- setup.get('column').length + 1 %>">
-        <h4>{{ trans('CrudeCRUD::crude.empty_list') }}</h4>
+        <h4><%- setup.interfaceTrans('empty_list') %></h4>
     </td>
 </script>
 
@@ -45,8 +45,10 @@
             <% if(pagination.count) { %>
                 <% if(setup.get('checkboxColumn')) { %>
                     <th class="crude-table-head-cell">
-                        <button id="check" title="{{ trans('CrudeCRUD::crude.check') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                            <%= $('#crude_checkActionButtonTemplate').html() %>
+                        <button id="check" title="<%- setup.interfaceTrans('check') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                            <%= _.template($('#crude_checkActionButtonTemplate').html())({
+                                setup: setup
+                            }) %>
                         </button>
                     </th>
                 <% } %>
@@ -72,14 +74,18 @@
 
             <th class="crude-table-head-cell crude-table-head-cell-action">
                 <% if(setup.get('orderOption') && pagination.count > 1) { %>
-                    <button id="order" title="{{ trans('CrudeCRUD::crude.order') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                        <%= $('#crude_orderActionButtonTemplate').html() %>
+                    <button id="order" title="<%- setup.interfaceTrans('order') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                        <%= _.template($('#crude_orderActionButtonTemplate').html())({
+                            setup: setup
+                        }) %>
                     </button>
                 <% } %>
 
                 <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
-                    <button id="add" title="{{ trans('CrudeCRUD::crude.add') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                        <%= $('#crude_addActionButtonTemplate').html() %>
+                    <button id="add" title="<%- setup.interfaceTrans('add') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                        <%= _.template($('#crude_addActionButtonTemplate').html())({
+                            setup: setup
+                        }) %>
                     </button>
                 <% } %>
             </th>
@@ -106,17 +112,22 @@
 
 <script type="text/template" id="crude_deleteItemConfirmModalTemplate">
     <div class="modal-header">
-        {{ trans('CrudeCRUD::crude.confirm_delete.title') }}
+        <%- setup.interfaceTrans('confirm_delete', 'title') %>
     </div>
     <div class="modal-body">
         <div class="content">
-            {{ trans('CrudeCRUD::crude.confirm_delete.content') }}
+            <%- setup.interfaceTrans('confirm_delete', 'content') %>
+
             <div class="pull-right">
                 <button id="confirm" class="crude-action-btn m-lg-r">
-                    <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_confirmDeleteActionButtonTemplate').html())({
+                        setup: setup
+                    }) %>
                 </button>
                 <button class="crude-action-btn" data-dismiss="modal">
-                    <%= _.template($('#crude_cancelDeleteActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_cancelDeleteActionButtonTemplate').html())({
+                        setup: setup
+                    }) %>
                 </button>
             </div>
         </div>
@@ -135,11 +146,11 @@
 
 <script type="text/template" id="crude_orderedListModalTemplate">
     <div class="modal-header">
-        {{ trans('CrudeCRUD::crude.order_list.title') }}
+        <%- setup.interfaceTrans('order_list', 'title') %>
     </div>
     <div class="modal-body">
         <div class="content">
-            {{ trans('CrudeCRUD::crude.order_list.content') }}
+            <%- setup.interfaceTrans('order_list', 'content') %>
 
             <ul id="collection" class="crude-order-list">
                 <%
@@ -156,10 +167,14 @@
             </ul>
             <div class="text-right">
                 <button id="confirm" class="crude-action-btn m-lg-r">
-                    <%= _.template($('#crude_confirmOrderActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_confirmOrderActionButtonTemplate').html())({
+                        setup: setup
+                    }) %>
                 </button>
                 <button class="crude-action-btn" data-dismiss="modal">
-                    <%= _.template($('#crude_cancelOrderActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_cancelOrderActionButtonTemplate').html())({
+                        setup: setup
+                    }) %>
                 </button>
             </div>
         </div>

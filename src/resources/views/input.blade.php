@@ -1,13 +1,13 @@
 <script type="text/template" id="crude_textInputTemplate">
-    <input type="text" class="input form-control" data-attr="<%- attr %>" value="<%- model[attr] %>" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.text') }}" />
+    <input type="text" class="input form-control" data-attr="<%- attr %>" value="<%- model[attr] %>" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'text') %>" />
 </script>
 
 <script type="text/template" id="crude_numberInputTemplate">
-    <input type="number" class="input form-control" data-attr="<%- attr %>" value="<%- model[attr] %>" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.number') }}" />
+    <input type="number" class="input form-control" data-attr="<%- attr %>" value="<%- model[attr] %>" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'number') %>" />
 </script>
 
 <script type="text/template" id="crude_textareaInputTemplate">
-    <textarea class="input form-control" data-attr="<%- attr %>" rows="2" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.textarea') }}"><%- model[attr] %></textarea>
+    <textarea class="input form-control" data-attr="<%- attr %>" rows="2" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'textarea') %>"><%- model[attr] %></textarea>
 </script>
 
 <script type="text/template" id="crude_jsonInputTemplate">
@@ -16,7 +16,7 @@
         class="input form-control"
         data-attr="<%- attr %>"
         rows="4"
-        placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.json') }}"
+        placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'json') %>"
         ><%- JSON.stringify(model[attr], null, 4) %></textarea></pre>
 </script>
 
@@ -29,13 +29,13 @@
 </script>
 
 <script type="text/template" id="crude_autocompleteInputTemplate">
-    <input type="text" class="autocomplete form-control" data-attr="<%- attr %>" value="" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.autocomplete') }}" />
+    <input type="text" class="autocomplete form-control" data-attr="<%- attr %>" value="" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'autocomplete') %>" />
     <input type="hidden" class="input autocompleteValue" data-attr="<%- attr %>" value="<%- model[attr] %>" />
 </script>
 
 <script type="text/template" id="crude_datetimeInputTemplate">
     <div class="datetimepicker input-group date">
-        <input readonly type="text" class="input form-control" data-attr="<%- attr %>" value="<%- model[attr] %>" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.datetime') }}" />
+        <input readonly type="text" class="input form-control" data-attr="<%- attr %>" value="<%- model[attr] %>" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'datetime') %>" />
         <div class="input-group-btn">
             <button type="button" class="btn btn-default">
                 <i class="fa fa-calendar"></i>
@@ -45,7 +45,7 @@
 </script>
 
 <script type="text/template" id="crude_selectInputTemplate">
-    <select type="select" class="input form-control" data-attr="<%- attr %>" placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.select') }}">
+    <select type="select" class="input form-control" data-attr="<%- attr %>" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'select') %>">
         <% for (var i in setup.get('selectOptions')[attr]) { %>
             <% var option = setup.get('selectOptions')[attr][i] %>
             <option value="<%- option.id %>" <%- model[attr] == option.id ? 'selected' : '' %>>
@@ -61,7 +61,7 @@
         class="input form-control markdownInput"
         data-attr="<%- attr %>"
         rows="8"
-        placeholder="<%- setup.getAttrName(attr) %>: {{ trans('CrudeCRUD::crude.input_placeholder.markdown') }}"
+        placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'markdown') %>"
         ><%- model[attr] %></textarea></pre>
     <div class="well markdownPreview" style="background: #fff"></div>
 </script>
@@ -82,7 +82,9 @@
             <hr>
             <div class="text-right">
                 <button class="crude-action-btn" data-dismiss="modal">
-                    <%= _.template($('#crude_closePreviewActionButtonTemplate').html())({}) %>
+                    <%= _.template($('#crude_closePreviewActionButtonTemplate').html())({
+                        setup: setup
+                    }) %>
                 </button>
             </div>
         </div>

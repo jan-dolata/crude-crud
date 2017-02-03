@@ -122,7 +122,7 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                 formData.append("modelId", that.model.id);
             },
 
-            dictMaxFilesExceeded: that.setup.get("dropzoneTrans")["dictMaxFilesExceeded"]
+            dictMaxFilesExceeded: that.setup.interfaceTrans("dictMaxFilesExceeded")
         });
     },
 });

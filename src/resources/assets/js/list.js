@@ -103,6 +103,13 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
         this.setup.triggerCancel();
 
         var $modal = $('#deleteItemConfirmModal');
+
+        $modal.find('.modal-content').html(
+            _.template($('#crude_deleteItemConfirmModalTemplate').html())({
+                setup: this.setup
+            })
+        );
+
         $modal.modal('show');
         var alertContainer = $('#' + this.setup.containerId()).find('#alertContainer');
 
@@ -303,7 +310,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         var template = _.template($('#crude_orderedListModalTemplate').html())({
             list: list,
-            options: options
+            options: options,
+            setup: this.setup
         });
 
         $modal = $('#orderedListModal');

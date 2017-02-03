@@ -24,11 +24,14 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderParameters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailParameters;
-    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DropzoneTrans;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CheckboxColumn;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DefaultSortAttr;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\RichFilters;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\InterfaceTrans;
+
+    // 2017-02-03 depreciated after InterfaceTrans added
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DropzoneTrans;
 
     /**
      * Construct
@@ -62,10 +65,6 @@ class CrudeSetup
         foreach ($formAttr as $attr)
             $this->inputType[$attr] = 'text';
 
-        $this->dropzoneTrans = [
-            'dictMaxFilesExceeded' => trans('CrudeCRUD::crude.dictMaxFilesExceeded')
-        ];
-
         return $this;
     }
 
@@ -96,16 +95,16 @@ class CrudeSetup
             'richFilters'   => $this->richFilters,
             'showFilters'   => $this->showFilters,
             'trans'         => $this->trans,
-            'dropzoneTrans' => $this->dropzoneTrans,
             'moduleInPopup' => $this->moduleInPopup,
             'customActions' => $this->customActions,
             'panelView'     => $this->panelView,
             'orderParameters' => $this->orderParameters,
             'thumbnailColumns' => $this->thumbnailColumns,
-            'dateTimePickerOptions' => $this->dateTimePickerOptions,
+            'dateTimePickerOptions' => $this->getDateTimePickerOptions(),
             'checkboxColumn' => $this->checkboxColumn,
             'defaultSortAttr' => $this->defaultSortAttr,
             'defaultSortOrder' => $this->defaultSortOrder,
+            'interfaceTrans' => $this->getInterfaceTrans(),
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),

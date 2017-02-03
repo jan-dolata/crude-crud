@@ -6,7 +6,9 @@ _.each(setup.get('customActions'), function(data, action) {
         <a href="<%= data.url ? data.url : '#' %><%= data.attr ? '/' + model.get(data.attr) : '' %>" <%= data.target ? 'target="' + data.target + '"' : '' %>>
             <button class="crude-action-btn"
                 <%= data.title ? 'title="' + data.title + '" data-toggle="tooltip" data-placement="bottom"' : '' %>>
-                <%= $('#' + action + 'CustomActionButtonTemplate').html() %>
+                <%= _.template($('#' + action + 'CustomActionButtonTemplate').html())({
+                    setup: setup
+                }) %>
             </button>
         </a>
 <%
@@ -15,7 +17,9 @@ _.each(setup.get('customActions'), function(data, action) {
             <button data-action="<%= action %>"
                 class="customAction crude-action-btn"
                 <%= data.title ? 'title="' + data.title + '" data-toggle="tooltip" data-placement="bottom"' : '' %>>
-                <%= $('#' + action + 'CustomActionButtonTemplate').html() %>
+                <%= _.template($('#' + action + 'CustomActionButtonTemplate').html())({
+                    setup: setup
+                }) %>
             </button>
 <%
         }
@@ -28,9 +32,11 @@ if(setup.get('editOption') && model.get('canBeEdited')) {
 %>
             <button data-action="<%= action %>"
                 class="action crude-action-btn"
-                title="<%= Crude.getTrans('crude.action', action) %>"
+                title="<%= setup.interfaceTrans('action', action) %>"
                 data-toggle="tooltip" data-placement="bottom">
-                <%= $('#crude_' + action + 'ActionButtonTemplate').html() %>
+                <%= _.template($('#crude_' + action + 'ActionButtonTemplate').html())({
+                    setup: setup
+                }) %>
             </button>
 <%
         }
@@ -41,9 +47,11 @@ if(setup.get('deleteOption') && model.get('canBeRemoved')) {
 %>
     <button id="delete"
         class="crude-action-btn"
-        title="{{ trans('CrudeCRUD::crude.delete') }}"
+        title="<%- setup.interfaceTrans('delete') %>"
         data-toggle="tooltip" data-placement="bottom">
-        <%= $('#crude_deleteActionButtonTemplate').html() %>
+        <%= _.template($('#crude_deleteActionButtonTemplate').html())({
+            setup: setup
+        }) %>
     </button>
 <%
 }

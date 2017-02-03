@@ -19,7 +19,7 @@ class OrderedListController extends BaseController
             $request->crude->reorder($orderList);
 
         return $this->successResponse([
-            'message' => trans('CrudeCRUD::crude.new_order_saved')
+            'message' => $request->crude->getCrudeSetup()->trans('new_order_saved')
         ]);
     }
 

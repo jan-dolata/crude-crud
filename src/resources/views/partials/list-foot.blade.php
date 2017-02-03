@@ -2,7 +2,7 @@
 
     <div class="input-group input-group crude-table-foot-refresh m-sm-b">
         <button id="refresh" type="button" class="btn btn-default btn-sm">
-            {{ trans('CrudeCRUD::crude.update_delay') }}
+            <%- setup.interfaceTrans('update_delay') %>
             <span id="updateDelay"></span>s
             <i class="fa fa-refresh m-sm-l"></i>
         </button>
@@ -44,7 +44,7 @@
     <% if (setup.get('exportOption')) { %>
         <div class="input-group input-group crude-table-foot-csv m-sm-b">
             <a href="/<%= setup.config('routePrefix') %>/export-csv/<%= setup.getName() %>" target="_blank" type="button" class="btn btn-default btn-sm">
-                {{ trans('CrudeCRUD::crude.extort_csv') }}
+                <%- setup.interfaceTrans('extort_csv') %>
                 <i class="fa fa-download m-sm-l"></i>
             </a>
         </div>
@@ -68,7 +68,7 @@
                     <% }) %>
                 </ul>
             </div>
-            <input id="searchValue" size="20" type="text" class="form-control input-sm" value="<%- search.value %>" placeholder="{{ trans('CrudeCRUD::crude.search_value') }}" />
+            <input id="searchValue" size="20" type="text" class="form-control input-sm" value="<%- search.value %>" placeholder="<%- setup.interfaceTrans('search_value') %>" />
             <div class="input-group-btn">
                 <button type="button" id="clearSearch" class="btn btn-default btn-sm">
                     <i class="fa fa-times"></i>

@@ -24,7 +24,7 @@
 </script>
 
 <script type="text/template" id="crude_boolColumnFormatTemplate">
-    <%- model.get(attr) ? '{{ trans('CrudeCRUD::crude.yes') }}' : '{{ trans('CrudeCRUD::crude.no') }}' %>
+    <%- model.get(attr) ? setup.interfaceTrans('yes') : setup.interfaceTrans('no') %>
 </script>
 
 <script type="text/template" id="crude_filesColumnFormatTemplate">

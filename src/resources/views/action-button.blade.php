@@ -1,11 +1,11 @@
 <script type="text/template" id="crude_saveActionButtonTemplate">
     <i class="fa fa-lg fa-save"></i>
-    {{ trans('CrudeCRUD::crude.save') }}
+    <%- setup.interfaceTrans('save') %>
 </script>
 
 <script type="text/template" id="crude_cancelActionButtonTemplate">
     <i class="fa fa-lg fa-times"></i>
-    {{ trans('CrudeCRUD::crude.close') }}
+    <%- setup.interfaceTrans('close') %>
 </script>
 
 <script type="text/template" id="crude_deleteActionButtonTemplate">
@@ -38,27 +38,27 @@
 
 <script type="text/template" id="crude_confirmDeleteActionButtonTemplate">
     <i class="fa fa-lg fa-trash"></i>
-    {{ trans('CrudeCRUD::crude.confirm_delete.confirm') }}
+    <%- setup.interfaceTrans('confirm_delete', 'confirm') %>
 </script>
 
 <script type="text/template" id="crude_cancelDeleteActionButtonTemplate">
     <i class="fa fa-lg fa-times"></i>
-    {{ trans('CrudeCRUD::crude.confirm_delete.cancel') }}
+    <%- setup.interfaceTrans('confirm_delete', 'cancel') %>
 </script>
 
 <script type="text/template" id="crude_closePreviewActionButtonTemplate">
     <i class="fa fa-lg fa-times"></i>
-    {{ trans('CrudeCRUD::crude.close') }}
+    <%- setup.interfaceTrans('close') %>
 </script>
 
 <script type="text/template" id="crude_confirmOrderActionButtonTemplate">
     <i class="fa fa-lg fa-save"></i>
-    {{ trans('CrudeCRUD::crude.order_list.confirm') }}
+    <%- setup.interfaceTrans('order_list', 'confirm') %>
 </script>
 
 <script type="text/template" id="crude_cancelOrderActionButtonTemplate">
     <i class="fa fa-lg fa-times"></i>
-    {{ trans('CrudeCRUD::crude.order_list.cancel') }}
+    <%- setup.interfaceTrans('order_list', 'cancel') %>
 </script>
 
 <script type="text/template" id="crude_checkActionButtonTemplate">

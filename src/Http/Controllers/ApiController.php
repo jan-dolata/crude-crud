@@ -84,7 +84,7 @@ class ApiController extends Controller
 
         return $this->successResponse([
             'model' => $model,
-            'message' => trans('CrudeCRUD::crude.item_has_been_saved')
+            'message' => $this->crude->getCrudeSetup()->trans('item_has_been_saved')
         ]);
     }
 
@@ -99,7 +99,7 @@ class ApiController extends Controller
 
         return $this->successResponse([
             'model' => $model,
-            'message' => trans('CrudeCRUD::crude.item_has_been_updated')
+            'message' => $this->crude->getCrudeSetup()->trans('item_has_been_updated')
         ]);
     }
 
@@ -113,7 +113,7 @@ class ApiController extends Controller
         $model = $this->crude->deleteById($id);
 
         return $this->successResponse([
-            'message' => trans('CrudeCRUD::crude.item_has_been_removed')
+            'message' => $this->crude->getCrudeSetup()->trans('item_has_been_removed')
         ]);
     }
 

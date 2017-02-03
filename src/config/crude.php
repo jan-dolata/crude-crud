@@ -27,6 +27,12 @@ return [
     'uploadFolder' => 'upload',
 
     /**
+     * Default interface and api translation file
+     * @var string
+     */
+    'defaultInterfaceTrans' => 'CrudeCRUD::crude',
+
+    /**
      * Defaults filters
      * @var array
      */

@@ -6,7 +6,7 @@
             <label><%- setup.getAttrName(column) %> </label>
         </div>
         <div class="col-sm-8">
-        <label>{{ trans('CrudeCRUD::crude.drop_file_here') }}</label>
+        <label><%- setup.interfaceTrans('drop_file_here') %></label>
             <div id="upload_file_dropzone_<%- column %>" class="well pointer" style="background: #fafafa"></div>
         </div>
     </div>

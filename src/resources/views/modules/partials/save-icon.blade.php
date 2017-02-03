@@ -1,24 +1,27 @@
 <div class="m-md-t m-md-b">
     <% if (model.id) { %>
-        {{ trans('CrudeCRUD::crude.edit_mode') }}: {{ trans('validation.attributes.id') }} <%- model.id %>
+        <%- setup.interfaceTrans('edit_mode') %>: # <%- model.id %>
     <% } else { %>
-        {{ trans('CrudeCRUD::crude.add_mode') }}:
+        <%- setup.interfaceTrans('add_mode') %>:
     <% } %>
 
     <div class="pull-right">
         <span id="loader" style="display: none">
-            <%= $('#crude_moduleLoaderTemplate').html() %>
+            <%= _.template($('#crude_moduleLoaderTemplate').html())({
+                setup: setup
+            }) %>
         </span>
 
-        <button id="save" title="{{ trans('CrudeCRUD::crude.save') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-            <%= $('#crude_saveActionButtonTemplate').html() %>
+        <button id="save" title="<%- setup.interfaceTrans('save') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+            <%= _.template($('#crude_saveActionButtonTemplate').html())({
+                setup: setup
+            }) %>
         </button>
 
-        <button id="cancel" title="{{ trans('CrudeCRUD::crude.close') }}" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-            <%= $('#crude_cancelActionButtonTemplate').html() %>
+        <button id="cancel" title="<%- setup.interfaceTrans('close') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+            <%= _.template($('#crude_cancelActionButtonTemplate').html())({
+                setup: setup
+            }) %>
         </button>
     </div>
 </div>
-
-
-

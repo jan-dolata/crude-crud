@@ -137,6 +137,13 @@ Crude.Models.Setup = Backbone.Model.extend(
         return config[attr];
     },
 
+    interfaceTrans: function (key, key2)
+    {
+        return _.isUndefined(key2)
+            ? this.get('interfaceTrans')[key]
+            : this.get('interfaceTrans')[key][key2];
+    },
+
     baseRoute: function (name, uri)
     {
         return '/' + this.config('routePrefix') + '/' + name + '/' + uri;
