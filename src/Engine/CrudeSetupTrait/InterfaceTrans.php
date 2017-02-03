@@ -18,9 +18,7 @@ trait InterfaceTrans
      */
     public function getInterfaceTrans()
     {
-        $available = ['en', 'pl'];
         $locale = config('app.locale');
-        $locale = in_array($locale, $available) ? $locale : 'en';
         $file = config('crude.defaultInterfaceTrans');
 
         $this->interfaceTrans = array_merge(
