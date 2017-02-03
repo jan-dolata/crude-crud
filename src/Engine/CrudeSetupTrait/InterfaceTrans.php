@@ -21,6 +21,11 @@ trait InterfaceTrans
         $locale = config('app.locale');
         $file = config('crude.defaultInterfaceTrans');
 
+        if ($file == 'CrudeCRUD::crude') {
+            $available = ['en', 'pl'];
+            $locale = in_array($locale, $available) ? $locale : 'en';
+        }
+
         $this->interfaceTrans = array_merge(
             \Lang::get($file, [], $locale),
             $this->interfaceTrans
