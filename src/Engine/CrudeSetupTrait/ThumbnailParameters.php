@@ -18,6 +18,9 @@ trait ThumbnailParameters
 
     public function setThumbnailColumns(array $columns)
     {
+        if (! is_array($columns))
+            $columns = [$columns];
+
         $this->thumbnailColumns = $columns;
 
         return $this;

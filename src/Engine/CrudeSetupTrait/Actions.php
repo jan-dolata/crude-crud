@@ -41,6 +41,8 @@ trait Actions
     private function setFormAction()
     {
         array_push($this->actions, 'form');
+
+        return $this;
     }
 
     /**
@@ -58,6 +60,8 @@ trait Actions
 
         $this->addForm = array_diff($this->addForm, ['lat', 'lng', 'address']);
         $this->editForm = array_diff($this->addForm, ['lat', 'lng', 'address']);
+
+        return $this;
     }
 
     /**
@@ -72,6 +76,8 @@ trait Actions
 
         $this->setModelDefaults('files', []);
         $this->setColumnFormat('files', 'files');
+
+        return $this;
     }
 
     /**
@@ -80,5 +86,7 @@ trait Actions
     public function setThumbnailAction()
     {
         array_push($this->actions, 'thumbnail');
+
+        return $this;
     }
 }
