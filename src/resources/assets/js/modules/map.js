@@ -10,6 +10,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     ui: {
         save: '#save',
         cancel: '#cancel',
+        clear: '#clear',
         input: '.input',
         loader: '#loader',
         'mapContainer': '#mapContainer',
@@ -56,26 +57,42 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
 
     initMap: function () {
         this.map = new google.maps.Map(this.ui.mapContainer[0], {
-            center: this.model.getLatLngObject(),
+            center: this.getMapCenter(),
             zoom: 6
         });
 
-        var marker = new google.maps.Marker({
-            map: this.map,
-            position: this.model.getLatLngObject()
-        });
+        var marker = null;
 
-        this.showSelectedLocation();
+        if (this.model.hasLatLngObject()) {
+            marker = this.showNewMarker();
+            this.showSelectedLocation();
+        }
 
         this.map.addListener('click', function(event) {
-            this.model.set('lat', event.latLng.lat());
-            this.model.set('lng', event.latLng.lng());
+            this.model.set('map_lat', event.latLng.lat());
+            this.model.set('map_lng', event.latLng.lng());
             this.showSelectedLocation();
 
-            marker.setPosition(this.model.getLatLngObject());
+            if (marker == null)
+                marker = this.showNewMarker();
+            else
+                marker.setPosition(this.model.getLatLngObject());
         }.bind(this));
 
         this.bindSearch();
+    },
+
+    getMapCenter: function () {
+        return this.model.hasLatLngObject()
+            ? this.model.getLatLngObject()
+            : this.setup.config('mapCenter');
+    },
+
+    showNewMarker: function () {
+        return new google.maps.Marker({
+            map: this.map,
+            position: this.model.getLatLngObject()
+        });
     },
 
     refreshMap: function (name) {
@@ -83,12 +100,12 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
             return;
 
         google.maps.event.trigger(this.map, 'resize');
-        this.map.setCenter(this.model.getLatLngObject());
+        this.map.setCenter(this.getMapCenter());
     },
 
     showSelectedLocation: function()
     {
-        this.ui.position.html(this.model.get('lat') + ' x ' + this.model.get('lng'));
+        this.ui.position.html(this.model.get('map_lat') + ' x ' + this.model.get('map_lng'));
 
         var geocoder = new google.maps.Geocoder;
 
@@ -99,8 +116,39 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
                 return;
 
             this.ui.info.html(results[0].formatted_address);
-            this.model.set('address', results[0].formatted_address);
+
+            var components = results[0].address_components;
+            this.model.set('map_postal_code', this.getComponentOfSelectedLocation(components, 'postal_code'));
+            this.model.set('map_province', this.getComponentOfSelectedLocation(components, 'administrative_area_level_1'));
+            this.model.set('map_locality', this.getComponentOfSelectedLocation(components, 'locality'));
+            this.model.set('map_address', results[0].formatted_address);
         }.bind(this));
+    },
+
+    getComponentOfSelectedLocation: function (components, type) {
+        for (var i in components) {
+            var component = components[i];
+
+            var isOneOfType = _.filter(component.types, function (cType) {
+                return cType == type;
+            }).length > 0;
+
+            if (isOneOfType)
+                return component.long_name;
+        }
+
+        return '';
+    },
+
+    clear: function () {
+        this.model.set('map_lat', null)
+        this.model.set('map_lng', null)
+        this.model.set('map_postal_code', null);
+        this.model.set('map_province', null);
+        this.model.set('map_locality', null);
+        this.model.set('map_address', null);
+
+        this.saveModel();
     },
 
     /**

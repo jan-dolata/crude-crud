@@ -2,6 +2,7 @@
     <label><%- setup.interfaceTrans('drop_file_here') %></label>
     <div id="upload_file_dropzone" class="well pointer" style="background: #fafafa"></div>
 
+    <% var module = 'file' %>
     @include('CrudeCRUD::modules.partials.save-icon')
 </script>
 

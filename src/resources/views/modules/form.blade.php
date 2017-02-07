@@ -16,5 +16,6 @@
         </div>
     <% }); %>
 
+    <% var module = 'form' %>
     @include('CrudeCRUD::modules.partials.save-icon')
 </script>

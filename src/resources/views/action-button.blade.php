@@ -8,6 +8,11 @@
     <%- setup.interfaceTrans('close') %>
 </script>
 
+<script type="text/template" id="crude_clearActionButtonTemplate">
+    <i class="fa fa-lg fa-eraser"></i>
+    <%- setup.interfaceTrans('clear') %>
+</script>
+
 <script type="text/template" id="crude_deleteActionButtonTemplate">
     <i class="fa fa-lg fa-trash"></i>
 </script>

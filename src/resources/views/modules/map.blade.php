@@ -14,6 +14,6 @@
         </div>
     </div>
 
+    <% var module = 'map' %>
     @include('CrudeCRUD::modules.partials.save-icon')
 </script>
-

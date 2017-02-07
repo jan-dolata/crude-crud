@@ -8,6 +8,7 @@ return [
     'delete' => 'Delete',
     'add' => 'Add',
     'close' => 'Close',
+    'clear' => 'Clear',
     'submit' => 'Submit',
     'empty_list' => 'Empty list',
     'tools' => 'Tools',

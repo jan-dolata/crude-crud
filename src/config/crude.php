@@ -44,12 +44,21 @@ return [
     ],
 
     /**
-     * Map defaults
+     * Map center
      * @var array
      */
-    'mapDefaults' => [
+    'mapCenter' => [
         'lat' => 52.03,
         'lng' => 19.27
+    ],
+
+    /**
+     * Default thumbnails size
+     * @var array
+     */
+    'thumbnailSize' => [
+        'width' => 300,
+        'height' => 300
     ],
 
     /**

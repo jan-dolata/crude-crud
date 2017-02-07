@@ -41,20 +41,6 @@ Check config file `config/crude.php`.
 create dir
 `app/Engine/Crude`
 
-create model with migration, if model is related to files include
-
-```php
-$table->text('files');
-```
-
-if model is related to map
-
-```php
-$table->double('lat', 17, 14);
-$table->double('lng', 17, 14);
-$table->string('address');
-```
-
 in app/Engine/Crude directory create class for list
 
 ```php

@@ -52,14 +52,8 @@ trait Actions
     {
         array_push($this->actions, 'map');
 
-        $this->setModelDefaults([
-            'lat' => config('crude.mapDefaults')['lat'],
-            'lng' => config('crude.mapDefaults')['lng'],
-            'address' => ''
-        ]);
-
-        $this->addForm = array_diff($this->addForm, ['lat', 'lng', 'address']);
-        $this->editForm = array_diff($this->addForm, ['lat', 'lng', 'address']);
+        $this->addForm = array_diff($this->addForm, ['map_lat', 'map_lng', 'map_address', 'map_province', 'map_locality', 'map_postal_code']);
+        $this->editForm = array_diff($this->addForm, ['map_lat', 'map_lng', 'map_address', 'map_province', 'map_locality', 'map_postal_code']);
 
         return $this;
     }

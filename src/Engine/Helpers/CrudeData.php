@@ -6,15 +6,19 @@ use Session;
 
 class CrudeData
 {
-    public static function put(array $data)
+    public static function put($crudeName, $attr, $value = null)
     {
-        Session::forget('crudeData');
-        Session::put('crudeData', $data);
+        if (! is_array($attr))
+            $attr = [$attr => $value];
+
+        Session::put(self::prepareName($crudeName), $attr);
     }
 
-    public static function get($attr = null)
+    public static function get($crudeName, $attr = null)
     {
-        $data = Session::has('crudeData') ? Session::get('crudeData') : [];
+        $data = Session::has(self::prepareName($crudeName))
+            ? Session::get(self::prepareName($crudeName))
+            : [];
 
         if (empty($attr))
             return $data;
@@ -23,5 +27,10 @@ class CrudeData
             return $data[$attr];
 
         return null;
+    }
+
+    private static function prepareName($crudeName)
+    {
+        return 'crudeData.' . $crudeName;
     }
 }

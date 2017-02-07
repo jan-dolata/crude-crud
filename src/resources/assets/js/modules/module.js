@@ -8,13 +8,15 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     ui: {
         save: '#save',
         cancel: '#cancel',
+        clear: '#clear',
         input: '.input',
         loader: '#loader'
     },
 
     events: {
         'click @ui.save': 'save',
-        'click @ui.cancel': 'cancel'
+        'click @ui.cancel': 'cancel',
+        'click @ui.clear': 'clear'
     },
 
     initialize: function (options)

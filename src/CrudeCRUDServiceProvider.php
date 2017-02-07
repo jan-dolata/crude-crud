@@ -103,6 +103,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         $loader->alias('CrudeData', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeData');
         $loader->alias('CrudeOptions', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeOptions');
         $loader->alias('CrudeQueryHelper', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeQueryHelper');
+        $loader->alias('CrudeMagic', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeMagic');
     }
 
     private function registerCrudeCRUD()

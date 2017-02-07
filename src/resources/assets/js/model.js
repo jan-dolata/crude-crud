@@ -10,9 +10,15 @@ Crude.Models.Base = Backbone.Model.extend(
     getLatLngObject: function()
     {
         return {
-            lat: parseFloat(this.get('lat')),
-            lng: parseFloat(this.get('lng'))
+            lat: parseFloat(this.get('map_lat')),
+            lng: parseFloat(this.get('map_lng'))
         };
+    },
+
+    hasLatLngObject: function()
+    {
+        return ! _.isNaN(this.getLatLngObject().lat)
+            && ! _.isNaN(this.getLatLngObject().lng);
     },
 
     isCustomActionAvailable: function(action)

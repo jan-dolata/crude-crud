@@ -9,16 +9,17 @@ use Image;
 trait WithThumbnailTrait
 {
 
-    protected $width = 300;
-    protected $height = 300;
-
     public function uploadThumbnailByIdAndColumn($id, $column, $file)
     {
         $model = $this->getById($id);
 
+        $columnSetup = $this->getCrudeSetup()->getThumbnailColumns($column);
+        $width = $columnSetup['width'];
+        $height = $columnSetup['height'];
+
         $systemFileName = $this->createSystemFileName($file);
         $fileOriginalPath = $this->createFileOriginalPath($column, $systemFileName);
-        $fileThumbnailName = $this->createFileThumbnailName($file);
+        $fileThumbnailName = $this->createFileThumbnailName($file, $width, $height);
         $fileThumbnailPath = $this->createFileThumbnailPath($column, $fileThumbnailName);
         $folderOriginalPath = $this->createFileOriginalPath($column);
         $folderThumbnailPath = $this->createFileThumbnailPath($column);
@@ -39,10 +40,10 @@ trait WithThumbnailTrait
 
         //create thumb
         $img = Image::make(storage_path('app/'.$fileThumbnailPath));
-        $img->heighten($this->height, function ($constraint) {
+        $img->heighten($height, function ($constraint) {
             $constraint->upsize();
         });
-        $img->widen($this->width, function ($constraint) {
+        $img->widen($width, function ($constraint) {
             $constraint->upsize();
         });
         //save thumbnail
@@ -58,8 +59,8 @@ trait WithThumbnailTrait
             'thumbnail_path' => asset($fileThumbnailPath),
             'thumbnail_name' => $fileThumbnailName,
             'thumbnail_folder_path' => $folderThumbnailPath,
-            'current_thumbnail_width' => $this->width,
-            'current_thumbnail_heigth' => $this->height
+            'current_thumbnail_width' => $width,
+            'current_thumbnail_heigth' => $height
         ];
 
         $model = $this->model->find($id);
@@ -98,9 +99,6 @@ trait WithThumbnailTrait
         return config('crude.uploadFolder') . '/' . strtolower($folderName) . '/thumbnail/' . $fileThumbnailName;
     }
 
-    // TODO  zapisac oryginal
-    //  zapisac miniatury osobno razem wymiarami w nazwie
-
     /**
      * Create system file name
      * @param  File    $file
@@ -111,25 +109,11 @@ trait WithThumbnailTrait
         return uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
     }
 
-    private function createFileThumbnailName($file)
+    private function createFileThumbnailName($file, $width, $height)
     {
         $name = uniqid() . '_' . time();
-        $name .= sprintf('_%sx%s', $this->width, $this->height);
+        $name .= sprintf('_%sx%s', $width, $height);
         $name .= '.' . $file->getClientOriginalExtension();
         return $name;
-    }
-
-    public function setThumbnailWidth($width)
-    {
-        $this->width = $width;
-
-        return $this;
-    }
-
-    public function setThumbnailHeight($height)
-    {
-        $this->height = $height;
-
-        return $this;
     }
 }

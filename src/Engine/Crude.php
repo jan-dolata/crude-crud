@@ -65,7 +65,7 @@ abstract class Crude
      * Get called class name
      * @return string
      */
-    protected static function getCalledClassName()
+    protected function getCalledClassName()
     {
         $class = get_called_class();
         $class = explode('\\', $class);
@@ -93,6 +93,11 @@ abstract class Crude
     public function inScope($attr)
     {
         return isset($this->scope[$attr]) && ! empty($this->scope[$attr]);
+    }
+
+    public function getCrudeData($attr = null)
+    {
+        return \CrudeData::get($this->getCalledClassName(), $attr);
     }
 
 }

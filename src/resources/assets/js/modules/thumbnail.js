@@ -19,7 +19,9 @@ Crude.Views.ThumbnailModule = Crude.Views.Module.extend(
     {
         var that = this;
         _.each(this.setup.get('thumbnailColumns'), function(column) {
-            this.$('#upload_file_dropzone_'+column).dropzone(that.dropzoneSetup(column));
+            this.$('#upload_file_dropzone_' + column.name).dropzone(
+                that.dropzoneSetup(column.name)
+            );
         });
 
         this.parentOnRender();

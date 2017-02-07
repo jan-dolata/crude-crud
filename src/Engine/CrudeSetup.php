@@ -23,15 +23,12 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CustomActions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\PanelView;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\OrderParameters;
-    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailParameters;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ThumbnailColumns;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CheckboxColumn;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DefaultSortAttr;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\RichFilters;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\InterfaceTrans;
-
-    // 2017-02-03 depreciated after InterfaceTrans added
-    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DropzoneTrans;
 
     /**
      * Construct
@@ -54,7 +51,7 @@ class CrudeSetup
         $this->setFormAction();
 
         // add map view
-        $mapAttr = ['lat', 'lng', 'address'];
+        $mapAttr = ['map_lat', 'map_lng'];
         if (count(array_intersect($mapAttr, $formAttr)) == count($mapAttr))
             $this->setMapAction();
 
@@ -99,19 +96,20 @@ class CrudeSetup
             'customActions' => $this->customActions,
             'panelView'     => $this->panelView,
             'orderParameters' => $this->orderParameters,
-            'thumbnailColumns' => $this->thumbnailColumns,
-            'dateTimePickerOptions' => $this->getDateTimePickerOptions(),
             'checkboxColumn' => $this->checkboxColumn,
             'defaultSortAttr' => $this->defaultSortAttr,
             'defaultSortOrder' => $this->defaultSortOrder,
             'interfaceTrans' => $this->getInterfaceTrans(),
+            'thumbnailColumns' => $this->getThumbnailColumns(),
+            'dateTimePickerOptions' => $this->getDateTimePickerOptions(),
 
             'config' => [
                 'routePrefix'    => config('crude.routePrefix'),
                 'numRowsOptions' => config('crude.numRowsOptions'),
                 'iconClassName'  => config('crude.iconClassName'),
                 'refreshAll'     => config('crude.refreshAll'),
-                'sortAttr'       => $this->getOrderAttribute()
+                'mapCenter'      => config('crude.mapCenter'),
+                'sortAttr'       => $this->getOrderAttribute(),
             ],
         ];
     }
