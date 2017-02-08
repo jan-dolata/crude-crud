@@ -18,6 +18,7 @@ trait OrderTrait
     public function storeInFirstPlace()
     {
         $this->storeInLastPlace = false;
+        return $this;
     }
 
     /**
