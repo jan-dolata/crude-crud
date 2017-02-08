@@ -18,9 +18,12 @@ trait RichFilters
 
         $filters = is_array($name)
             ? $name
-            : [$name, $label, $type, $options];
+            : [[$name, $label, $type, $options]];
 
         foreach ($filters as $filter) {
+            if (! is_array($filter))
+                $filter = [$filter];
+
             $this->richFilters[$filter[0]] = [
                 'name' => $filter[0],
                 'label' => isset($filter[1]) ? $filter[1] : '',

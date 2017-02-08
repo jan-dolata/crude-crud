@@ -36,6 +36,9 @@ trait ThumbnailColumns
 
         $thumbnailColumns = [];
         foreach ($columns as $column)
+            if (! is_array($column))
+                $column = [$column];
+
             $thumbnailColumns[$column[0]] = [
                 'name' => $column[0],
                 'width' => $column[1] ? : config('crude.thumbnailSize.width'),

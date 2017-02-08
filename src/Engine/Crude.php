@@ -58,7 +58,7 @@ abstract class Crude
 
         $this->crudeSetup = new CrudeSetup($this->getCalledClassName(), []);
 
-        return $this;
+        return $this->crudeSetup;
     }
 
     /**

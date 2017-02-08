@@ -61,7 +61,7 @@ trait ModelTrait
 
         $this->crudeSetup->setFilters(['id']);
 
-        return $this;
+        return $this->crudeSetup;
     }
 
 }
