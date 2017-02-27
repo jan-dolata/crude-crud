@@ -8,4 +8,5 @@ interface WithFileInterface
 {
     public function uploadFilesById($id, $files);
     public function deleteFileByFileLog(FileLog $log);
+    public function deleteFileByData($id, $fileLogId);
 }

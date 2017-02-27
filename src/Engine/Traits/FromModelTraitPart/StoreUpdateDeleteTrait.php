@@ -128,6 +128,14 @@ trait StoreUpdateDeleteTrait
         if (empty($model))
             return $this;
 
+        if ($this instanceof \JanDolata\CrudeCRUD\Engine\Interfaces\WithFileInterface) {
+            $fileAttrName = $this->fileAttrName;
+            $modelFiles = $model->$fileAttrName;
+
+            foreach ($modelFiles as $file)
+                $this->deleteFileByData($model->id, $file['file_log_id']);
+        }
+
         $model->delete();
 
         if ($this->canOrder())
