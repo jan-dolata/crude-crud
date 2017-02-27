@@ -50,6 +50,17 @@ trait WithFileTrait
         return $this->updateById($id, [$fileAttrName => $model->files]);
     }
 
+    public function deleteFileByData($id, $fileLogId)
+    {
+        $fileAttrName = $this->getFileAttrName();
+
+        $log = (new FileLog)->find($fileLogId);
+        $model = $this->getById($id);
+        $model = (new CrudeFiles)->delete($model, $log, $fileAttrName, $fileLogId);
+
+        return $this->updateById($id, [$fileAttrName => $model->files]);
+    }
+
     /**
      * Gets the File attributes name.
      *

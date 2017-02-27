@@ -75,9 +75,10 @@ Crude.Views.FileModule = Crude.Views.Module.extend(
                             type: 'delete',
                             url: that.setup.filesRoute('delete'),
                             data: {
-                                file_path   : file.serverPath,
-                                file_log_id : file.fileLogId,
-                                crudeName   : that.setup.getName()
+                                file_path    : file.serverPath,
+                                file_log_id  : file.fileLogId,
+                                crudeName    : that.setup.getName(),
+                                crudeModelId : that.model.id
                             },
                             success: function(response){
                                 updateModelFiles(response.model.files);

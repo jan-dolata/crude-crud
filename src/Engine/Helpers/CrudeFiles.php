@@ -57,19 +57,31 @@ class CrudeFiles
      * Delete file for model, without save model
      * @param  Model $model
      * @param  FileLog $log
+     * @param  String $fileAttrName = 'files'
+     * @param  String $fileLogId = 0 - used when log is missing
      * @return Model
      */
-    public function delete($model, FileLog $log, $fileAttrName = 'files')
+    public function delete($model, $log, $fileAttrName = 'files', $fileLogId = 0)
     {
-        Storage::delete($log->file_path);
-
         $updatedFiles = [];
+        if ($log)
+            $fileLogId = $log->id;
+
+        $fileToDelete = [];
         foreach ($model->files as $file) {
-            if ($file['file_log_id'] != $log->id)
+            if ($file['file_log_id'] == $fileLogId)
+                $fileToDelete = $file;
+            else
                 $updatedFiles[] = $file;
         }
 
-        $log->delete();
+        if ($log)
+            Storage::delete($log->file_path);
+        else
+            Storage::delete($fileToDelete['path']);
+
+        if ($log)
+            $log->delete();
 
         $model->$fileAttrName = $updatedFiles;
         return $model;

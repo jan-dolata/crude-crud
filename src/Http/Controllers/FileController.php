@@ -67,9 +67,8 @@ class FileController extends Controller
      */
     public function delete(FileRequest $request)
     {
-        $log = (new FileLog)->findOrFail($request->input('file_log_id'));
-        $crude = CrudeInstance::get($log->model_name);
-        $model = $crude->deleteFileByFileLog($log);
+        $crude = CrudeInstance::get($request->input('crudeName'));
+        $model = $crude->deleteFileByData($request->input('crudeModelId'), $request->input('file_log_id'));
 
         return ['model' => $model];
     }
