@@ -221,9 +221,10 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.collection = this.setup.getNewCollection();
 
+        this.getFiltersFromUrlHash();
         this.updateList();
-        this.listenTo(Crude.vent, 'action_update', this.updateThisList);
 
+        this.listenTo(Crude.vent, 'action_update', this.updateThisList);
         this.listenTo(Crude.vent, 'open_add_form', this.add);
     },
 
@@ -263,6 +264,8 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
             this.ui.updateDelay.html( m + ':' + s );
         }.bind(this), 1000);
+
+        this.updateUrlHash();
     },
 
     add: function ()
@@ -460,6 +463,25 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             delete this.collection.richFilters[name];
 
         this.updateList();
+    },
+
+    updateUrlHash: function () {
+        window.location.hash = '';
+
+        for (var name in this.collection.richFilters)
+            window.location.hash += '#' + name + '=' + this.collection.richFilters[name];
+    },
+
+    getFiltersFromUrlHash: function () {
+        var hash = window.location.hash.split('#');
+        this.collection.richFilters = {};
+
+        for (var i in hash) {
+            if (hash[i] != '') {
+                var values = hash[i].split('=');
+                this.collection.richFilters[values[0]] = values[1];
+            }
+        }
     },
 
     bindDatepickerInRichFilters: function ()
