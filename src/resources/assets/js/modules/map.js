@@ -121,7 +121,12 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
             this.model.set('map_postal_code', this.getComponentOfSelectedLocation(components, 'postal_code'));
             this.model.set('map_province', this.getComponentOfSelectedLocation(components, 'administrative_area_level_1'));
             this.model.set('map_locality', this.getComponentOfSelectedLocation(components, 'locality'));
-            this.model.set('map_address', results[0].formatted_address);
+
+            var street = this.getComponentOfSelectedLocation(components, 'route');
+            var streetNumber = this.getComponentOfSelectedLocation(components, 'street_number');
+            var number = streetNumber == '' ? '' : ' ' + streetNumber;
+
+            this.model.set('map_address', street + number);
         }.bind(this));
     },
 
