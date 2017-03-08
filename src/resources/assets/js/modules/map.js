@@ -6,6 +6,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     map: null,
     geocoder: null,
     selectedLocation: null,
+    marker: null,
 
     ui: {
         save: '#save',
@@ -61,25 +62,27 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
             zoom: 6
         });
 
-        var marker = null;
-
         if (this.model.hasLatLngObject()) {
-            marker = this.showNewMarker();
+            this.marker = this.showNewMarker();
             this.showSelectedLocation();
         }
 
-        this.map.addListener('click', function(event) {
-            this.model.set('map_lat', event.latLng.lat());
-            this.model.set('map_lng', event.latLng.lng());
-            this.showSelectedLocation();
-
-            if (marker == null)
-                marker = this.showNewMarker();
-            else
-                marker.setPosition(this.model.getLatLngObject());
+        this.map.addListener('click', function (event) {
+            this.setMarker(event);
         }.bind(this));
 
         this.bindSearch();
+    },
+
+    setMarker: function (event) {
+        this.model.set('map_lat', event.latLng.lat());
+        this.model.set('map_lng', event.latLng.lng());
+        this.showSelectedLocation();
+
+        if (this.marker == null)
+            this.marker = this.showNewMarker();
+        else
+            this.marker.setPosition(this.model.getLatLngObject());
     },
 
     getMapCenter: function () {
@@ -161,6 +164,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
      */
     bindSearch: function()
     {
+        var that = this;
         var input = this.ui.search[0];
         var map = this.map;
 
@@ -199,12 +203,18 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
                 };
 
                 // Create a marker for each place.
-                markers.push(new google.maps.Marker({
+                var marker = new google.maps.Marker({
                     map: map,
                     icon: icon,
                     title: place.name,
                     position: place.geometry.location
-                }));
+                });
+
+                markers.push(marker);
+
+                google.maps.event.addListener(marker, 'click', function (event) {
+                    that.setMarker(event);
+                });
 
                 if (place.geometry.viewport) {
                     // Only geocodes have viewport.
