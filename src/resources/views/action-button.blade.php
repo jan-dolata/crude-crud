@@ -25,6 +25,10 @@
     <i class="fa fa-lg fa-list-ol"></i>
 </script>
 
+<script type="text/template" id="crude_selectColumnActionButtonTemplate">
+    <i class="fa fa-lg fa-table"></i>
+</script>
+
 <script type="text/template" id="crude_formActionButtonTemplate">
     <i class="fa fa-lg fa-pencil"></i>
 </script>
@@ -64,6 +68,16 @@
 <script type="text/template" id="crude_cancelOrderActionButtonTemplate">
     <i class="fa fa-lg fa-times"></i>
     <%- setup.interfaceTrans('order_list', 'cancel') %>
+</script>
+
+<script type="text/template" id="crude_confirmColumnSelectorActionButtonTemplate">
+    <i class="fa fa-lg fa-save"></i>
+    <%- setup.interfaceTrans('column_selector', 'confirm') %>
+</script>
+
+<script type="text/template" id="crude_cancelColumnSelectorActionButtonTemplate">
+    <i class="fa fa-lg fa-times"></i>
+    <%- setup.interfaceTrans('column_selector', 'cancel') %>
 </script>
 
 <script type="text/template" id="crude_checkActionButtonTemplate">

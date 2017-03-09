@@ -101,6 +101,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         title: '',
         description: '',
         column: [],
+        extraColumn: {},
         columnFormat: [],
         addForm: [],
         editForm: [],
@@ -190,7 +191,39 @@ Crude.Models.Setup = Backbone.Model.extend(
         return 'crudeSetup_' + this.getName();
     },
 
-    getColumnFormat: function(attr)
+    getVisibleColumns: function ()
+    {
+        var columns = this.get('column');
+        var extraColumns = this.get('extraColumn');
+
+        if (_.isEmpty(extraColumns))
+            return columns;
+
+        var visibleColumns = [];
+        for (var i in columns) {
+            var column = columns[i];
+
+            if (! _.isArray(column)) {
+                if (! (column in extraColumns) || extraColumns[column].visible)
+                    visibleColumns.push(column);
+            } else {
+                var newItem = [];
+                for (var j in column) {
+                    var item = column[j];
+
+                    if (! (item in extraColumns) || extraColumns[item].visible)
+                        newItem.push(item);
+                }
+
+                if (newItem.length)
+                    visibleColumns.push(newItem);
+            }
+        }
+
+        return visibleColumns;
+    },
+
+    getColumnFormat: function (attr)
     {
         var columnFormat = this.get('columnFormat');
 

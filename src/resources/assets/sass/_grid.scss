@@ -82,6 +82,10 @@ $bootstrap-screen-sm-max: 991px;
             padding: $vertical-margin $horizontal-margin;
         }
 
+        .list-region {
+            overflow-x: auto;
+        }
+
         .crude-table {
             margin-bottom: 5px;
 

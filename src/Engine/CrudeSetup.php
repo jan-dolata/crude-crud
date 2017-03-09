@@ -9,6 +9,7 @@ class CrudeSetup
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Name;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Description;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Column;
+    use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ExtraColumn;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\ColumnFormat;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\CsvColumn;
     use \JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\Form;
@@ -76,6 +77,7 @@ class CrudeSetup
             'title'         => $this->title,
             'description'   => $this->description,
             'column'        => $this->column,
+            'extraColumn'   => $this->extraColumn,
             'columnFormat'  => $this->columnFormat,
             'addForm'       => $this->addForm,
             'editForm'      => $this->editForm,

@@ -14,6 +14,7 @@ return [
     'tools' => 'Tools',
     'order' => 'Order',
     'check' => 'Check / Uncheck',
+    'select_column' => 'Select column',
 
     'add_mode' => 'Add',
     'edit_mode' => 'Edit',
@@ -47,6 +48,13 @@ return [
     'order_list' => [
         'title' => 'New order',
         'content' => 'Create new order',
+        'cancel' => 'Cancel',
+        'confirm' => 'Save'
+    ],
+
+    'column_selector' => [
+        'title' => 'Select columns',
+        'content' => 'Show or hide columns',
         'cancel' => 'Cancel',
         'confirm' => 'Save'
     ],

@@ -13,6 +13,8 @@ return [
     'empty_list' => 'Lista jest pusta',
     'tools' => 'Narzędzia',
     'order' => 'Kolejność',
+    'check' => 'Zaznacz / Odznacz',
+    'select_column' => 'Wybór kolumn',
 
     'add_mode' => 'Dodajesz',
     'edit_mode' => 'Edytujesz',
@@ -47,6 +49,13 @@ return [
     'order_list' => [
         'title' => 'Nowa kolejność',
         'content' => 'Ustaw nową kolejność',
+        'cancel' => 'Anuluj',
+        'confirm' => 'Zapisz'
+    ],
+
+    'column_selector' => [
+        'title' => 'Widoczność kolumn',
+        'content' => 'Ustaw widoczność kolumn',
         'cancel' => 'Anuluj',
         'confirm' => 'Zapisz'
     ],

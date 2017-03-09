@@ -180,6 +180,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         order: '#order',
         sort: '.sort',
         check: '#check',
+        selectColumn: '#selectColumn',
 
         changeNumRows: '.changeNumRows',
 
@@ -195,6 +196,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     events: {
         'click @ui.add': 'add',
         'click @ui.order': 'order',
+        'click @ui.selectColumn': 'selectColumn',
         'click @ui.sort': 'sort',
         'click @ui.check': 'check',
         'click @ui.changeNumRows': 'changeNumRows',
@@ -203,7 +205,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.search': 'search',
         'keyup @ui.searchValue': 'searchOnEnter',
         'click @ui.clearSearch': 'clearSearch',
-        'click @ui.refresh': 'updateList'
+        'click @ui.refresh': 'updateList',
     },
 
     initialize: function (options)
@@ -303,7 +305,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             setup: this.setup
         });
 
-        $modal = $('#orderedListModal');
+        var $modal = $('#orderedListModal');
         $modal.find('#content').html(template);
 
         $modal.modal('show');
@@ -347,6 +349,33 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
                 }
             });
         });
+    },
+
+    selectColumn: function ()
+    {
+        $(':focus').blur();
+
+        var template = _.template($('#crude_columnSelectorModalTemplate').html())({
+            setup: this.setup
+        });
+
+        var $modal = $('#columnSelectorModal');
+        $modal.find('#content').html(template);
+        $modal.modal('show');
+
+        $modal.find('#confirm').click(function() {
+            var extraColumn = this.setup.get('extraColumn');
+
+            $modal.find('.columnCheckbox').each(function () {
+                var check = $(this);
+                extraColumn[check.data('name')].visible = check.is(':checked');
+            });
+
+            this.setup.set('extraColumn', extraColumn);
+
+            $modal.modal('hide');
+            this.render();
+        }.bind(this));
     },
 
     changeNumRows: function (event)
@@ -416,7 +445,6 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         if (this.setup.getName() == setupName) {
             this.collection.richFilters = richFilters;
-            console.log(this.collection.richFilters, this.collection, setupName, richFilters );
             this.updateList();
         }
     }

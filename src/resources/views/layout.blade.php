@@ -41,6 +41,6 @@
             <div id="richFiltersRegion" class="form-inline rich-filters-region"></div>
         <% } %>
 
-        <div id="listRegion"></div>
+        <div id="listRegion" class="list-region"></div>
     </div>
 </script>
