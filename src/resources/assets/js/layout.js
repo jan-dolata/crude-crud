@@ -57,9 +57,10 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
                     new Crude.Views.ThumbnailModule({ setup: setup })
                 );
 
-            this.richFilters.show(
-                new Crude.Views.RichFilterList({ setup: setup })
-            );
+            if (! _.isEmpty(setup.get('richFilters')))
+                this.richFilters.show(
+                    new Crude.Views.RichFilterList({ setup: setup })
+                );
 
             this.firstRender = false;
         }
