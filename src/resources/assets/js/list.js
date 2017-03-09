@@ -416,6 +416,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         if (this.setup.getName() == setupName) {
             this.collection.richFilters = richFilters;
+            console.log(this.collection.richFilters, this.collection, setupName, richFilters );
             this.updateList();
         }
     }

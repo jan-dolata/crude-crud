@@ -32,7 +32,7 @@ Crude.Collections.RichFilters = Backbone.Collection.extend(
     model: Crude.Models.RichFilter,
 
     getFiltersValues: function () {
-        var filters = [];
+        var filters = {};
 
         this.each(function (model) {
             if (model.isActive())
