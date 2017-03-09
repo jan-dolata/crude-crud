@@ -26,6 +26,8 @@ return [
 
     'update_delay' => 'Dane z przed',
 
+    'add_new_filter' => 'Dodaj filtr',
+
     'markdown_preview' => 'Podgląd',
 
     'action' => [

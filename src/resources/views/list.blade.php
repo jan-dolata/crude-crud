@@ -33,14 +33,6 @@
 
 <script type="text/template" id="crude_listTemplate">
     <thead class="crude-table-head">
-        <% if (! _.isEmpty(setup.get('richFilters'))) { %>
-            <tr class="crude-table-head-filters-row">
-                <td colspan="<%- setup.get('column').length + 1 + (setup.get('checkboxColumn') ? 1 : 0) %>">
-                    @include('CrudeCRUD::partials.rich-filters')
-                </td>
-            </tr>
-        <% } %>
-
         <tr class="crude-table-head-row">
             <% if(pagination.count) { %>
                 <% if(setup.get('checkboxColumn')) { %>

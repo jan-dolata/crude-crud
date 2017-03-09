@@ -79,7 +79,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
         this.model.set('map_lng', event.latLng.lng());
         this.showSelectedLocation();
 
-        if (this.marker == null)
+        if (this.marker === null)
             this.marker = this.showNewMarker();
         else
             this.marker.setPosition(this.model.getLatLngObject());
@@ -127,7 +127,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
 
             var street = this.getComponentOfSelectedLocation(components, 'route');
             var streetNumber = this.getComponentOfSelectedLocation(components, 'street_number');
-            var number = streetNumber == '' ? '' : ' ' + streetNumber;
+            var number = streetNumber === '' ? '' : ' ' + streetNumber;
 
             this.model.set('map_address', street + number);
         }.bind(this));
@@ -149,8 +149,8 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     },
 
     clear: function () {
-        this.model.set('map_lat', null)
-        this.model.set('map_lng', null)
+        this.model.set('map_lat', null);
+        this.model.set('map_lng', null);
         this.model.set('map_postal_code', null);
         this.model.set('map_province', null);
         this.model.set('map_locality', null);
@@ -181,7 +181,7 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
 
-            if (places.length == 0) {
+            if (places.length === 0) {
                 return;
             }
 

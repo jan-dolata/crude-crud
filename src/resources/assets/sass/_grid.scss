@@ -78,6 +78,10 @@ $bootstrap-screen-sm-max: 991px;
     }
 
     .crude-list {
+        .rich-filters-region {
+            padding: $vertical-margin $horizontal-margin;
+        }
+
         .crude-table {
             margin-bottom: 5px;
 
@@ -90,15 +94,6 @@ $bootstrap-screen-sm-max: 991px;
                         .crude-sort {
                             white-space: nowrap;
                         }
-                    }
-                }
-
-                .crude-table-head-filters-row {
-                    td:first-child {
-                        padding-left: $horizontal-margin;
-                    }
-                    td:last-child {
-                        padding-right: $horizontal-margin;
                     }
                 }
             }

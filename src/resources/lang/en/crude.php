@@ -27,6 +27,8 @@ return [
 
     'update_delay' => 'Last update',
 
+    'add_new_filter' => 'Add new filter',
+
     'markdown_preview' => 'Preview',
 
     'action' => [

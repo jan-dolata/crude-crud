@@ -189,11 +189,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         searchValue: '#searchValue',
         search: '#search',
         selectedSearchAttr: '#selectedSearchAttr',
-        clearSearch: '#clearSearch',
-
-        clearRichFilter: '.clearRichFilter',
-        useRichFilters: '#useRichFilters',
-        richFilterValue: '.richFilterValue'
+        clearSearch: '#clearSearch'
     },
 
     events: {
@@ -207,10 +203,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         'click @ui.search': 'search',
         'keyup @ui.searchValue': 'searchOnEnter',
         'click @ui.clearSearch': 'clearSearch',
-        'click @ui.refresh': 'updateList',
-        'click @ui.clearRichFilter': 'clearRichFilter',
-        'click @ui.useRichFilters': 'updateList',
-        'change @ui.richFilterValue': 'richFilterValue'
+        'click @ui.refresh': 'updateList'
     },
 
     initialize: function (options)
@@ -221,11 +214,9 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
         this.collection = this.setup.getNewCollection();
 
-        this.getFiltersFromUrlHash();
-        this.updateList();
-
         this.listenTo(Crude.vent, 'action_update', this.updateThisList);
         this.listenTo(Crude.vent, 'open_add_form', this.add);
+        this.listenTo(Crude.vent, 'rich_filters_change', this.richFiltersChange);
     },
 
     childViewOptions: function ()
@@ -241,8 +232,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             setup: this.setup,
             sort: this.collection.sortAttributes,
             pagination: this.collection.pagination,
-            search: this.collection.search,
-            richFilters: this.collection.richFilters
+            search: this.collection.search
         };
     },
 
@@ -250,8 +240,6 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     {
         // initialize all tooltips on a page
         $('[data-toggle="tooltip"]').tooltip();
-
-        this.bindDatepickerInRichFilters();
 
         setInterval(function()
         {
@@ -264,8 +252,6 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
 
             this.ui.updateDelay.html( m + ':' + s );
         }.bind(this), 1000);
-
-        this.updateUrlHash();
     },
 
     add: function ()
@@ -426,84 +412,12 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
             this.updateList();
     },
 
-    clearRichFilter: function (event)
+    richFiltersChange: function (setupName, richFilters)
     {
-        var $target = $(event.target);
-
-        if (! $target.hasClass('clearRichFilter'))
-            $target = $target.parent();
-
-        var name = $target.data('name');
-        var $input = $('.richFilterValue[data-name="' + name + '"]');
-
-        if (_.isEmpty($input.val()))
-            return;
-
-        $input.val('');
-        delete this.collection.richFilters[name];
-        this.updateList();
-    },
-
-    richFilterValue: function (event)
-    {
-        var $target = $(event.target);
-
-        if (! $target.hasClass('richFilterValue'))
-            $target = $target.parents('.input-group').find('.richFilterValue');
-
-        var name = $target.data('name');
-        var filter = this.setup.get('richFilters')[name];
-
-        if (filter.type == 'select')
-            this.collection.richFilters[name] = $target.find(':selected').val();
-        else
-            this.collection.richFilters[name] = $target.val();
-
-        if (_.isEmpty(this.collection.richFilters[name]))
-            delete this.collection.richFilters[name];
-
-        this.updateList();
-    },
-
-    updateUrlHash: function () {
-        window.location.hash = '';
-
-        for (var name in this.collection.richFilters)
-            window.location.hash += '#' + name + '=' + this.collection.richFilters[name];
-    },
-
-    getFiltersFromUrlHash: function () {
-        var hash = window.location.hash.split('#');
-        this.collection.richFilters = {};
-
-        for (var i in hash) {
-            if (hash[i] != '') {
-                var values = hash[i].split('=');
-                this.collection.richFilters[values[0]] = values[1];
-            }
+        if (this.setup.getName() == setupName) {
+            this.collection.richFilters = richFilters;
+            this.updateList();
         }
-    },
-
-    bindDatepickerInRichFilters: function ()
-    {
-        // check default in JanDolata\CrudeCRUD\Engine\CrudeSetupTrait\DateTimePickerOptions
-        var defaultOptions = this.setup.get('dateTimePickerOptions');
-
-        var richFilters = this.setup.get('richFilters');
-        for (var name in richFilters) {
-            if (richFilters[name].type == 'datetime') {
-                var options = _.isEmpty(richFilters[name].options)
-                    ? defaultOptions
-                    : richFilters[i].options;
-
-                var $input = $('.richFilterValue[data-name="' + name + '"').parent();
-                $input.datetimepicker(options);
-
-                $input.on('dp.hide', function(e) {
-                    this.richFilterValue(e);
-                }.bind(this));
-            }
-        }
-    },
+    }
 
 });

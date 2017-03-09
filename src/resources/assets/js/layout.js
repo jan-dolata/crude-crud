@@ -8,6 +8,7 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
     title: '',
 
     regions: {
+        'richFilters': '#richFiltersRegion',
         'list': '#listRegion',
         'form': '#formRegion',
         'map': '#mapRegion',
@@ -55,6 +56,10 @@ Crude.Views.Layout = Backbone.Marionette.LayoutView.extend(
                 this.thumbnail.show(
                     new Crude.Views.ThumbnailModule({ setup: setup })
                 );
+
+            this.richFilters.show(
+                new Crude.Views.RichFilterList({ setup: setup })
+            );
 
             this.firstRender = false;
         }
