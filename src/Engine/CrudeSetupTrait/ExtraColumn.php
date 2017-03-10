@@ -30,11 +30,11 @@ trait ExtraColumn
      *
      * @return self
      */
-    public function setExtraColumn($name, $description = '', $visible = false)
+    public function setExtraColumn($name, $visible = false, $description = '')
     {
         $extraColumns = is_array($name)
             ? $name
-            : [[$name, $description, $visible]];
+            : [[$name, $visible, $description]];
 
         foreach ($extraColumns as $column) {
             if (! is_array($column))
@@ -42,8 +42,8 @@ trait ExtraColumn
 
             $this->extraColumn[$column[0]] = [
                 'name' => $column[0],
-                'description' => isset($column[1]) ? $column[1] : '',
-                'visible' => isset($column[2]) ? $column[2] : false
+                'visible' => isset($column[1]) ? $column[1] : false,
+                'description' => isset($column[2]) ? $column[2] : ''
             ];
         }
 

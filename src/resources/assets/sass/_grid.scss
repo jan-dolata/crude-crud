@@ -80,6 +80,7 @@ $bootstrap-screen-sm-max: 991px;
     .crude-list {
         .rich-filters-region {
             padding: $vertical-margin $horizontal-margin;
+            min-height: 55px;
         }
 
         .list-region {

@@ -215,6 +215,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         this.updateTime = Date.now();
 
         this.collection = this.setup.getNewCollection();
+        this.updateList();
 
         this.listenTo(Crude.vent, 'action_update', this.updateThisList);
         this.listenTo(Crude.vent, 'open_add_form', this.add);

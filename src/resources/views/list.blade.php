@@ -201,11 +201,11 @@
                 _.each(setup.get('extraColumn'), function (column) {
                 %>
                     <li>
-                        <label>
+                        <label class="pointer m-r">
                             <input type="checkbox" class="columnCheckbox" <%= column.visible ? 'checked' : '' %> data-name="<%- column.name %>">
                             <%- setup.getAttrName(column.name) %>
                         </label>
-                        <%- column.description %>
+                        <small><%- column.description %></small>
                     </li>
                 <% }) %>
             </ul>
