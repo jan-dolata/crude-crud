@@ -2,10 +2,10 @@
 
 namespace JanDolata\CrudeCRUD\Http\Requests;
 
-use App\Http\Requests\Request;
+use JanDolata\CrudeCRUD\Http\Requests\CrudeRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class ExportRequest extends Request
+class ExportRequest extends CrudeRequest
 {
 
     /**
