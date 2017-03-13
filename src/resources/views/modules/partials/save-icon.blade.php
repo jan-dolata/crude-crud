@@ -1,4 +1,4 @@
-<div class="m-md-t m-md-b">
+<div id="moduleButtons" class="m-md-t m-md-b">
     <% if (model.id) { %>
         <%- setup.interfaceTrans('edit_mode') %>: # <%- model.id %>
     <% } else { %>

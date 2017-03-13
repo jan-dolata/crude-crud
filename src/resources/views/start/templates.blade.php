@@ -12,3 +12,4 @@
 @include('CrudeCRUD::modules.file')
 @include('CrudeCRUD::modules.thumbnail')
 @include('CrudeCRUD::layout')
+@include('CrudeCRUD::form-layout')
