@@ -53,6 +53,11 @@ return [
     ],
 
     /**
+     * Google api key for maps
+     */
+    'googleApiKey' => env('GOOGLE_API_KEY'),
+
+    /**
      * Default thumbnails size
      * @var array
      */

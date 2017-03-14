@@ -32,7 +32,8 @@ class CrudeCRUDServiceProvider extends ServiceProvider
 
         // use this if your package needs a config file
         $this->publishes([
-            __DIR__.'/config/crude.php' => config_path('crude.php')
+            __DIR__.'/config/crude.php' => config_path('crude.php'),
+            __DIR__.'/config/crude.php' => config_path('crude_navbar.php')
         ], 'config');
 
         $this->publishes([
@@ -46,6 +47,10 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         // use the vendor configuration file as fallback
         $this->mergeConfigFrom(
             __DIR__.'/config/crude.php', 'crude'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__.'/config/crude_navbar.php', 'crude_navbar'
         );
     }
 
