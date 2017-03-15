@@ -2,7 +2,15 @@
 
 namespace JanDolata\CrudeCRUD\Http\Controllers;
 
-use JanDolata\CrudeCRUD\Engine\Helpers\CrudeSpecialFiles;
+use Illuminate\Support\Str;
+use JanDolata\CrudeCRUD\Http\Controllers\Controller;
+use JanDolata\CrudeCRUD\Engine\Models\FileLog;
+use JanDolata\CrudeCRUD\Engine\Helpers\CrudeZip;
+use JanDolata\CrudeCRUD\Engine\CrudeInstance;
+use JanDolata\CrudeCRUD\Http\Requests\Request;
+use JanDolata\CrudeCRUD\Http\Requests\FileRequest;
+use Storage;
+use Validator;
 
 class FileController extends Controller
 {

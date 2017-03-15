@@ -1,6 +1,6 @@
 Crude.Views.MapModule = Crude.Views.Module.extend(
 {
-    template: '#crude_mapTemplate',
+    template: '#crude_mapModuleTemplate',
     moduleName: 'map',
 
     map: null,
@@ -31,24 +31,9 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
     {
         this.parentOnRender();
 
-        this.whenAvailable("google", function() {
+        Crude.whenAvailable("google", function() {
             this.initMap();
         }.bind(this));
-    },
-
-    whenAvailable: function (name, callback) {
-        var interval = 10; // ms
-        var that = this;
-
-        if (window[name])
-            callback();
-        else
-            window.setTimeout(function() {
-                if (window[name])
-                    callback();
-                else
-                    window.setTimeout(that.whenAvailable(name, callback), interval);
-            }, interval);
     },
 
     save: function ()

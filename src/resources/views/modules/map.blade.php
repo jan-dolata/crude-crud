@@ -1,4 +1,4 @@
-<script type="text/template" id="crude_mapTemplate">
+<script type="text/template" id="crude_mapModuleTemplate">
     <div class="row">
         <div class="col-xs-12">
             <input type="text" id="search" class="pac-input controls" />

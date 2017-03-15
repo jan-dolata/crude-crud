@@ -1,4 +1,4 @@
-<script type="text/template" id="crude_thumbnailTemplate">
+<script type="text/template" id="crude_thumbnailModuleTemplate">
 
     <% _.each(setup.get('thumbnailColumns'), function(column) { %>
         <div class="row m-sm-b">

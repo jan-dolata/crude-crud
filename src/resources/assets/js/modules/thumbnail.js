@@ -1,6 +1,6 @@
 Crude.Views.ThumbnailModule = Crude.Views.Module.extend(
 {
-    template: '#crude_thumbnailTemplate',
+    template: '#crude_thumbnailModuleTemplate',
     moduleName: 'thumbnail',
 
     dropzone: '',

@@ -1,4 +1,4 @@
-<script type="text/template" id="crude_formTemplate">
+<script type="text/template" id="crude_formModuleTemplate">
     <%
     var list = model.id ? setup.get('editForm') : setup.get('addForm');
     _.each(list, function(attr) {

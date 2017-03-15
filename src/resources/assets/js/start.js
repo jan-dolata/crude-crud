@@ -22,6 +22,27 @@ $(function()
         view.render();
     });
 
+    // map
+    var crudeMap = Crude.getData('crudeMap', []);
+    var $crudeMapContainer = $('#crudeMapContainer');
+
+    _.each(crudeMap, function(setup)
+    {
+        var setup = new Crude.Models.Setup(setup);
+
+        var containerId = setup.mapContainerId();
+
+        $crudeContainer.append(
+            '<div id="' + containerId + '" class="container crude-box"></div>'
+        );
+
+        var view = new Crude.Views.MapLayout({
+            el: '#' + containerId,
+            setup: setup
+        });
+        view.render();
+    });
+
     // forms
     var crudeForm = Crude.getData('crudeForm', []);
     var $crudeFormContainer = $('#crudeFormContainer');

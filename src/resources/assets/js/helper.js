@@ -238,3 +238,19 @@ Crude.renderCell = function (setup, attr, model)
         model: model
     });
 };
+
+Crude.whenAvailable = function (name, callback)
+{
+    var interval = 10; // ms
+    var that = this;
+
+    if (window[name])
+        callback();
+    else
+        window.setTimeout(function() {
+            if (window[name])
+                callback();
+            else
+                window.setTimeout(Crude.whenAvailable(name, callback), interval);
+        }, interval);
+};

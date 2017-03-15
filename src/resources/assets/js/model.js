@@ -196,6 +196,11 @@ Crude.Models.Setup = Backbone.Model.extend(
         return 'crudeForm_' + this.getName();
     },
 
+    mapContainerId: function ()
+    {
+        return 'crudeMap_' + this.getName();
+    },
+
     getVisibleColumns: function ()
     {
         var columns = this.get('column');

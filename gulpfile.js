@@ -38,8 +38,10 @@ elixir(function(mix) {
         'js/modules/thumbnail.js',
         'js/rich-filters.js',
         'js/list.js',
+        'js/map.js',
         'js/layout.js',
-        'js/form_layout.js',
+        'js/layout-form.js',
+        'js/layout-map.js',
         'js/start.js',
     ], 'public/js/app.js', assets);
 

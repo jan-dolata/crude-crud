@@ -1,6 +1,6 @@
 Crude.Views.FormModule = Crude.Views.Module.extend(
 {
-    template: '#crude_formTemplate',
+    template: '#crude_formModuleTemplate',
     moduleName: 'form',
 
     ui: {
