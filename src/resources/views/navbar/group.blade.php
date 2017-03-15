@@ -5,7 +5,9 @@
     @if (count($group['routeName']) == 1)
         <li class="{{ $currentRouteName == $group['routeName'][0] ? 'active' : '' }}">
             <a href="{{ route($group['routeName'][0]) }}">
-                <i class="fa fa-{{ $group['icon'] }}"></i>
+                @if ($group['icon')
+                    <i class="fa fa-{{ $group['icon'] }}"></i>
+                @endif
                 <span>
                     {{ trans($routeTrans . '.' . $group['routeName'][0]) }}
                 </span>
@@ -14,7 +16,9 @@
     @else
         <li class="dropdown {{ in_array($currentRouteName, $group['routeName']) ? 'active' : '' }}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <i class="fa fa-{{ $group['icon'] }}"></i>
+                @if ($group['icon')
+                    <i class="fa fa-{{ $group['icon'] }}"></i>
+                @endif
                 {{ trans($groupTrans . '.' . $group['groupName']) }}
             </a>
 
