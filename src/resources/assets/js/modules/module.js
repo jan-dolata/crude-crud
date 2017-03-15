@@ -27,12 +27,15 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     moduleInitialize: function (options)
     {
         this.setup = options.setup;
-        this.model = this.setup.getNewModel();
+
+        this.model = 'model' in options ? options.model : this.setup.getNewModel();
+
         this.slideUpAllow = 'slideUpAllow' in options ? options.slideUpAllow : this.slideUpAllow;
 
         this.listenTo(Crude.vent, 'action_' + this.moduleName, this.onAction);
         this.listenTo(Crude.vent, 'action_end', this.onActionEnd);
         this.listenTo(Crude.vent, 'action_change', this.onActionChange);
+        this.listenTo(Crude.vent, 'save_this_model', this.saveThisModel);
     },
 
     serializeData: function ()
@@ -169,7 +172,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         this.setup.onAjaxFail(response, this.alertContainer());
     },
 
-    lockForm: function()
+    lockForm: function ()
     {
         this.formIsLocked = true;
         this.ui.loader.show(200);
@@ -177,11 +180,17 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         this.ui.cancel.attr('disabled', true);
     },
 
-    unlockForm: function()
+    unlockForm: function ()
     {
         this.formIsLocked = false;
         this.ui.loader.hide(200);
         this.ui.save.removeAttr('disabled');
         this.ui.cancel.removeAttr('disabled');
     },
+
+    saveThisModel: function (crudeName)
+    {
+        if (this.setup.getName() == crudeName)
+            this.save();
+    }
 });

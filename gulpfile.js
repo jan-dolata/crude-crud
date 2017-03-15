@@ -39,6 +39,7 @@ elixir(function(mix) {
         'js/rich-filters.js',
         'js/list.js',
         'js/layout.js',
+        'js/form_layout.js',
         'js/start.js',
     ], 'public/js/app.js', assets);
 
