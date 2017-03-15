@@ -5,6 +5,8 @@ namespace JanDolata\CrudeCRUD\Engine\Helpers;
 use JanDolata\CrudeCRUD\Engine\Models\FileLog;
 use Illuminate\Support\Str;
 use Storage;
+use Image;
+use File;
 
 class CrudeFiles
 {
@@ -16,7 +18,7 @@ class CrudeFiles
      * @param  Files $files
      * @return Model
      */
-    public function upload($model, $folderName, $files, $fileAttrName = 'files')
+    public function upload($model, $folderName, $files, $fileAttrName = 'files', $width = null)
     {
         $updatedFiles = $model->$fileAttrName;
 
@@ -42,6 +44,9 @@ class CrudeFiles
                 'file_system_name' => $systemFileName
             ])->save();
 
+            if ($width)
+                $this->imageResize($width, $file, $filePath);
+
             $updatedFiles[] = [
                 'file_log_id' => $log->id,
                 'path' => asset($log->file_path),
@@ -51,6 +56,19 @@ class CrudeFiles
 
         $model->$fileAttrName = $updatedFiles;
         return $model;
+    }
+
+    private function imageResize($width, $file, $filePath)
+    {
+        $preparedFileMimeType = explode("/", File::mimeType($file))[0];
+
+        if($preparedFileMimeType == 'image') {
+            $img = Image::make($filePath);
+            $img->widen($width, function ($constraint) {
+                $constraint->upsize();
+            });
+            $img->save();
+        }
     }
 
     /**
