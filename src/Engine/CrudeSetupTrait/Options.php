@@ -39,6 +39,13 @@ trait Options
      */
     protected $exportOption = true;
 
+    /**
+     * Show pagination
+     *
+     * @var boolean
+     */
+    protected $paginationOption = true;
+
     public function lockEditOption()
     {
         $this->editOption = false;
@@ -76,6 +83,13 @@ trait Options
         return $this;
     }
 
+    public function lockPaginationOption()
+    {
+        $this->paginationOption = false;
+
+        return $this;
+    }
+
     public function haveOption($optionName = '')
     {
         if ($optionName == 'add')
@@ -92,6 +106,9 @@ trait Options
 
         if ($optionName == 'export')
             return $this->exportOption;
+
+        if ($optionName == 'pagination')
+            return $this->paginationOption;
 
         return false;
     }

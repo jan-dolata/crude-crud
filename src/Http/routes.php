@@ -44,3 +44,14 @@ Route::group($group, function () {
     // Export to CSV
     Route::get('export-csv/{crudeName?}', 'ExportController@csv');
 });
+
+// Special file
+Route::group(['prefix' => config('crude.routePrefix') . '/special-file'], function() {
+    Route::post('upload/{name}', 'SpecialFilesController@upload')
+        ->name('special_file_upload')
+        ->middleware(config('crude_special_files.uploadMiddleware'));
+
+    Route::get('download/{name}', 'SpecialFilesController@download')
+        ->name('special_file_download')
+        ->middleware(config('crude_special_files.downloadMiddleware'));
+});

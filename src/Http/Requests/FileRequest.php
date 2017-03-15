@@ -2,10 +2,10 @@
 
 namespace JanDolata\CrudeCRUD\Http\Requests;
 
-use JanDolata\CrudeCRUD\Http\Requests\CrudeRequest;
+use JanDolata\CrudeCRUD\Http\Requests\Abstracts\BaseRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class FileRequest extends CrudeRequest
+class FileRequest extends BaseRequest
 {
 
     /**
@@ -28,15 +28,5 @@ class FileRequest extends CrudeRequest
 
         return true;
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [];
-    }
+    
 }
-

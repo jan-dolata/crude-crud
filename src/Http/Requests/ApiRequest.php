@@ -2,10 +2,10 @@
 
 namespace JanDolata\CrudeCRUD\Http\Requests;
 
-use JanDolata\CrudeCRUD\Http\Requests\CrudeRequest;
+use JanDolata\CrudeCRUD\Http\Requests\Abstracts\BaseRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class ApiRequest extends CrudeRequest
+class ApiRequest extends BaseRequest
 {
 
     /**
@@ -23,15 +23,4 @@ class ApiRequest extends CrudeRequest
         return $crude->canView();
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [];
-    }
-
 }
-

@@ -3,7 +3,6 @@
 namespace JanDolata\CrudeCRUD\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
 use JanDolata\CrudeCRUD\Http\Controllers\Traits\ApiResponseTrait;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 use JanDolata\CrudeCRUD\Http\Requests\ApiRequest;
@@ -46,9 +45,6 @@ class ApiController extends Controller
             $page = 1;
         if ($page > $numPages)
             $page = $numPages;
-
-        // if ($numRows > $count)
-            // $numRows = $count;
 
         $collection = $this->crude->getFiltered($page, $numRows, $sortAttr, $sortOrder, $searchAttr, $searchValue, $richFilters);
 

@@ -2,10 +2,10 @@
 
 namespace JanDolata\CrudeCRUD\Http\Requests;
 
-use App\Http\Requests\Request;
+use JanDolata\CrudeCRUD\Http\Requests\Abstracts\RequestWithAttributes;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class ApiStoreRequest extends AbstractRequest
+class ApiStoreRequest extends RequestWithAttributes
 {
 
     /**
@@ -43,4 +43,3 @@ class ApiStoreRequest extends AbstractRequest
         return $crude->getValidationRules($attr, $this->all());
     }
 }
-

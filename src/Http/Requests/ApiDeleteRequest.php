@@ -2,10 +2,10 @@
 
 namespace JanDolata\CrudeCRUD\Http\Requests;
 
-use JanDolata\CrudeCRUD\Http\Requests\CrudeRequest;
+use JanDolata\CrudeCRUD\Http\Requests\Abstracts\BaseRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class ApiDeleteRequest extends CrudeRequest
+class ApiDeleteRequest extends BaseRequest
 {
 
     /**
@@ -27,15 +27,4 @@ class ApiDeleteRequest extends CrudeRequest
 
         return $crude->canDelete($model);
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [];
-    }
 }
-

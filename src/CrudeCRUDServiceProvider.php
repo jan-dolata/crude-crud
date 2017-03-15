@@ -33,7 +33,8 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         // use this if your package needs a config file
         $this->publishes([
             __DIR__.'/config/crude.php' => config_path('crude.php'),
-            __DIR__.'/config/crude.php' => config_path('crude_navbar.php')
+            __DIR__.'/config/crude_navbar.php' => config_path('crude_navbar.php'),
+            __DIR__.'/config/crude_special_files.php' => config_path('crude_special_files.php')
         ], 'config');
 
         $this->publishes([
@@ -51,6 +52,10 @@ class CrudeCRUDServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             __DIR__.'/config/crude_navbar.php', 'crude_navbar'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__.'/config/crude_special_files.php', 'crude_special_files'
         );
     }
 
@@ -109,6 +114,7 @@ class CrudeCRUDServiceProvider extends ServiceProvider
         $loader->alias('CrudeOptions', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeOptions');
         $loader->alias('CrudeQueryHelper', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeQueryHelper');
         $loader->alias('CrudeMagic', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeMagic');
+        $loader->alias('CrudeSpecialFiles', 'JanDolata\CrudeCRUD\Engine\Helpers\CrudeSpecialFiles');
     }
 
     private function registerCrudeCRUD()

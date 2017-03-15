@@ -1,11 +1,11 @@
 <?php
 
-namespace JanDolata\CrudeCRUD\Http\Requests;
+namespace JanDolata\CrudeCRUD\Http\Requests\Abstracts;
 
-use JanDolata\CrudeCRUD\Http\Requests\CrudeRequest;
+use JanDolata\CrudeCRUD\Http\Requests\Abstracts\BaseRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-abstract class AbstractRequest extends CrudeRequest
+abstract class RequestWithAttributes extends BaseRequest
 {
 
     public function attributes()

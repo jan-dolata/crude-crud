@@ -2,10 +2,10 @@
 
 namespace JanDolata\CrudeCRUD\Http\Requests;
 
-use JanDolata\CrudeCRUD\Http\Requests\CrudeRequest;
+use JanDolata\CrudeCRUD\Http\Requests\Abstracts\BaseRequest;
 use JanDolata\CrudeCRUD\Engine\CrudeInstance;
 
-class AutocompleteRequest extends CrudeRequest
+class AutocompleteRequest extends BaseRequest
 {
 
     /**
@@ -22,15 +22,5 @@ class AutocompleteRequest extends CrudeRequest
 
         return true;
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [];
-    }
+    
 }
-
