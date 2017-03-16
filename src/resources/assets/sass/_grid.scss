@@ -78,12 +78,20 @@ $bootstrap-screen-sm-max: 991px;
     }
 
     .crude-list {
-        .rich-filters-region {
+        .crude-rich-filters-region {
             padding: $vertical-margin $horizontal-margin;
             min-height: 55px;
         }
 
-        .list-region {
+        .crude-foot-region {
+            padding: $vertical-margin $horizontal-margin;
+            min-height: 55px;
+            border-top: 1px solid $second-bg;
+        }
+
+        .list-region {}
+
+        .crude-table-container {
             overflow-x: auto;
         }
 
@@ -104,8 +112,7 @@ $bootstrap-screen-sm-max: 991px;
             }
 
             .crude-table-body-cell,
-            .crude-table-head-cell,
-            .crude-table-foot-cell {
+            .crude-table-head-cell {
                 &:first-child {
                     padding-left: $horizontal-margin;
                 }
@@ -145,13 +152,6 @@ $bootstrap-screen-sm-max: 991px;
                 }
             }
 
-            .crude-table-foot {
-                .crude-table-foot-row {
-                    .crude-table-foot-cell {
-                        border-top: 1px solid $second-bg !important;
-                    }
-                }
-            }
         }
     }
 }

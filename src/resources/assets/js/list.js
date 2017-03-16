@@ -167,8 +167,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
     childView: Crude.Views.ListItem,
     emptyView: Crude.Views.ListEmpty,
     childViewContainer: '#childViewContainer',
-    tagName: 'table',
-    className: 'table table-hover crude-table',
+    tagName: 'div',
 
     updateTime: '',
 

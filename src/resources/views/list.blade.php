@@ -25,83 +25,81 @@
 </script>
 
 <script type="text/template" id="crude_listEmptyTemplate">
-    <td class="hide"></td>
-    <td class="crude-table-body-cell" colspan="<%- setup.getVisibleColumns().length + 1 %>">
+    <td class="crude-table-body-cell">
         <h4><%- setup.interfaceTrans('empty_list') %></h4>
     </td>
 </script>
 
 <script type="text/template" id="crude_listTemplate">
-    <thead class="crude-table-head">
-        <tr class="crude-table-head-row">
-            <% if(pagination.count) { %>
-                <% if(setup.get('checkboxColumn')) { %>
-                    <th class="crude-table-head-cell">
-                        <button id="check" title="<%- setup.interfaceTrans('check') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                            <%= _.template($('#crude_checkActionButtonTemplate').html())({
-                                setup: setup
-                            }) %>
-                        </button>
+    <div class="crude-table-container">
+        <table class="table table-hover crude-table">
+            <thead class="crude-table-head">
+                <tr class="crude-table-head-row">
+                    <% if(pagination.count) { %>
+                        <% if(setup.get('checkboxColumn')) { %>
+                            <th class="crude-table-head-cell">
+                                <button id="check" title="<%- setup.interfaceTrans('check') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                                    <%= _.template($('#crude_checkActionButtonTemplate').html())({
+                                        setup: setup
+                                    }) %>
+                                </button>
+                            </th>
+                        <% } %>
+
+                        <% _.each(setup.getVisibleColumns(), function(attr) { %>
+                            <% if(! _.isArray(attr)) attr = [attr]; %>
+                            <th class="crude-table-head-cell">
+                                <% _.each(attr, function(a) { %>
+                                    <div class="sort crude-sort pointer" data-attr="<%- a %>">
+                                        <%- setup.getAttrName(a) %>
+
+                                        <% if(sort.attr == a) { %>
+                                            <span class="fa-stack">
+                                                <i class="fa fa-sort fa-stack-1x" style="color: #ddd"></i>
+                                                <i class="fa fa-sort-<%- sort.order %> fa-stack-1x"></i>
+                                            </span>
+                                        <% } %>
+                                    </div>
+                                <% }); %>
+                            </th>
+                        <% }) %>
+                    <% } %>
+
+                    <th class="crude-table-head-cell crude-table-head-cell-action">
+                        <% if(setup.get('orderOption') && pagination.count > 1) { %>
+                            <button id="order" title="<%- setup.interfaceTrans('order') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                                <%= _.template($('#crude_orderActionButtonTemplate').html())({
+                                    setup: setup
+                                }) %>
+                            </button>
+                        <% } %>
+
+                        <% if(! _.isEmpty(setup.get('extraColumn')) && pagination.count > 1) { %>
+                            <button id="selectColumn" title="<%- setup.interfaceTrans('select_column') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                                <%= _.template($('#crude_selectColumnActionButtonTemplate').html())({
+                                    setup: setup
+                                }) %>
+                            </button>
+                        <% } %>
+
+                        <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
+                            <button id="add" title="<%- setup.interfaceTrans('add') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+                                <%= _.template($('#crude_addActionButtonTemplate').html())({
+                                    setup: setup
+                                }) %>
+                            </button>
+                        <% } %>
                     </th>
-                <% } %>
+                </tr>
+            </thead>
 
-                <% _.each(setup.getVisibleColumns(), function(attr) { %>
-                    <% if(! _.isArray(attr)) attr = [attr]; %>
-                    <th class="crude-table-head-cell">
-                        <% _.each(attr, function(a) { %>
-                            <div class="sort crude-sort pointer" data-attr="<%- a %>">
-                                <%- setup.getAttrName(a) %>
+            <tbody id="childViewContainer" class="crude-table-body"></tbody>
+        </table>
+    </div>
 
-                                <% if(sort.attr == a) { %>
-                                    <span class="fa-stack">
-                                        <i class="fa fa-sort fa-stack-1x" style="color: #ddd"></i>
-                                        <i class="fa fa-sort-<%- sort.order %> fa-stack-1x"></i>
-                                    </span>
-                                <% } %>
-                            </div>
-                        <% }); %>
-                    </th>
-                <% }) %>
-            <% } %>
-
-            <th class="crude-table-head-cell crude-table-head-cell-action">
-                <% if(setup.get('orderOption') && pagination.count > 1) { %>
-                    <button id="order" title="<%- setup.interfaceTrans('order') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                        <%= _.template($('#crude_orderActionButtonTemplate').html())({
-                            setup: setup
-                        }) %>
-                    </button>
-                <% } %>
-
-                <% if(! _.isEmpty(setup.get('extraColumn')) && pagination.count > 1) { %>
-                    <button id="selectColumn" title="<%- setup.interfaceTrans('select_column') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                        <%= _.template($('#crude_selectColumnActionButtonTemplate').html())({
-                            setup: setup
-                        }) %>
-                    </button>
-                <% } %>
-
-                <% if(setup.get('addOption') && setup.get('actions').length > 0) { %>
-                    <button id="add" title="<%- setup.interfaceTrans('add') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                        <%= _.template($('#crude_addActionButtonTemplate').html())({
-                            setup: setup
-                        }) %>
-                    </button>
-                <% } %>
-            </th>
-        </tr>
-    </thead>
-
-    <tbody id="childViewContainer" class="crude-table-body"></tbody>
-
-    <tfoot class="crude-table-foot">
-        <tr class="crude-table-foot-row">
-            <td class="crude-table-foot-cell" colspan="<%- setup.get('column').length + 1 + (setup.get('checkboxColumn') ? 1 : 0) %>">
-                @include('CrudeCRUD::partials.list-foot')
-            </td>
-        </tr>
-    </tfoot>
-
+    <div class="crude-foot-region">
+        @include('CrudeCRUD::partials.list-foot')
+    </div>
 </script>
 
 <div id="deleteItemConfirmModal" class="modal fade" role="dialog">

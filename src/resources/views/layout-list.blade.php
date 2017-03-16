@@ -38,9 +38,9 @@
 
     <div class="crude-list">
         <% if (! _.isEmpty(setup.get('richFilters'))) { %>
-            <div id="richFiltersRegion" class="form-inline rich-filters-region"></div>
+            <div id="richFiltersRegion" class="form-inline crude-rich-filters-region"></div>
         <% } %>
 
-        <div id="listRegion" class="list-region"></div>
+        <div id="listRegion" class="crude-list-region"></div>
     </div>
 </script>
