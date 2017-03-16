@@ -20,6 +20,7 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
         this.bindAutocomplete();
         this.bindDatepicker();
         this.bindMarkdownPreview();
+        this.bindSelectize();
     },
 
     save: function ()
@@ -116,5 +117,10 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
         this.ui.markdownInput.bind('click', function () {
             updateMarkdownPreview(this);
         });
+    },
+
+    bindSelectize: function ()
+    {
+        this.$('select').selectize();
     }
 });
