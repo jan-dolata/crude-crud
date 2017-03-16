@@ -13,7 +13,7 @@
 
     <div class="crude-list">
         <% if (! _.isEmpty(setup.get('richFilters'))) { %>
-            <div id="richFiltersRegion" class="form-inline rich-filters-region"></div>
+            <div id="richFiltersRegion" class="form-inline crude-rich-filters-region"></div>
         <% } %>
 
         <div id="mapRegion"></div>
