@@ -27,6 +27,17 @@
     <%- model.get(attr) ? setup.interfaceTrans('yes') : setup.interfaceTrans('no') %>
 </script>
 
+<script type="text/template" id="crude_statusColumnFormatTemplate">
+    <%
+    var value = model.get(attr),
+        format = setup.getColumnFormat(attr),
+        option = _.findWhere(format.options, {id: value});
+    %>
+    <div class="text-center" style="padding: 2px 4px; border-radius: 2px; background: <%- option && ('color' in option) ? option.color : '#eee' %>">
+        <%- option && ('label' in option) ? option.label : '-' %>
+    </div>
+</script>
+
 <script type="text/template" id="crude_filesColumnFormatTemplate">
     <% files = model.get(attr) %>
     <% for (var i in files) { %>

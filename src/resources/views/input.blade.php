@@ -99,12 +99,41 @@
                 type="markdown"
                 class="input form-control markdownInput"
                 data-attr="<%- attr %>"
-                rows="8"
+                rows="15"
                 placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'markdown') %>"
+                style="max-width: 100%"
                 ><%- model[attr] %></textarea></pre>
+
+            <div class="text-right">
+                <small>
+                    <ul class="list-inline">
+                        <li>
+                            <strong>**bold**</strong>
+                        </li>
+                        <li>
+                            <em>_italics_</em>
+                        </li>
+                        <li>
+                            <code>`code`</code>
+                        </li>
+                        <li>
+                            <code>```code block```</code>
+                        </li>
+                        <li>
+                            > quote
+                        </li>
+                        <li>
+                            # title
+                        </li>
+                        <li>
+                            ## subtitle
+                        </li>
+                    </ul>
+                </small>
+            </div>
         </div>
         <div class="col-sm-6">
-            <div class="markdownPreview" style="background: #fff"></div>
+            <div class="markdownPreview crude-box" style="padding: 10px; min-height: 314px; background-color: #f5f5ff"></div>
         </div>
     </div>
 </script>

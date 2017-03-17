@@ -3,21 +3,19 @@
 </script>
 
 <script type="text/template" id="crude_mapInfowindowTemplate">
-    <table>
+    <dl class="dl-horizontal m-lg-t">
         <% _.each(setup.get('column'), function(attr) { %>
             <% if(! _.isArray(attr)) attr = [attr]; %>
             <% _.each(attr, function(a) { %>
-                <tr>
-                    <td class="text-right">
-                        <strong class="m-r">
-                            <%- setup.getAttrName(a) %>:
-                        </strong>
-                    </td>
-                    <td class="p-l">
-                        <%= Crude.renderCell(setup, a, model) %>
-                    </td>
-                </tr>
+                <dt>
+                    <strong class="m-r">
+                        <%- setup.getAttrName(a) %>:
+                    </strong>
+                </dt>
+                <dd>
+                    <%= Crude.renderCell(setup, a, model) %>
+                </dd>
             <% }); %>
         <% }) %>
-    </table>
+    </dl>
 </script>
