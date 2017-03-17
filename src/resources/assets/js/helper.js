@@ -141,7 +141,7 @@ Crude.getFormValues = function (inputList)
             values[$this.data('attr')] = window[$this.data('method')]($this);
         else if ($this.attr('type') == 'checkbox')
             values[$this.data('attr')] = $this.is(':checked');
-        else if ($this.attr('type') == 'select')
+        else if ($this.attr('type') == 'select' || $this.attr('type') == 'selectize')
             values[$this.data('attr')] = $this.find(':selected').val();
         else if ($this.attr('type') == 'json') {
             values[$this.data('attr')] = JSON.parse($this.val());
@@ -173,7 +173,7 @@ Crude.getAttrName = function (attr)
 Crude.renderInput = function (setup, attr, model)
 {
     var defaultName = '#crude_textInputTemplate';
-    var type = setup.get('inputType')[attr];
+    var type = setup.getInputType(attr);
     var templateName = _.isUndefined(type)
         ? defaultName
         : '#crude_' + type + 'InputTemplate';

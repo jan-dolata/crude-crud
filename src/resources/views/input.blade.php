@@ -55,15 +55,58 @@
     </select>
 </script>
 
+<script type="text/template" id="crude_multiselectInputTemplate">
+    <select multiple type="multiselect" class="input form-control" data-attr="<%- attr %>"
+        placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'select') %>"
+        data-method="getFromMultiselectInput">
+
+        <% for (var i in setup.get('selectOptions')[attr]) { %>
+            <% var option = setup.get('selectOptions')[attr][i] %>
+            <option value="<%- option.id %>" <%- model[attr] == option.id ? 'selected' : '' %>>
+                <%- option.label %>
+            </option>
+        <% } %>
+
+    </select>
+</script>
+
+<script type="text/template" id="crude_selectizeInputTemplate">
+    <select type="selectize" class="input form-control" data-attr="<%- attr %>" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'select') %>">
+        <% for (var i in setup.get('selectOptions')[attr]) { %>
+            <% var option = setup.get('selectOptions')[attr][i] %>
+            <option value="<%- option.id %>" <%- model[attr] == option.id ? 'selected' : '' %>>
+                <%- option.label %>
+            </option>
+        <% } %>
+    </select>
+</script>
+
+<script type="text/template" id="crude_multiselectizeInputTemplate">
+    <select type="multiselectize" class="input form-control" data-attr="<%- attr %>" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'select') %>">
+        <% for (var i in setup.get('selectOptions')[attr]) { %>
+            <% var option = setup.get('selectOptions')[attr][i] %>
+            <option value="<%- option.id %>" <%- model[attr] == option.id ? 'selected' : '' %>>
+                <%- option.label %>
+            </option>
+        <% } %>
+    </select>
+</script>
+
 <script type="text/template" id="crude_markdownInputTemplate">
-    <pre class="crude-pre-textarea-container"><textarea
-        type="markdown"
-        class="input form-control markdownInput"
-        data-attr="<%- attr %>"
-        rows="8"
-        placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'markdown') %>"
-        ><%- model[attr] %></textarea></pre>
-    <div class="well markdownPreview" style="background: #fff"></div>
+    <div class="row">
+        <div class="col-sm-6">
+            <pre class="crude-pre-textarea-container"><textarea
+                type="markdown"
+                class="input form-control markdownInput"
+                data-attr="<%- attr %>"
+                rows="8"
+                placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'markdown') %>"
+                ><%- model[attr] %></textarea></pre>
+        </div>
+        <div class="col-sm-6">
+            <div class="markdownPreview" style="background: #fff"></div>
+        </div>
+    </div>
 </script>
 
 <div id="markdownPreviewModal" class="modal fade" role="dialog">

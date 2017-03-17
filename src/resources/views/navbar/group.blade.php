@@ -20,6 +20,7 @@
                     <i class="fa fa-{{ $group['icon'] }}"></i>
                 @endif
                 {{ trans($groupTrans . '.' . $group['groupName']) }}
+                <span class="caret"></span>
             </a>
 
             <ul class="dropdown-menu" role="menu">

@@ -371,5 +371,9 @@ Crude.Models.Setup = Backbone.Model.extend(
             return false;
         }
         return true;
+    },
+
+    getInputType: function (attr) {
+        return this.get('inputType')[attr];
     }
 });

@@ -121,6 +121,12 @@ Crude.Views.FormModule = Crude.Views.Module.extend(
 
     bindSelectize: function ()
     {
-        this.$('select').selectize();
+        this.$('select[type="selectize"]').selectize();
+
+        this.$('select[type="multiselectize"]').selectize({
+            persist: false,
+            maxItems: null,
+            delimiter: ','
+        });
     }
 });
