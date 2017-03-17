@@ -33,7 +33,7 @@
         format = setup.getColumnFormat(attr),
         option = _.findWhere(format.options, {id: value});
     %>
-    <div class="text-center" style="padding: 2px 4px; border-radius: 2px; background: <%- option && ('color' in option) ? option.color : '#eee' %>">
+    <div class="text-center" style="padding: 2px 4px; border-radius: 2px; <%= option && ('color' in option) ? 'background:' + option.color : '' %>">
         <%- option && ('label' in option) ? option.label : '-' %>
     </div>
 </script>
