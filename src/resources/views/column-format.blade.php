@@ -38,6 +38,10 @@
     </div>
 </script>
 
+<script type="text/template" id="crude_numberColumnFormatTemplate">
+    <%- s.numberFormat(model.get(attr), 2, ".", ",");  %>
+</script>
+
 <script type="text/template" id="crude_filesColumnFormatTemplate">
     <% files = model.get(attr) %>
     <% for (var i in files) { %>
