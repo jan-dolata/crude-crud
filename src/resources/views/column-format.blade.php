@@ -39,7 +39,7 @@
 </script>
 
 <script type="text/template" id="crude_numberColumnFormatTemplate">
-    <%- s.numberFormat(model.get(attr), 2, ".", ",");  %>
+    <%- s.numberFormat(parseFloat(model.get(attr)), 2, ".", " ")  %>
 </script>
 
 <script type="text/template" id="crude_filesColumnFormatTemplate">
