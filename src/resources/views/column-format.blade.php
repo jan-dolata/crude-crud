@@ -1,10 +1,39 @@
 <script type="text/template" id="crude_textColumnFormatTemplate">
-    <% value = model.get(attr) %>
+    <% var value = model.get(attr) %>
+
     <% if (_.isObject(value)) { %>
-        <%- value.length %>
+        <!-- object -->
+        <span title="<%= JSON.stringify(value) %>" data-toggle="tooltip" data-placement="bottom">
+            <%- value.length %>
+        </span>
     <% } else { %>
-        <%- s.truncate(String(value), 20) %>
+        <% var short = s.truncate(String(value), 20) %>
+        <% var tooltip = value == short ? '' : 'title="' + value + '" data-toggle="tooltip" data-placement="bottom"' %>
+
+        <% if (Crude.isEmail(value)) { %>
+            <!-- email -->
+            <a href="mailto:<%= value %>" target="_top" <%= tooltip %> >
+                <%- short %>
+            </a>
+        <% } else if (Crude.isUrl(value)) { %>
+            <!-- link -->
+            <a href="<%= value %>" target="_blank" <%= tooltip %> >
+                <%- short %>
+            </a>
+        <% } else { %>
+            <!-- text -->
+            <span <%= tooltip %> >
+                <%- short %>
+            </span>
+        <% } %>
     <% } %>
+</script>
+
+<script type="text/template" id="crude_objectColumnFormatTemplate">
+    <% value = model.get(attr) %>
+    <span title="<%= value.length %>" data-toggle="tooltip" data-placement="bottom">
+        <%= JSON.stringify(value) %>
+    </span>
 </script>
 
 <script type="text/template" id="crude_longtextColumnFormatTemplate">
@@ -60,7 +89,9 @@
                 <input type="hidden" name="path" value="<%= file.path %>">
                 <input type="hidden" name="name" value="<%= fileOriginalName %>">
 
-                <button type="submit" class="crude-action-btn">
+                <button type="submit" class="crude-action-btn"
+                    title="<%- setup.interfaceTrans('download') %>: <%- fileDisplayName %>"
+                    data-toggle="tooltip" data-placement="bottom">
                     <i class="fa fa-download m-r m-l" aria-hidden="true"></i>
                 </button>
             </form>
@@ -72,9 +103,10 @@
     <% } %>
 
     <% if (files.length > 1) { %>
-        <a href="{{ route('download_all') }}/<%- setup.getName() %>/<%- model.get('id') %>">
-            <i class="fa fa-archive m-r m-l" aria-hidden="true"></i>
-            <small>.zip</small>
+        <a href="{{ route('download_all') }}/<%- setup.getName() %>/<%- model.get('id') %>" class="none-text-decoration">
+            <button class="crude-action-btn" data-toggle="tooltip" data-placement="bottom" title="<%- setup.interfaceTrans('download') %>: <%- setup.getName() %>_<%- model.get('id') %>.zip">
+                <i class="fa fa-archive m-r m-l" aria-hidden="true"></i>
+            </button>
         </a>
     <% } %>
 </script>

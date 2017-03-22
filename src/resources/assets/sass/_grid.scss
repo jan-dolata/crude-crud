@@ -299,10 +299,12 @@ $bootstrap-screen-sm-max: 991px;
 
 .crude-action-btn {
     background: transparent;
+    color: $first-color;
     border: 0;
     border-radius: 3px;
     margin: 0;
     padding: 1px 2px;
+    transition: 0.5s;
 
     &:focus, &:active {
         outline: none;
@@ -313,9 +315,13 @@ $bootstrap-screen-sm-max: 991px;
     }
 }
 
-.active {
-    .crude-action-btn:hover {
-        color: $first-color;
+.crude-header-title, .active {
+    .crude-action-btn {
+        @include second();
+
+        &:hover {
+            color: $first-color !important;
+        }
     }
 }
 
@@ -341,5 +347,12 @@ $bootstrap-screen-sm-max: 991px;
         border-top: 1px solid lighten($second-bg, 30%);
         border-bottom: 1px solid lighten($second-bg, 30%);
         background-color: rgba(255,255,255, 0.5);
+    }
+}
+
+.none-text-decoration {
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
     }
 }

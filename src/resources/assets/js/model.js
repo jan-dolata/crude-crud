@@ -130,7 +130,8 @@ Crude.Models.Setup = Backbone.Model.extend(
             sortAttr: 'id'
         },
 
-        actionToTrigger: []
+        actionToTrigger: [],
+        interfaceTrans: {}
     },
 
     getName: function ()
@@ -293,13 +294,13 @@ Crude.Models.Setup = Backbone.Model.extend(
         return _.isUndefined(next) ? '' : next;
     },
 
-    triggerAction: function (actionToTrigger, model)
+    triggerAction: function (actionToTrigger, model, containerId)
     {
         if (! _.isArray(actionToTrigger))
             actionToTrigger = [actionToTrigger];
 
         $('html, body').animate({
-            scrollTop: $('#' + this.containerId()).offset().top - 200
+            scrollTop: $(containerId).offset().top - 200
         }, 500);
 
         this.set('actionToTrigger', actionToTrigger);

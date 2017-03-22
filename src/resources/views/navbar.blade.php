@@ -25,7 +25,7 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ route($homeRoute) }}">
+            <a class="navbar-brand" href="{{ route($homeRoute) }}" style="margin: 1px">
                 <div class="fa fa-home"></div>
             </a>
         </div>
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <div class="container hidden-xs m-t m-b">
+    <div class="container hidden-xs m-t">
         <div class="text-left">
             @foreach($left as $group)
                 @include('CrudeCRUD::navbar.selected-group')

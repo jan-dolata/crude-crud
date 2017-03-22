@@ -15,6 +15,7 @@ return [
     'order' => 'Order',
     'check' => 'Check / Uncheck',
     'select_column' => 'Select column',
+    'download' => 'Download',
 
     'add_mode' => 'Add',
     'edit_mode' => 'Edit',
@@ -35,7 +36,8 @@ return [
     'action' => [
         'form' => 'Edit',
         'map' => 'Edit location',
-        'file' => 'Add / Remove files'
+        'file' => 'Add / Remove files',
+        'thumbnail' => 'Add / Remove thumbnail'
     ],
 
     'confirm_delete' => [

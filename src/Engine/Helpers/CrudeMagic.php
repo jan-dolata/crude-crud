@@ -24,5 +24,17 @@ class CrudeMagic
         return [];
     }
 
+    public static function form($modelId, $crudeName, $attr = null, $value = null)
+    {
+        $crude = self::make($crudeName, $attr, $value);
+        if ($crude)
+            return [
+                'setup' => $crude->getCrudeSetupData(),
+                'model' => $crude->getById($modelId)
+            ];
+
+        return [];
+    }
+
 
 }

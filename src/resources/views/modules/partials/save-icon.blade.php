@@ -1,8 +1,12 @@
 <div id="moduleButtons" class="m-md-t m-md-b">
+
+    <i class="fa fa-info-circle"></i>
     <% if (model.id) { %>
-        <%- setup.interfaceTrans('edit_mode') %>: # <%- model.id %>
+        <strong><%- setup.interfaceTrans('edit_mode') %>:</strong>
+        <%- setup.getAttrName('id') %>
+        <%- model.id %>
     <% } else { %>
-        <%- setup.interfaceTrans('add_mode') %>:
+        <strong><%- setup.interfaceTrans('add_mode') %></strong>
     <% } %>
 
     <div class="pull-right">

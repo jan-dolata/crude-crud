@@ -15,6 +15,7 @@ return [
     'order' => 'Kolejność',
     'check' => 'Zaznacz / Odznacz',
     'select_column' => 'Wybór kolumn',
+    'download' => 'Pobierz',
 
     'add_mode' => 'Dodajesz',
     'edit_mode' => 'Edytujesz',

@@ -254,3 +254,15 @@ Crude.whenAvailable = function (name, callback)
                 window.setTimeout(Crude.whenAvailable(name, callback), interval);
         }, interval);
 };
+
+Crude.isUrl = function (string)
+{
+    var reg = new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?");
+    return reg.test(string);
+};
+
+Crude.isEmail = function (string)
+{
+    var reg = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+    return reg.test(string);
+};

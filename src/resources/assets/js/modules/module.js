@@ -2,8 +2,10 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 {
     tagName: 'div',
     moduleName: '',
+
     formIsLocked: false,
     slideUpAllow: true,
+    unlockCancel: false,
 
     ui: {
         save: '#save',
@@ -31,6 +33,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
         this.model = 'model' in options ? options.model : this.setup.getNewModel();
 
         this.slideUpAllow = 'slideUpAllow' in options ? options.slideUpAllow : this.slideUpAllow;
+        this.unlockCancel = 'unlockCancel' in options ? options.unlockCancel : this.unlockCancel;
 
         this.listenTo(Crude.vent, 'action_' + this.moduleName, this.onAction);
         this.listenTo(Crude.vent, 'action_end', this.onActionEnd);
@@ -55,6 +58,9 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
     {
         // initialize all tooltips on a page
         $('[data-toggle="tooltip"]').tooltip();
+
+        if (this.unlockCancel)
+            this.$('#cancel').hide();
     },
 
     onActionEnd: function (setupName)
@@ -92,7 +98,7 @@ Crude.Views.Module = Backbone.Marionette.ItemView.extend(
 
     alertContainer: function ()
     {
-        return $('#' + this.setup.containerId()).find('#alertContainer');
+        return this.$el.parents('.crude-header').find('#alertContainer');
     },
 
     clearAllAlerts: function ()

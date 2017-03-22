@@ -141,7 +141,10 @@ Crude.Views.MapModule = Crude.Views.Module.extend(
         this.model.set('map_locality', null);
         this.model.set('map_address', null);
 
-        this.saveModel();
+        this.marker = null;
+        this.render();
+
+        this.save();
     },
 
     /**

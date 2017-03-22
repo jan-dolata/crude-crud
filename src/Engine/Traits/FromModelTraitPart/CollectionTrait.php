@@ -146,24 +146,34 @@ trait CollectionTrait
 
         $collection->each(function ($model) use ($newCollection, $customActions) {
             if ($this->permissionView($model)) {
-                $model->canBeEdited = $this->permissionUpdate($model);
-                $model->canBeRemoved = $this->permissionDelete($model);
-
-                if (! empty($customActions)) {
-                    foreach ($customActions as $action => $value) {
-                        $permission = $action . 'CustomActionPermission';
-                        $param = $action . 'CustomActionAvailable';
-                        $model->$param = method_exists($this, $permission)
-                            ? $this->$permission($model)
-                            : true;
-                    }
-                }
-
+                $model = $this->addPermissionsForModel($model, $customActions);
                 $newCollection->push($model);
             }
         });
 
         return $newCollection;
+    }
+
+    private function addPermissionsForModel($model, $customActions = null)
+    {
+        $model->canBeEdited = $this->permissionUpdate($model);
+        $model->canBeRemoved = $this->permissionDelete($model);
+
+        if ($customActions == null)
+            $customActions = $this->crudeSetup->getCustomActions();
+
+        if (empty($customActions))
+            return $model;
+
+        foreach ($customActions as $action => $value) {
+            $permission = $action . 'CustomActionPermission';
+            $param = $action . 'CustomActionAvailable';
+            $model->$param = method_exists($this, $permission)
+                ? $this->$permission($model)
+                : true;
+        }
+
+        return $model;
     }
 
     /**
@@ -178,8 +188,11 @@ trait CollectionTrait
             ->where($this->model->getTable() . '.id', $id)
             ->first();
 
-        return empty($model)
-            ? null
-            : $this->formatModel($model);
+        if (empty($model))
+            return null;
+
+        $model = $this->addPermissionsForModel($model);
+
+        return $this->formatModel($model);
     }
 }

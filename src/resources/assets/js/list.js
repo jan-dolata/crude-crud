@@ -53,7 +53,7 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
             target = target.parents('.action');
 
         var action = target.data('action');
-        this.setup.triggerAction(action, this.model);
+        this.setup.triggerAction(action, this.model, '#' + this.setup.containerId());
     },
 
     customAction: function (event)
@@ -261,7 +261,12 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         $(':focus').blur();
 
         Crude.data.selectedItem = null;
-        this.setup.triggerAction(_.clone(this.setup.get('actions')), this.setup.getNewModel());
+
+        var actions = _.clone(this.setup.get('actions')),
+            newModel = this.setup.getNewModel(),
+            containerId = this.setup.containerId();
+            
+        this.setup.triggerAction(actions, newModel, '#' + containerId);
     },
 
     sort: function (event)

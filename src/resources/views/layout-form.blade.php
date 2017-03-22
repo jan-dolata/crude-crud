@@ -1,7 +1,14 @@
+<script type="text/template" id="crude_formActionsTemplate">
+    @include('CrudeCRUD::partials.actions.custom')
+    @include('CrudeCRUD::partials.actions.edit')
+</script>
+
 <script type="text/template" id="crude_formLayoutTemplate">
     <div id="header" class="crude-header">
         <div class="crude-header-title" data-title="<%- setup.get('title') %>">
             <%- setup.get('title') %>
+
+            <div id="actionsRegion" class="pull-right"></div>
         </div>
 
         <% if (setup.get('description')) { %>
@@ -21,21 +28,5 @@
         <div id="mapRegion" class="crude-module no-border" style="display: none"></div>
         <div id="fileRegion" class="crude-module no-border" style="display: none"></div>
         <div id="thumbnailRegion" class="crude-module no-border" style="display: none"></div>
-
-        <div id="layoutAction" class="crude-module no-border">
-            <div class="text-right">
-                <span id="loader" style="display: none">
-                    <%= _.template($('#crude_moduleLoaderTemplate').html())({
-                        setup: setup
-                    }) %>
-                </span>
-
-                <button id="save" title="<%- setup.interfaceTrans('save') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
-                    <%= _.template($('#crude_saveActionButtonTemplate').html())({
-                        setup: setup
-                    }) %>
-                </button>
-            </div>
-        </div>
     </div>
 </script>
