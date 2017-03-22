@@ -240,7 +240,7 @@ Crude.Models.Setup = Backbone.Model.extend(
 
         return attr in columnFormat
             ? columnFormat[attr]
-            : {type: 'text'};
+            : {type: 'default'};
     },
 
     getNewCollection: function ()

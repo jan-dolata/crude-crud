@@ -1,39 +1,109 @@
-<script type="text/template" id="crude_textColumnFormatTemplate">
+<script type="text/template" id="crude_defaultColumnFormatTemplate">
     <% var value = model.get(attr) %>
 
     <% if (_.isObject(value)) { %>
-        <!-- object -->
-        <span title="<%= JSON.stringify(value) %>" data-toggle="tooltip" data-placement="bottom">
-            <%- value.length %>
-        </span>
+        <%=
+            _.template($('#crude_objectColumnFormatTemplate').html())({
+                setup: setup,
+                format: format,
+                attr: attr,
+                model: model
+            })
+        %>
     <% } else { %>
-        <% var short = s.truncate(String(value), 20) %>
-        <% var tooltip = value == short ? '' : 'title="' + value + '" data-toggle="tooltip" data-placement="bottom"' %>
 
         <% if (Crude.isEmail(value)) { %>
             <!-- email -->
-            <a href="mailto:<%= value %>" target="_top" <%= tooltip %> >
-                <%- short %>
-            </a>
+            <%=
+                _.template($('#crude_mailtoColumnFormatTemplate').html())({
+                    setup: setup,
+                    format: format,
+                    attr: attr,
+                    model: model
+                })
+            %>
         <% } else if (Crude.isUrl(value)) { %>
             <!-- link -->
-            <a href="<%= value %>" target="_blank" <%= tooltip %> >
-                <%- short %>
-            </a>
+            <%=
+                _.template($('#crude_hrefColumnFormatTemplate').html())({
+                    setup: setup,
+                    format: format,
+                    attr: attr,
+                    model: model
+                })
+            %>
         <% } else { %>
             <!-- text -->
-            <span <%= tooltip %> >
-                <%- short %>
-            </span>
+            <%=
+                _.template($('#crude_textColumnFormatTemplate').html())({
+                    setup: setup,
+                    format: format,
+                    attr: attr,
+                    model: model
+                })
+            %>
         <% } %>
+
     <% } %>
 </script>
 
-<script type="text/template" id="crude_objectColumnFormatTemplate">
-    <% value = model.get(attr) %>
-    <span title="<%= value.length %>" data-toggle="tooltip" data-placement="bottom">
-        <%= JSON.stringify(value) %>
+<script type="text/template" id="crude_mailtoColumnFormatTemplate">
+    <%
+    var value = model.get(attr);
+    var short = s.truncate(String(value), 20);
+    var tooltip = value == short
+        ? ''
+        : 'title="' + value + '" data-toggle="tooltip" data-placement="bottom"';
+    %>
+
+    <a href="mailto:<%= value %>" target="_top" <%= tooltip %> >
+        <%- short %>
+    </a>
+</script>
+
+<script type="text/template" id="crude_hrefColumnFormatTemplate">
+    <%
+    var value = model.get(attr);
+    var short = s.truncate(String(value), 20);
+    var tooltip = value == short
+        ? ''
+        : 'title="' + value + '" data-toggle="tooltip" data-placement="bottom"';
+    %>
+
+    <a href="<%= value %>" target="_blank" <%= tooltip %> >
+        <%- short %>
+    </a>
+</script>
+
+<script type="text/template" id="crude_textColumnFormatTemplate">
+    <%
+    var value = model.get(attr);
+    var short = s.truncate(String(value), 20);
+    var popover = value == short
+        ? ''
+        : 'style="cursor: zoom-in" data-content="' + Crude.nl2br(value) + '" data-toggle="popover" data-placement="bottom"';
+    %>
+    <span <%= popover %> >
+        <%- short %>
     </span>
+</script>
+
+<script type="text/template" id="crude_objectColumnFormatTemplate">
+    <%
+    var value = model.get(attr);
+    var json = JSON.stringify(value, null, '  ');
+    var jsonString = JSON.stringify(value);
+    var jsonShort = s.truncate(String(jsonString), 20);
+    %>
+
+    <pre class="crude-pre"
+        <% if (jsonString != jsonShort) { %>
+            style="cursor: zoom-in"
+            data-content='<pre class="crude-pre"><%= json %></pre>'
+            data-toggle="popover"
+            data-placement="bottom"
+        <% } %>
+        ><%= jsonShort %></pre>
 </script>
 
 <script type="text/template" id="crude_longtextColumnFormatTemplate">
@@ -67,6 +137,10 @@
     </div>
 </script>
 
+<script type="text/template" id="crude_integerColumnFormatTemplate">
+    <%- s.numberFormat(parseInt(model.get(attr)), 0, ".", " ")  %>
+</script>
+
 <script type="text/template" id="crude_numberColumnFormatTemplate">
     <%- s.numberFormat(parseFloat(model.get(attr)), 2, ".", " ")  %>
 </script>
@@ -96,7 +170,7 @@
                 </button>
             </form>
 
-            <a href="<%- files[i]['path'] %>" target="_blank" data-toggle="tooltip" data-placement="top" title="<%- fileOriginalName %>">
+            <a href="<%- files[i]['path'] %>" target="_blank" data-toggle="tooltip" data-placement="bottom" title="<%- fileOriginalName %>">
                 <%- fileDisplayName %>
             </a>
         </div>

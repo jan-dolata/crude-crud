@@ -30,8 +30,13 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     onRender: function ()
     {
-        // initialize all tooltips on a page
-        $('[data-toggle="tooltip"]').tooltip();
+        // initialize all tooltips
+        this.$('[data-toggle="tooltip"]').tooltip();
+
+        // initialize all popovers
+        this.$('[data-toggle="popover"]').popover({
+            html: true
+        });
     },
 
     serializeData: function ()
@@ -265,7 +270,7 @@ Crude.Views.List = Backbone.Marionette.CompositeView.extend(
         var actions = _.clone(this.setup.get('actions')),
             newModel = this.setup.getNewModel(),
             containerId = this.setup.containerId();
-            
+
         this.setup.triggerAction(actions, newModel, '#' + containerId);
     },
 
