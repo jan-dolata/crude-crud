@@ -105,10 +105,13 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
         if (this.setup.getName() != setupName)
             return;
 
-        if (this.model.get('id') == Crude.data.selectedItem)
+        if (this.model.get('id') == Crude.data.selectedItem) {
             this.$el.addClass('active');
-        else
+            this.ui.microEditBtn.hide();
+        } else {
             this.$el.removeClass('active');
+            this.ui.microEditBtn.show();
+        }
     },
 
     delete: function ()
@@ -171,7 +174,7 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
         if (! target.hasClass('microEditBtn'))
             target = target.parents('.microEditBtn');
 
-        target.css('opacity', 0.2);
+        target.css('opacity', 0.3);
     },
 
     clickMicroEditBtn: function (e)
@@ -209,36 +212,34 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
 
     clickMicroEditCancel: function (e)
     {
-        var target = $(e.target);
-        if (! target.hasClass('microEditCancel'))
-            target = target.parents('.microEditCancel');
-
-        this.closeMicroEditPopover(target.parents('.crudeCellContent').find('.microEditBtn'));
+        var crudeCellContent = $(e.target).parents('.crudeCellContent');
+        this.closeMicroEditPopover(crudeCellContent.find('.microEditBtn'));
     },
 
     clickMicroEditSave: function (e)
     {
-        var target = $(e.target);
-        if (! target.hasClass('microEditSave'))
-            target = target.parents('.microEditSave');
-
-        this.closeMicroEditPopover(target.parents('.crudeCellContent').find('.microEditBtn'));
-
-        var popoverContent = target.parents('.popover-content');
+        var popoverContent = $(e.target).parents('.popover-content');
 
         var input = popoverContent.find('.input');
-        this.model.set(input.data('attr'), Crude.getFormValue(input));
+        var attr = input.data('attr');
+        var oldValue = this.model.get(attr);
+
+        this.model.set(attr, Crude.getFormValue(input));
+
         this.model.save()
             .done(function (response)
             {
                 if (('data' in response) && ('model' in  response.data))
                     this.model.set(response.data.model);
 
+                this.closeMicroEditPopover(popoverContent.parents('.crudeCellContent').find('.microEditBtn'));
                 this.render();
             }.bind(this))
             .fail(function (response)
             {
+                popoverContent.find('.microEditAlertContainer').html('');
                 this.setup.onAjaxFail(response, popoverContent.find('.microEditAlertContainer'));
+                this.model.set(attr, oldValue);
             }.bind(this));
 
     },

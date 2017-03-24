@@ -13,13 +13,13 @@
                     <%- setup.getAttrName(a) %>
                 </span>
                 <span class="crude-table-body-cell-content crudeCellContent">
+                    <%= Crude.renderCell(setup, a, model) %>
+
                     <% if (setup.microEditAllow(a)) { %>
-                        <small class="microEditBtn crude-action-btn pointer" style="opacity: 0.2" data-attr="<%- a %>">
-                            <i class="fa fa-pencil"></i>
+                        <small class="microEditBtn crude-action-btn pointer" style="opacity: 0.3" data-attr="<%- a %>">
+                            <i class="fa fa-edit"></i>
                         </small>
                     <% } %>
-
-                    <%= Crude.renderCell(setup, a, model) %>
                 </span>
                 <br>
             <% }); %>
