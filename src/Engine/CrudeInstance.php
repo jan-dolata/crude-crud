@@ -12,11 +12,23 @@ class CrudeInstance
      */
     public static function get($name)
     {
-        $name = config('crude.namespace') . $name;
+        $namespaces = config('crude.namespace');
 
-        return class_exists($name)
-            ? new $name()
-            : null;
+        if (! is_array($namespaces)) {
+            $fullName = $namespaces . $name;
+
+            return class_exists($name)
+                ? new $name()
+                : null;
+        }
+
+        foreach ($namespaces as $namespace) {
+            $fullName = $namespace . $name;
+            if (class_exists($fullName))
+                return new $fullName();
+        }
+
+        return null;
     }
-
+    
 }
