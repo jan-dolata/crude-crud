@@ -17,8 +17,8 @@ class CrudeInstance
         if (! is_array($namespaces)) {
             $fullName = $namespaces . $name;
 
-            return class_exists($name)
-                ? new $name()
+            return class_exists($fullName)
+                ? new $fullName()
                 : null;
         }
 
@@ -30,5 +30,5 @@ class CrudeInstance
 
         return null;
     }
-    
+
 }

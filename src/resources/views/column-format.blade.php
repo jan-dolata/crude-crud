@@ -123,7 +123,7 @@
 </script>
 
 <script type="text/template" id="crude_boolColumnFormatTemplate">
-    <%- model.get(attr) ? setup.interfaceTrans('yes') : setup.interfaceTrans('no') %>
+    <%- parseInt(model.get(attr)) ? setup.interfaceTrans('yes') : setup.interfaceTrans('no') %>
 </script>
 
 <script type="text/template" id="crude_statusColumnFormatTemplate">
