@@ -112,6 +112,7 @@ Crude.Models.Setup = Backbone.Model.extend(
         addOption: true,
         orderOption: true,
         exportOption: true,
+        microEditOption: true,
         modelDefaults: [],
         selectOptions: [],
         customeActions: [],
@@ -376,5 +377,12 @@ Crude.Models.Setup = Backbone.Model.extend(
 
     getInputType: function (attr) {
         return this.get('inputType')[attr];
+    },
+
+    microEditAllow: function (attr) {
+        if (! this.get('editOption') || ! this.get('microEditOption'))
+            return false;
+
+        return _.indexOf(_.values(this.get('editForm')), attr) != -1;
     }
 });

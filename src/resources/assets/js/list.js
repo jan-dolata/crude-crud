@@ -13,13 +13,23 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
     ui: {
         action: '.action',
         customAction: '.customAction',
-        delete: '#delete'
+        delete: '#delete',
+        crudeCell: '.crudeCell',
+        microEditBtn: '.microEditBtn',
+        microEditCancel: '.microEditCancel',
+        microEditSave: '.microEditSave'
     },
 
     events: {
         'click @ui.action': 'action',
         'click @ui.delete': 'delete',
         'click @ui.customAction': 'customAction',
+
+        'mouseover @ui.microEditBtn': 'showMicroEditBtn',
+        'mouseout @ui.microEditBtn': 'hideMicroEditBtn',
+        'click @ui.microEditBtn': 'clickMicroEditBtn',
+        'click @ui.microEditCancel': 'clickMicroEditCancel',
+        'click @ui.microEditSave': 'clickMicroEditSave'
     },
 
     initialize: function (options)
@@ -145,6 +155,99 @@ Crude.Views.ListItem = Backbone.Marionette.ItemView.extend(
                 }.bind(this));
         }.bind(this));
     },
+
+    showMicroEditBtn: function (e)
+    {
+        var target = $(e.target);
+        if (! target.hasClass('microEditBtn'))
+            target = target.parents('.microEditBtn');
+
+        target.css('opacity', 1);
+    },
+
+    hideMicroEditBtn: function (e)
+    {
+        var target = $(e.target);
+        if (! target.hasClass('microEditBtn'))
+            target = target.parents('.microEditBtn');
+
+        target.css('opacity', 0.2);
+    },
+
+    clickMicroEditBtn: function (e)
+    {
+        var target = $(e.target);
+        if (! target.hasClass('microEditBtn'))
+            target = target.parents('.microEditBtn');
+
+        var attr = target.data('attr');
+
+        if (! this.setup.microEditAllow(attr))
+            return;
+
+        // popover is visible
+        if (target.next('div.popover:visible').length)
+            return this.closeMicroEditPopover(target);
+
+        this.closeMicroEditPopover($('.microEditBtn'));
+
+        var template = _.template($('#crude_microEditPopoverTemplate').html());
+
+        target.popover({
+            html: true,
+            trigger: 'manual',
+            placement: 'bottom',
+            content: template({
+                attr: attr,
+                setup: this.setup,
+                model: this.model.toJSON()
+            })
+        });
+
+        target.popover('show');
+    },
+
+    clickMicroEditCancel: function (e)
+    {
+        var target = $(e.target);
+        if (! target.hasClass('microEditCancel'))
+            target = target.parents('.microEditCancel');
+
+        this.closeMicroEditPopover(target.parents('.crudeCellContent').find('.microEditBtn'));
+    },
+
+    clickMicroEditSave: function (e)
+    {
+        var target = $(e.target);
+        if (! target.hasClass('microEditSave'))
+            target = target.parents('.microEditSave');
+
+        this.closeMicroEditPopover(target.parents('.crudeCellContent').find('.microEditBtn'));
+
+        var popoverContent = target.parents('.popover-content');
+
+        var input = popoverContent.find('.input');
+        this.model.set(input.data('attr'), Crude.getFormValue(input));
+        this.model.save()
+            .done(function (response)
+            {
+                if (('data' in response) && ('model' in  response.data))
+                    this.model.set(response.data.model);
+
+                this.render();
+            }.bind(this))
+            .fail(function (response)
+            {
+                this.setup.onAjaxFail(response, popoverContent.find('.microEditAlertContainer'));
+            }.bind(this));
+
+    },
+
+    closeMicroEditPopover: function (trigger)
+    {
+        trigger.popover('hide');
+        trigger.popover('destroy');
+    }
 });
 
 Crude.Views.ListEmpty = Backbone.Marionette.ItemView.extend(

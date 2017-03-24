@@ -7,7 +7,7 @@
 </script>
 
 <script type="text/template" id="crude_textareaInputTemplate">
-    <textarea class="input form-control" data-attr="<%- attr %>" rows="2" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'textarea') %>"><%- model[attr] %></textarea>
+    <textarea style="max-width: 100%" class="input form-control" data-attr="<%- attr %>" rows="2" placeholder="<%- setup.getAttrName(attr) %>: <%- setup.interfaceTrans('input_placeholder', 'textarea') %>"><%- model[attr] %></textarea>
 </script>
 
 <script type="text/template" id="crude_jsonInputTemplate">

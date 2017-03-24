@@ -12,7 +12,13 @@
                 <span class="crude-table-body-cell-label">
                     <%- setup.getAttrName(a) %>
                 </span>
-                <span class="crude-table-body-cell-content">
+                <span class="crude-table-body-cell-content crudeCellContent">
+                    <% if (setup.microEditAllow(a)) { %>
+                        <small class="microEditBtn crude-action-btn pointer" style="opacity: 0.2" data-attr="<%- a %>">
+                            <i class="fa fa-pencil"></i>
+                        </small>
+                    <% } %>
+
                     <%= Crude.renderCell(setup, a, model) %>
                 </span>
                 <br>
@@ -221,4 +227,24 @@
             </div>
         </div>
     </div>
+</script>
+
+<script type="text/template" id="crude_microEditPopoverTemplate">
+    <div class="microEditAlertContainer crude-alert-container"></div>
+
+    <label><%- setup.getAttrName(attr) %></label>
+    <br>
+    <%= Crude.renderInput(setup, attr, model) %>
+    <br>
+
+    <button title="<%- setup.interfaceTrans('save') %>" class="microEditSave crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+        <%= _.template($('#crude_saveActionButtonTemplate').html())({
+            setup: setup
+        }) %>
+    </button>
+    <button title="<%- setup.interfaceTrans('close') %>" class="microEditCancel crude-action-btn" data-toggle="tooltip" data-placement="bottom">
+        <%= _.template($('#crude_cancelActionButtonTemplate').html())({
+            setup: setup
+        }) %>
+    </button>
 </script>

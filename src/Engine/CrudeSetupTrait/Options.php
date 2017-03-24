@@ -46,6 +46,13 @@ trait Options
      */
     protected $paginationOption = true;
 
+    /**
+     * Show single attribute edit
+     *
+     * @var boolean
+     */
+    protected $microEditOption = true;
+
     public function lockEditOption()
     {
         $this->editOption = false;
@@ -90,6 +97,14 @@ trait Options
         return $this;
     }
 
+    public function lockMicroEditOption()
+    {
+        $this->microEditOption = false;
+
+        return $this;
+    }
+
+
     public function haveOption($optionName = '')
     {
         if ($optionName == 'add')
@@ -109,6 +124,9 @@ trait Options
 
         if ($optionName == 'pagination')
             return $this->paginationOption;
+
+        if ($optionName == 'microEdit')
+            return $this->microEditOption;
 
         return false;
     }

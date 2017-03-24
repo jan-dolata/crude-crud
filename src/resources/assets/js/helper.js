@@ -136,21 +136,27 @@ Crude.getFormValues = function (inputList)
 
     inputList.each(function() {
         var $this = $(this);
-
-        if ($this.attr('type') == 'custom')
-            values[$this.data('attr')] = window[$this.data('method')]($this);
-        else if ($this.attr('type') == 'checkbox')
-            values[$this.data('attr')] = $this.is(':checked');
-        else if ($this.attr('type') == 'select' || $this.attr('type') == 'selectize')
-            values[$this.data('attr')] = $this.find(':selected').val();
-        else if ($this.attr('type') == 'json') {
-            values[$this.data('attr')] = JSON.parse($this.val());
-        }
-        else
-            values[$this.data('attr')] = $this.val();
+        values[$this.data('attr')] = Crude.getFormValue($this);
     });
 
     return values;
+};
+
+Crude.getFormValue = function (input)
+{
+    if (input.attr('type') == 'custom')
+        return window[$this.data('method')](input);
+
+    if (input.attr('type') == 'checkbox')
+        return input.is(':checked');
+
+    if (input.attr('type') == 'select' || input.attr('type') == 'selectize')
+        return input.find(':selected').val();
+
+    if (input.attr('type') == 'json')
+        return JSON.parse(input.val());
+
+    return input.val();
 };
 
 /**
