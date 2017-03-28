@@ -9,6 +9,8 @@
 
     $loginLogout = config('crude_navbar.loginLogout');
 
+    $secondBar = config('crude_navbar.secondBar');
+
     $currentRouteName = Route::getCurrentRoute()->getName();
 ?>
 
@@ -50,17 +52,7 @@
         </div>
     </div>
 
-    <div class="container hidden-xs m-t">
-        <div class="text-left">
-            @foreach($left as $group)
-                @include('CrudeCRUD::navbar.selected-group')
-            @endforeach
-        </div>
-
-        <div class="text-right">
-            @foreach($right as $group)
-                @include('CrudeCRUD::navbar.selected-group')
-            @endforeach
-        </div>
-    </div>
+    @if ($secondBar)
+        @include('CrudeCRUD::navbar.selected-group')
+    @endif
 </nav>

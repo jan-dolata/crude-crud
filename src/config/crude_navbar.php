@@ -27,6 +27,12 @@ return [
     'loginLogout' => false,
 
     /**
+     * Second bar is visible
+     * @var boolean
+     */
+    'secondBar' => true,
+
+    /**
      * Left side of navbar
      * @var array
      */
