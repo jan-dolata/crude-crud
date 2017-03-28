@@ -80,7 +80,7 @@
                             </button>
                         <% } %>
 
-                        <% if(! _.isEmpty(setup.get('extraColumn')) && pagination.count > 1) { %>
+                        <% if(! _.isEmpty(setup.get('extraColumn')) && pagination.count > 0) { %>
                             <button id="selectColumn" title="<%- setup.interfaceTrans('select_column') %>" class="crude-action-btn" data-toggle="tooltip" data-placement="bottom">
                                 <%= _.template($('#crude_selectColumnActionButtonTemplate').html())({
                                     setup: setup
